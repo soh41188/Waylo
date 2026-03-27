@@ -291,6 +291,48 @@ function parseDur(str){
 
 // ── API CALL ──────────────────────────────────────────────────────────────
 async function fetchFlights(origin, dest, date){
+  const dateStr = date + 'T00:00:00';
+  const params = new URLSearchParams({
+    source: `Airport:${origin.toUpperCase()}`,
+    destination: `Airport:${dest.toUpperCase()}`,
+    outboundDepartmentDateStart: dateStr,
+    currency: 'usd',
+    locale: 'en',
+    adults: document.getElementById('pax').value || '1',
+    children: '0',
+    infants: '0',
+    handbags: '1',
+    holdbags: '0',
+    cabinClass: 'ECONOMY',
+    sortBy: 'QUALITY',
+    applyMixedClasses: 'true',
+    allowChangeInboundDestination: 'true',
+    allowChangeInboundSource: 'true',
+    allowDifferentStationConnection: 'true',
+    enableSelfTransfer: 'true',
+    allowOvernightStopover: 'true',
+    enableTrueHiddenCity: 'true',
+    allowReturnToDifferentCity: 'false',
+    allowReturnFromDifferentCity: 'false',
+    enableThrowAwayTicketing: 'true',
+    outbound: 'SUNDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,MONDAY,TUESDAY',
+    transportTypes: 'FLIGHT',
+    contentProviders: 'FLIXBUS_DIRECTS,FRESH,KAYAK,KIWI',
+    limit: '10'
+  });
+
+  const res = await fetch(`${KIWI_BASE}/one-way?${params}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-rapidapi-host': KIWI_HOST,
+      'x-rapidapi-key': RAPIDAPI_KEY
+    }
+  });
+
+  if(!res.ok) throw new Error(`API error: ${res.status}`);
+  return await res.json();
+}
   // Format date for API: needs YYYY-MM-DDT00:00:00
   const dateStr = date + 'T00:00:00';
   // Add 3 days for end range
