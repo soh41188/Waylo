@@ -60,9 +60,6 @@ h1 em{font-style:normal;color:var(--accent);}
 .fc.best{border-color:rgba(0,229,160,.3);background:rgba(0,229,160,.02);}
 .fc-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;gap:16px;}
 .fc-left{display:flex;align-items:center;gap:20px;flex:1;}
-.fc-times{display:flex;align-items:center;gap:10px;}
-.fc-time{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;}
-.fc-arrow{color:var(--tx3);font-size:14px;padding:0 4px;}
 .fc-meta{display:flex;flex-direction:column;gap:3px;}
 .fc-airline{font-size:13px;font-weight:500;color:var(--tx);}
 .fc-details{font-size:11px;color:var(--tx2);}
@@ -80,7 +77,6 @@ h1 em{font-style:normal;color:var(--accent);}
 @media(max-width:600px){
   .row{grid-template-columns:1fr 1fr;}
   header{padding:14px 18px;}
-  .fc-left{flex-direction:column;align-items:flex-start;gap:8px;}
 }
 </style>
 </head>
@@ -125,17 +121,17 @@ h1 em{font-style:normal;color:var(--accent);}
 </div>
 
 <script>
-// ── YOUR API KEY — replace 0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4 between the quotes ───────────
+// ── ADD YOUR RAPIDAPI KEY BETWEEN THESE QUOTES ────────────────────────────
 var KEY = '0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4';
 // ─────────────────────────────────────────────────────────────────────────
 
 var HOST = 'kiwi-com-cheap-flights.p.rapidapi.com';
 var BASE = 'https://kiwi-com-cheap-flights.p.rapidapi.com';
 
-async function fetchFlights(origin, dest, date, pax){
+async function fetchFlights(orig, dst, date, pax) {
   var params = new URLSearchParams({
-    source: 'Airport:' + origin,
-    destination: 'Airport:' + dest,
+    source: 'Airport:' + orig,
+    destination: 'Airport:' + dst,
     outboundDepartmentDateStart: date + 'T00:00:00',
     currency: 'usd',
     locale: 'en',
@@ -170,73 +166,36 @@ async function fetchFlights(origin, dest, date, pax){
     }
   });
 
-  if(!res.ok) throw new Error('API error ' + res.status);
+  if (!res.ok) throw new Error('API error ' + res.status);
   return await res.json();
 }
 
-function parseItineraries(data){
-  // The API returns data in metadata.itineraries array
-  var itineraries = [];
+function parseItineraries(data) {
+  var its = [];
+  if (data && Array.isArray(data.itineraries)) its = data.itineraries;
+  else if (data && data.data && Array.isArray(data.data.itineraries)) its = data.data.itineraries;
+  else if (data && data.metadata && Array.isArray(data.metadata.itineraries)) its = data.metadata.itineraries;
 
-  // Try top-level itineraries array first
-  if(data && data.itineraries && Array.isArray(data.itineraries)){
-    itineraries = data.itineraries;
-  }
-  // Try nested under data key
-  else if(data && data.data && data.data.itineraries){
-    itineraries = data.data.itineraries;
-  }
-  // Try metadata path
-  else if(data && data.metadata && data.metadata.itineraries){
-    itineraries = data.metadata.itineraries;
-  }
-
-  if(itineraries.length === 0) return [];
-
-  return itineraries.map(function(f, i){
-    // Price is in price.amount as a string
+  var results = [];
+  for (var i = 0; i < its.length; i++) {
+    var f = its[i];
     var price = f.price && f.price.amount ? Math.round(parseFloat(f.price.amount)) : 0;
-    if(price <= 0) return null;
-
-    // Duration in seconds
+    if (price <= 0) continue;
     var durSecs = f.duration || 0;
-    var durStr = durSecs > 0 ? Math.floor(durSecs/3600)+'h '+Math.floor((durSecs%3600)/60)+'m' : '--';
-
-    // Provider/airline
-    var airline = 'Unknown';
-    if(f.provider && f.provider.name) airline = f.provider.name;
-
-    // Booking link from id — we reconstruct Kiwi link
-    var bookLink = 'https://www.kiwi.com';
-    if(f.id){
-      // Extract base64 encoded route data from id
-      try {
-        var idPart = f.id.replace('ItineraryOneWay:','');
-        var decoded = atob(idPart);
-        var parsed = JSON.parse(decoded);
-        if(parsed.route_data){
-          bookLink = 'https://www.kiwi.com/booking?token=' + idPart;
-        }
-      } catch(e){}
-    }
-
-    return {
-      price: price,
-      airline: airline,
-      duration: durStr,
-      isBest: i === 0,
-      bookLink: bookLink
-    };
-  }).filter(function(f){ return f !== null; });
+    var durStr = durSecs > 0 ? Math.floor(durSecs/3600) + 'h ' + Math.floor((durSecs % 3600) / 60) + 'm' : '--';
+    var airline = (f.provider && f.provider.name) ? f.provider.name : 'Unknown airline';
+    results.push({ price: price, airline: airline, duration: durStr, isBest: results.length === 0 });
+  }
+  return results;
 }
 
-async function go(){
-  var origin = document.getElementById('origin').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
-  var dest = document.getElementById('dest').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+async function go() {
+  var origin = document.getElementById('origin').value.trim().toUpperCase().replace(/[^A-Z]/g, '');
+  var dest = document.getElementById('dest').value.trim().toUpperCase().replace(/[^A-Z]/g, '');
   var date = document.getElementById('depart').value;
   var pax = document.getElementById('pax').value || '1';
 
-  if(!origin || !dest || !date){ alert('Please fill in all fields.'); return; }
+  if (!origin || !dest || !date) { alert('Please fill in all fields.'); return; }
 
   var btn = document.getElementById('btn');
   var loading = document.getElementById('loading');
@@ -250,7 +209,6 @@ async function go(){
   output.innerHTML = '';
   splitSection.style.display = 'none';
   resultHeader.style.display = 'none';
-
   document.getElementById('ld-msg').textContent = 'Fetching live prices for ' + origin + ' → ' + dest + '...';
 
   try {
@@ -261,19 +219,21 @@ async function go(){
     btn.disabled = false;
     btn.textContent = 'Search live flights →';
 
-    if(fares.length === 0){
-      output.innerHTML = '<div class="err"><strong>No flights found</strong><p>No results for ' + origin + ' → ' + dest + ' on ' + date + '. Try a different date or route like LHR → CDG.</p></div>';
+    if (fares.length === 0) {
+      output.innerHTML = '<div class="err"><strong>No flights found</strong><p>No results for ' + origin + ' → ' + dest + ' on ' + date + '. Try a busier route like LHR → CDG or a closer date.</p></div>';
       return;
     }
 
-    // Show results
     document.getElementById('route-lbl').textContent = origin + ' → ' + dest;
-    document.getElementById('fare-count').textContent = fares.length + ' live fares';
+    document.getElementById('fare-count').textContent = fares.length + ' live fares found';
     resultHeader.style.display = 'flex';
 
+    var kiwiUrl = 'https://www.kiwi.com/en/search/results/' + origin + '-' + dest + '/' + date;
+
     var html = '';
-    fares.forEach(function(f, i){
-      html += '<div class="fc' + (f.isBest?' best':'') + '" style="animation-delay:' + (i*0.05) + 's">' +
+    for (var i = 0; i < fares.length; i++) {
+      var f = fares[i];
+      html += '<div class="fc' + (f.isBest ? ' best' : '') + '" style="animation-delay:' + (i * 0.05) + 's">' +
         (f.isBest ? '<div class="tag-best">BEST PRICE</div>' : '') +
         '<div class="fc-top">' +
           '<div class="fc-left">' +
@@ -283,42 +243,29 @@ async function go(){
             '</div>' +
           '</div>' +
           '<div class="fc-price-block">' +
-            '<div class="fc-price' + (f.isBest?' best-price':'') + '">$' + f.price + '</div>' +
+            '<div class="fc-price' + (f.isBest ? ' best-price' : '') + '">$' + f.price + '</div>' +
             '<div class="fc-ppax">per person</div>' +
           '</div>' +
         '</div>' +
         '<div class="fc-book">' +
-          '<a class="book-link" href="https://www.kiwi.com/en/search/results/' + origin + '/' + dest + '/' + date + '/no-return" target="_blank" rel="noopener">🌐 Book this flight →</a>' +
-```
-
-Commit and test the link. If that still 404s we'll fall back to the simplest option which always works — just sending them to kiwi.com with a note that the route is pre-searched. Sometimes the most reliable booking link is just:
-```
-https://www.kiwi.com
-```
-
-Commit and test the link. If that still 404s we'll fall back to the simplest option which always works — just sending them to kiwi.com with a note that the route is pre-searched. Sometimes the most reliable booking link is just:
-```
-https://www.kiwi.com
+          '<a class="book-link" href="' + kiwiUrl + '" target="_blank" rel="noopener">🌐 Search on Kiwi →</a>' +
         '</div>' +
       '</div>';
-    });
+    }
     output.innerHTML = html;
 
-    // Try split ticket detection if more than one airport on common hub routes
+    // Split ticket detection
     var HUBS = {
       'BSB':['GRU'],'GRU':['LIS','MAD'],'LIS':['MAD','CDG'],
       'NAP':['FCO','MXP'],'RAK':['LIS','MAD'],'TIA':['FCO','LHR'],
       'LHR':['CDG','AMS','MAD'],'CDG':['MAD','AMS','FCO']
     };
     var hubs = HUBS[origin] || [];
-    if(hubs.length > 0 && fares.length > 0){
-      var hub = hubs[0];
-      document.getElementById('ld-msg').textContent = 'Checking split ticket via ' + hub + '...';
-      loading.className = 'loading show';
-      detectSplit(origin, dest, date, pax, hub, fares[0].price);
+    if (hubs.length > 0 && fares.length > 0) {
+      detectSplit(origin, dest, date, pax, hubs[0], fares[0].price);
     }
 
-  } catch(err){
+  } catch (err) {
     loading.className = 'loading';
     btn.disabled = false;
     btn.textContent = 'Search live flights →';
@@ -326,22 +273,16 @@ https://www.kiwi.com
   }
 }
 
-async function detectSplit(origin, dest, date, pax, hub, bundledPrice){
-  var loading = document.getElementById('loading');
+async function detectSplit(origin, dest, date, pax, hub, bundledPrice) {
   try {
     var leg1Data = await fetchFlights(origin, hub, date, pax);
     var leg2Data = await fetchFlights(hub, dest, date, pax);
     var leg1 = parseItineraries(leg1Data);
     var leg2 = parseItineraries(leg2Data);
-
-    loading.className = 'loading';
-
-    if(leg1.length === 0 || leg2.length === 0) return;
-
+    if (leg1.length === 0 || leg2.length === 0) return;
     var splitTotal = leg1[0].price + leg2[0].price;
     var saving = bundledPrice - splitTotal;
-
-    if(saving >= 30){
+    if (saving >= 30) {
       var splitSection = document.getElementById('split-section');
       splitSection.innerHTML =
         '<div class="split-box">' +
@@ -353,9 +294,8 @@ async function detectSplit(origin, dest, date, pax, hub, bundledPrice){
         '</div>';
       splitSection.style.display = 'block';
     }
-  } catch(e){
-    loading.className = 'loading';
-    console.log('Split detection error:', e.message);
+  } catch (e) {
+    console.log('Split detection:', e.message);
   }
 }
 </script>
