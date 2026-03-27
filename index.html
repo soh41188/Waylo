@@ -288,7 +288,12 @@ async function go(){
           '</div>' +
         '</div>' +
         '<div class="fc-book">' +
-          '<a class="book-link" href="https'<a class="book-link" href="https://www.kiwi.com/en/search/results/' + origin + '/' + dest + '/' + date + '/no-return" target="_blank" rel="noopener">🌐 Book this flight →</a>' +
+          '<a class="book-link" href="https://www.kiwi.com/en/search/results/' + origin + '/' + dest + '/' + date + '/no-return" target="_blank" rel="noopener">🌐 Book this flight →</a>' +
+```
+
+Commit and test the link. If that still 404s we'll fall back to the simplest option which always works — just sending them to kiwi.com with a note that the route is pre-searched. Sometimes the most reliable booking link is just:
+```
+https://www.kiwi.com
 ```
 
 Commit and test the link. If that still 404s we'll fall back to the simplest option which always works — just sending them to kiwi.com with a note that the route is pre-searched. Sometimes the most reliable booking link is just:
