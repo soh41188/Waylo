@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform Framework — Confidential</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0e11;
+  --bg2: #111519;
+  --bg3: #181d22;
+  --border: rgba(255,255,255,0.07);
+  --border-med: rgba(255,255,255,0.12);
+  --teal: #00c4a0;
+  --teal-dim: rgba(0,196,160,0.12);
+  --teal-border: rgba(0,196,160,0.3);
+  --amber: #f0a500;
+  --amber-dim: rgba(240,165,0,0.1);
+  --blue: #4a9eff;
+  --blue-dim: rgba(74,158,255,0.1);
+  --red: #ff5c5c;
+  --text: #e8e6e0;
+  --text-2: #8a8880;
+  --text-3: #555350;
+  --mono: 'DM Mono', monospace;
+  --serif: 'DM Serif Display', serif;
+  --sans: 'Outfit', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(11,14,17,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 12px;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+  background: var(--border);
+}
+
+.nav-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--red);
+  background: rgba(255,92,92,0.1);
+  border: 1px solid rgba(255,92,92,0.2);
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+}
+
+/* SECTIONS */
+section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 100px 40px 60px;
+}
+
+section:first-of-type { padding-top: 140px; }
+
+/* HERO */
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(42px, 6vw, 68px);
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.hero-title em {
+  color: var(--teal);
+  font-style: italic;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-2);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stat-num {
+  font-family: var(--serif);
+  font-size: 36px;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+
+/* DIVIDER */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* SECTION LABELS */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.section-label-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: 36px;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.section-body {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 640px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+/* PROBLEM CARDS */
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.problem-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.problem-card-platform {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.problem-card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.problem-card-good {
+  font-size: 12px;
+  color: var(--teal);
+  margin-bottom: 4px;
+  padding-left: 14px;
+  position: relative;
+}
+.problem-card-good::before {
+  content: '+';
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+}
+
+.problem-card-bad {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 4px;
+  padding-left: 14px;
+  position: relative;
+}
+.problem-card-bad::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--text-3);
+}
+
+.problem-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px;
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-border);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--teal);
+}
+
+/* FOUNDATION */
+.foundation-block {
+  background: var(--bg2);
+  border: 1px solid var(--teal-border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.foundation-block::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal), transparent);
+}
+
+.foundation-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.foundation-name {
+  font-family: var(--serif);
+  font-size: 28px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.foundation-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 300;
+}
+
+.connector-down {
+  display: flex;
+  justify-content: center;
+  height: 32px;
+  align-items: center;
+}
+
+.connector-line-v {
+  width: 1px;
+  height: 32px;
+  background: var(--border-med);
+}
+
+/* MODULE GRID */
+.modules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.module-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s;
+  cursor: default;
+}
+
+.module-card:hover { border-color: var(--border-med); }
+.module-card.clinical { border-top: 2px solid var(--teal); }
+.module-card.business { border-top: 2px solid var(--amber); }
+.module-card.ai-layer { border-top: 2px solid var(--blue); grid-column: 1 / -1; }
+
+.module-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.module-type.clinical { color: var(--teal); }
+.module-type.business { color: var(--amber); }
+.module-type.ai-layer { color: var(--blue); }
+
+.module-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.module-src {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-bottom: 14px;
+  font-family: var(--mono);
+}
+
+.module-feats {
+  list-style: none;
+}
+
+.module-feats li {
+  font-size: 12px;
+  color: var(--text-2);
+  padding: 3px 0 3px 14px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.module-feats li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+
+.ai-module-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+/* PRODUCT ENTITY */
+.product-entity {
+  margin-top: 20px;
+  background: var(--bg3);
+  border: 1px dashed var(--border-med);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.product-entity-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.product-entity-body {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.product-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ptag {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid;
+}
+.ptag.teal { color: var(--teal); background: var(--teal-dim); border-color: var(--teal-border); }
+.ptag.amber { color: var(--amber); background: var(--amber-dim); border-color: rgba(240,165,0,0.25); }
+.ptag.blue { color: var(--blue); background: var(--blue-dim); border-color: rgba(74,158,255,0.25); }
+
+/* PRICING */
+.pricing-model {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px;
+  margin-bottom: 24px;
+}
+
+.pricing-formula {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 28px 0;
+}
+
+.pf-block {
+  background: var(--bg3);
+  border: 1px solid var(--border-med);
+  border-radius: 10px;
+  padding: 14px 20px;
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.pf-block-label {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.pf-block-value {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--teal);
+}
+
+.pf-op {
+  font-family: var(--serif);
+  font-size: 28px;
+  color: var(--text-3);
+}
+
+.pricing-note {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* MOAT */
+.moat-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.moat-item {
+  display: flex;
+  gap: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  align-items: flex-start;
+}
+
+.moat-num {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-3);
+  min-width: 28px;
+  padding-top: 2px;
+}
+
+.moat-content-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.moat-content-body {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+/* BUILD PHILOSOPHY */
+.philosophy-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 16px;
+}
+
+.philosophy-block.highlight {
+  border-color: var(--teal-border);
+  background: var(--teal-dim);
+}
+
+.philosophy-block-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.philosophy-block.highlight .philosophy-block-title {
+  color: var(--teal);
+}
+
+.philosophy-block-body {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* TEAM */
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.team-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.team-card.filled {
+  border-color: var(--teal-border);
+}
+
+.team-card.needed {
+  border-color: rgba(240,165,0,0.2);
+}
+
+.team-card.legal {
+  border-color: rgba(74,158,255,0.2);
+}
+
+.team-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.team-status.filled { color: var(--teal); background: var(--teal-dim); }
+.team-status.needed { color: var(--amber); background: var(--amber-dim); }
+.team-status.legal { color: var(--blue); background: var(--blue-dim); }
+
+.team-role {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.team-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.team-priority {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--mono);
+}
+
+/* RATINGS */
+.ratings-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.rating-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.rating-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.rating-num {
+  font-family: var(--serif);
+  font-size: 52px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.rating-num.high { color: var(--teal); }
+.rating-num.mid { color: var(--amber); }
+
+.rating-out-of {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 12px;
+  font-family: var(--mono);
+}
+
+.rating-note {
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-note {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow { animation: fadeUp 0.5s ease forwards; }
+.hero-title { animation: fadeUp 0.5s 0.1s ease forwards; opacity: 0; }
+.hero-sub { animation: fadeUp 0.5s 0.2s ease forwards; opacity: 0; }
+.hero-stats { animation: fadeUp 0.5s 0.3s ease forwards; opacity: 0; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-med); border-radius: 3px; }
+
+/* PRINT SAFE */
+@media print {
+  nav { display: none; }
+  section { padding: 40px 40px 20px; page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">// Platform Framework v0.1</div>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#platform">Platform</a></li>
+    <li><a href="#ai">AI Layer</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#moat">Moat</a></li>
+    <li><a href="#build">Build</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <div class="nav-badge">Confidential</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Physical Therapy — Enterprise Platform</div>
+  <h1 class="hero-title">The platform PT clinics<br><em>actually deserve.</em></h1>
+  <p class="hero-sub">One unified system built ground-up for physical therapy. Not four tools duct-taped together. Not a general health tech platform forced into PT workflows. The real thing.</p>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">7</div>
+      <div class="stat-label">integrated modules</div>
+    </div>
+    <div>
+      <div class="stat-num">1</div>
+      <div class="stat-label">unified data model</div>
+    </div>
+    <div>
+      <div class="stat-num">0</div>
+      <div class="stat-label">integrations required</div>
+    </div>
+    <div>
+      <div class="stat-num">5yr</div>
+      <div class="stat-label">build horizon</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-label">
+    <span class="section-label-tag">01 — The problem</span>
+  </div>
+  <h2 class="section-title">Every PT clinic is running<br>four broken tools at once.</h2>
+  <p class="section-body">The current market offers a scheduler that doesn't know about billing, an EMR that doesn't talk to marketing, forms software disconnected from clinical records, and a CRM with no concept of a patient. Each tool has a good idea. None of them execute it. None of them know about each other.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-card-platform">GoHighLevel</div>
+      <div class="problem-card-title">Best CRM + marketing execution</div>
+      <div class="problem-card-good">Tags, automations, pipelines</div>
+      <div class="problem-card-good">Landing pages + email</div>
+      <div class="problem-card-good">Sales calendars</div>
+      <div class="problem-card-bad">Zero clinical awareness</div>
+      <div class="problem-card-bad">No concept of a visit or patient</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-card-platform">MindBody (MBO)</div>
+      <div class="problem-card-title">Good scheduling concept, poor execution</div>
+      <div class="problem-card-good">Products + package enforcement</div>
+      <div class="problem-card-good">Class + appointment scheduling</div>
+      <div class="problem-card-bad">Platform is painful to use</div>
+      <div class="problem-card-bad">Disconnected from clinical data</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-card-platform">PtEverywhere</div>
+      <div class="problem-card-title">Solid EMR for PT workflows</div>
+      <div class="problem-card-good">SOAP notes + treatment plans</div>
+      <div class="problem-card-good">PT-specific clinical structure</div>
+      <div class="problem-card-bad">No marketing or CRM</div>
+      <div class="problem-card-bad">Scheduling is limited</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-card-platform">IntakeQ</div>
+      <div class="problem-card-title">Best healthcare-grade forms</div>
+      <div class="problem-card-good">HIPAA-compliant intake</div>
+      <div class="problem-card-good">Outcome measures + consent</div>
+      <div class="problem-card-bad">Forms live in a silo</div>
+      <div class="problem-card-bad">Separate login, separate database</div>
+    </div>
+  </div>
+
+  <div class="problem-arrow">
+    <span>Clinics pay $2,000–4,000/month across all these tools</span>
+    <span style="font-size:20px;opacity:0.5">→</span>
+    <span>And still can't get a complete picture of one patient</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PLATFORM -->
+<section id="platform">
+  <div class="section-label">
+    <span class="section-label-tag">02 — The platform</span>
+  </div>
+  <h2 class="section-title">One foundation.<br>Seven modules.</h2>
+  <p class="section-body">Everything is built on a single unified patient record. A lead filling out a landing page form creates the same record that receives a SOAP note, gets an HEP, processes insurance, and gets a re-engagement email. No syncing. No integrations. One object from first contact to discharge.</p>
+
+  <div class="foundation-block">
+    <div class="foundation-title">Core architecture</div>
+    <div class="foundation-name">Unified Patient Record</div>
+    <div class="foundation-desc">The single source of truth every module reads from and writes to. Lead → patient → discharged client. One object, no hand-offs, no data loss between platforms.</div>
+  </div>
+
+  <div class="connector-down"><div class="connector-line-v"></div></div>
+
+  <div class="modules-grid">
+    <div class="module-card business">
+      <div class="module-type business">Business layer</div>
+      <div class="module-name">CRM + Marketing</div>
+      <div class="module-src">GHL concept — better execution</div>
+      <ul class="module-feats">
+        <li>Tags + patient segmentation</li>
+        <li>Email campaigns + automations</li>
+        <li>Landing page builder</li>
+        <li>Sales pipelines + web chat</li>
+        <li>Sales calendars</li>
+      </ul>
+    </div>
+    <div class="module-card business">
+      <div class="module-type business">Business layer</div>
+      <div class="module-name">Scheduling + Products</div>
+      <div class="module-src">MBO concept — GHL execution</div>
+      <ul class="module-feats">
+        <li>Appointment + class booking</li>
+        <li>Packages + memberships</li>
+        <li>Insurance visit tracking</li>
+        <li>Staff + resource management</li>
+        <li>Product → visit type enforcement</li>
+      </ul>
+    </div>
+    <div class="module-card business">
+      <div class="module-type business">Business layer</div>
+      <div class="module-name">Billing + Payments</div>
+      <div class="module-src">Cash pay + clearinghouse</div>
+      <ul class="module-feats">
+        <li>Cash pay processing</li>
+        <li>Insurance clearinghouse</li>
+        <li>Eligibility verification</li>
+        <li>ERA / EOB auto-posting</li>
+        <li>Revenue-based pricing data</li>
+      </ul>
+    </div>
+    <div class="module-card clinical">
+      <div class="module-type clinical">Clinical layer</div>
+      <div class="module-name">EMR</div>
+      <div class="module-src">PtE — best PT clinical structure</div>
+      <ul class="module-feats">
+        <li>SOAP notes + documentation</li>
+        <li>Progress tracking</li>
+        <li>Treatment plans</li>
+        <li>Outcome measures</li>
+        <li>HIPAA audit trail</li>
+      </ul>
+    </div>
+    <div class="module-card clinical">
+      <div class="module-type clinical">Clinical layer</div>
+      <div class="module-name">Forms + Intake</div>
+      <div class="module-src">IntakeQ — healthcare-grade forms</div>
+      <ul class="module-feats">
+        <li>Digital intake + consent</li>
+        <li>HIPAA-compliant delivery</li>
+        <li>Insurance verification</li>
+        <li>Outcome questionnaires</li>
+        <li>Auto-attach to patient record</li>
+      </ul>
+    </div>
+    <div class="module-card clinical">
+      <div class="module-type clinical">Clinical layer</div>
+      <div class="module-name">HEP Builder</div>
+      <div class="module-src">No good current solution</div>
+      <ul class="module-feats">
+        <li>PT exercise library</li>
+        <li>Program builder</li>
+        <li>Patient-facing delivery</li>
+        <li>Compliance + tracking</li>
+        <li>Linked to treatment plan</li>
+      </ul>
+    </div>
+    <div class="module-card ai-layer">
+      <div class="module-type ai-layer">AI layer — proprietary</div>
+      <div class="ai-module-inner">
+        <div>
+          <div class="module-name">Ambient Documentation</div>
+          <div class="module-src">Built in-house — no SDK fees</div>
+          <ul class="module-feats">
+            <li>Session audio → draft SOAP note</li>
+            <li>PT-specific clinical language</li>
+            <li>Clinician review + approve</li>
+            <li>Gets smarter with every session</li>
+          </ul>
+        </div>
+        <div>
+          <div class="module-name">AI Coding Assist</div>
+          <div class="module-src">ICD-10 + CPT auto-suggest</div>
+          <ul class="module-feats">
+            <li>Diagnosis coding from notes</li>
+            <li>Billing code suggestions</li>
+            <li>Payer-specific rules</li>
+            <li>Revenue cycle improvement</li>
+          </ul>
+        </div>
+        <div>
+          <div class="module-name">Clinical Intelligence</div>
+          <div class="module-src">Proprietary PT dataset over time</div>
+          <ul class="module-feats">
+            <li>Pre-visit patient summaries</li>
+            <li>Outcome predictions</li>
+            <li>Chart Q&A for clinicians</li>
+            <li>Population-level insights</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-entity">
+    <div class="product-entity-label">The product entity — what makes this architecturally different</div>
+    <div class="product-entity-body">A "product" in this system is never just a SKU. When a clinic creates a 10-visit eval + treatment package, it simultaneously defines a billing unit, a scheduling rule, a clinical trigger, and a marketing asset. One product definition touches every module. This is what GHL + MBO + PtE can never do together.</div>
+    <div class="product-tags">
+      <span class="ptag teal">billing unit</span>
+      <span class="ptag teal">scheduling rule</span>
+      <span class="ptag amber">clinical trigger</span>
+      <span class="ptag amber">form assignment</span>
+      <span class="ptag blue">marketing asset</span>
+      <span class="ptag blue">email automation</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- AI LAYER -->
+<section id="ai">
+  <div class="section-label">
+    <span class="section-label-tag">03 — AI layer</span>
+  </div>
+  <h2 class="section-title">We build our own<br>ambient documentation.</h2>
+  <p class="section-body">Suki.ai charges $300–400 per user per month for SDK access. We build it in-house using off-the-shelf transcription (Whisper / Deepgram), a PT-specific LLM layer, and write directly to our own EMR — no copy-paste, no third-party dependency, no per-user fee bleeding into our pricing model.</p>
+
+  <div class="ratings-row">
+    <div class="rating-card">
+      <div class="rating-label">Possibility</div>
+      <div class="rating-num high">9</div>
+      <div class="rating-out-of">/ 10</div>
+      <div class="rating-note">Timing is right. PT scope is narrow. Native EMR removes the hardest problem Suki has.</div>
+    </div>
+    <div class="rating-card">
+      <div class="rating-label">Realistic</div>
+      <div class="rating-num high">8</div>
+      <div class="rating-out-of">/ 10</div>
+      <div class="rating-note">V1 is buildable with off-the-shelf components. Data flywheel takes time and user volume.</div>
+    </div>
+    <div class="rating-card">
+      <div class="rating-label">Difficulty</div>
+      <div class="rating-num mid">6</div>
+      <div class="rating-out-of">/ 10</div>
+      <div class="rating-note">Real work, not extraordinary work. Hard parts are narrow: HIPAA audio storage, latency, note quality.</div>
+    </div>
+  </div>
+
+  <div class="moat-items">
+    <div class="moat-item">
+      <div class="moat-num">L1</div>
+      <div>
+        <div class="moat-content-title">Transcription — commodity, solved</div>
+        <div class="moat-content-body">OpenAI Whisper, Deepgram, or AssemblyAI. Medical-grade transcription at fractions of a cent per minute. Not something we build — something we pick and plug in.</div>
+      </div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-num">L2</div>
+      <div>
+        <div class="moat-content-title">Clinical intelligence — our real IP</div>
+        <div class="moat-content-body">PT vocabulary is narrower than general medicine. SOAP structure is consistent. Functional movement language, exercise progressions, patient response patterns — all learnable with a focused training set. This is where Suki spent years and most of their money. We start with a great PT-specific prompt, iterate fast, and improve on every corrected note.</div>
+      </div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-num">L3</div>
+      <div>
+        <div class="moat-content-title">EMR write-back — our structural advantage</div>
+        <div class="moat-content-body">Suki spends enormous engineering resources on bidirectional integrations with Epic, MEDITECH, athenahealth. We write directly to our own data model. That entire class of problem disappears. Every corrected note a therapist edits becomes a training signal. After enough sessions we have something genuinely proprietary.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-label">
+    <span class="section-label-tag">04 — Pricing model</span>
+  </div>
+  <h2 class="section-title">Price is directly tied<br>to what you make.</h2>
+  <p class="section-body">No published tiers. No flat monthly fee that overcharges small clinics and undercharges large ones. Every clinic's price is calculated from their last quarter's revenue and their current headcount. Cheap as hell for solo practitioners. A real number for enterprise groups — but still less than what they pay for four separate tools.</p>
+
+  <div class="pricing-model">
+    <div class="pricing-formula">
+      <div class="pf-block">
+        <div class="pf-block-label">Quarterly revenue</div>
+        <div class="pf-block-value">Last 90 days</div>
+      </div>
+      <div class="pf-op">+</div>
+      <div class="pf-block">
+        <div class="pf-block-label">Team size</div>
+        <div class="pf-block-value">Headcount</div>
+      </div>
+      <div class="pf-op">=</div>
+      <div class="pf-block" style="border-color: var(--teal-border);">
+        <div class="pf-block-label" style="color: var(--teal);">Your price</div>
+        <div class="pf-block-value">Fair + transparent</div>
+      </div>
+    </div>
+    <div class="pricing-note">
+      A solo cash-pay PT doing $8k/month pays almost nothing. A 20-provider orthopedic group doing $200k/month pays meaningfully more — but compares that number against their combined spend on MBO, PtE, GHL, IntakeQ, and an HEP tool. We win that comparison. No pricing page means every sale is a conversation. That's intentional — it filters for clinics worth onboarding and creates a white-glove feel regardless of clinic size.
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- MOAT -->
+<section id="moat">
+  <div class="section-label">
+    <span class="section-label-tag">05 — Competitive moat</span>
+  </div>
+  <h2 class="section-title">Why this can't be<br>easily replicated.</h2>
+
+  <div class="moat-items">
+    <div class="moat-item">
+      <div class="moat-num">01</div>
+      <div>
+        <div class="moat-content-title">Unified data architecture from day one</div>
+        <div class="moat-content-body">Every competitor who tried to build this went module-first and ended up with frankenstein integrations. We design the unified patient record first and build every feature on top of it. The architecture IS the moat. It can't be retrofitted — it has to be built this way from the start.</div>
+      </div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-num">02</div>
+      <div>
+        <div class="moat-content-title">PT-specific from the ground up</div>
+        <div class="moat-content-body">GHL, MBO, and even most EMRs are general tools forced into PT. Every workflow, every form, every note template, every product entity is designed for how PT clinics actually work — not adapted from a general healthcare template. This matters for adoption and retention.</div>
+      </div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-num">03</div>
+      <div>
+        <div class="moat-content-title">Proprietary clinical AI dataset over time</div>
+        <div class="moat-content-body">Every session transcribed, every note corrected, every outcome recorded — all of it feeds a PT-specific model nobody else has. After years of operation this becomes something that can't be bought or replicated quickly. It's a data flywheel that compounds.</div>
+      </div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-num">04</div>
+      <div>
+        <div class="moat-content-title">Pricing model creates switching pain</div>
+        <div class="moat-content-body">When a clinic's pricing is tied to their revenue tracked inside the platform, migration becomes genuinely difficult. Their financial history, patient records, clinical data, and marketing automations all live in one place. That's intentional stickiness, not lock-in — it's just the natural result of a platform that actually works.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUILD PHILOSOPHY -->
+<section id="build">
+  <div class="section-label">
+    <span class="section-label-tag">06 — Build philosophy</span>
+  </div>
+  <h2 class="section-title">Why we don't build<br>modules in isolation.</h2>
+  <p class="section-body">The conventional wisdom is to pick one module, build it to launch, get users, then add more. That's how you end up with exactly the problem we're solving. The alternative isn't to build everything at once — it's to build the foundation first and grow features on top of it.</p>
+
+  <div class="philosophy-block highlight">
+    <div class="philosophy-block-title">The architecture principle</div>
+    <div class="philosophy-block-body">The unified patient record, the provider/clinic structure, and the visit entity are the foundation. Every module is a different interface or workflow on top of the same data. We build the foundation to handle enterprise complexity from day one — multi-location, role-based permissions, insurance and cash pay — then grow features into it. A small clinic gets the full architecture. They just pay less.</div>
+  </div>
+
+  <div class="philosophy-block">
+    <div class="philosophy-block-title">What this means practically</div>
+    <div class="philosophy-block-body">Phase 1 is entirely foundation work — data model, auth, permissions architecture, core patient record, visit entity. Nothing shippable to end users yet. Phase 2 is the first module built on top of it, with the full data model already in place. Every subsequent module is faster than the last because the plumbing is already there. This feels slow at first. It's the reason the platform actually works in year three.</div>
+  </div>
+
+  <div class="philosophy-block">
+    <div class="philosophy-block-title">5-year build horizon</div>
+    <div class="philosophy-block-body">This is not a 12-month product. The goal is a defensible, enterprise-grade platform with AI capabilities that compound over time. Capital needs are real — grants, angels, and a Series A path are all valid. The data moat and the pricing model make this fundable once there's enough platform to show.</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-label">
+    <span class="section-label-tag">07 — The team</span>
+  </div>
+  <h2 class="section-title">Who we need<br>to build this.</h2>
+
+  <div class="team-grid">
+    <div class="team-card filled">
+      <span class="team-status filled">Filled</span>
+      <div class="team-role">Founder / Product</div>
+      <div class="team-desc">PT industry operator. Platform vision. Pricing strategy. Customer relationships. Domain knowledge nobody else in the room has. Former Suki insider — knows exactly where the AI landmines are.</div>
+      <div class="team-priority">Day 1</div>
+    </div>
+    <div class="team-card filled">
+      <span class="team-status filled">Filled</span>
+      <div class="team-role">Sales</div>
+      <div class="team-desc">In-house. No pricing page means every deal is a conversation — having a dedicated sales person from early stage validates the model and builds the relationships that drive word-of-mouth in the PT community.</div>
+      <div class="team-priority">Day 1</div>
+    </div>
+    <div class="team-card needed">
+      <span class="team-status needed">Recruiting</span>
+      <div class="team-role">Head of Engineering</div>
+      <div class="team-desc">The most important hire. Needs to understand healthcare data architecture, HIPAA compliance, and have the discipline to build foundation before features. Ideally has health tech startup experience. This person's architectural decisions in year one determine whether the platform is actually buildable in year three.</div>
+      <div class="team-priority">Highest priority hire</div>
+    </div>
+    <div class="team-card legal">
+      <span class="team-status legal">Needed</span>
+      <div class="team-role">Healthcare Attorney</div>
+      <div class="team-desc">HIPAA compliance, BAA agreements with every clinic, clearinghouse contracts, audio data storage policies for ambient documentation, entity structure, and eventually funding docs. Not optional — needs to be engaged before the first clinic goes live on the platform.</div>
+      <div class="team-priority">Before first customer</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer>
+  <div class="footer-note">Confidential — not for distribution</div>
+  <div class="footer-note">Framework v0.1 — built with Claude</div>
+</footer>
+
+</body>
+</html>

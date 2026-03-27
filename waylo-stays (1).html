@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waylo — Find Your Stay · Lisbon</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a0d0f;
+  --surface:#111518;
+  --surface2:#181d21;
+  --surface3:#1f262c;
+  --surface4:#252e35;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --accent:#00e5a0;
+  --accent2:#00b87a;
+  --accent-dim:rgba(0,229,160,0.12);
+  --warn:#f5a623;
+  --warn-dim:rgba(245,166,35,0.12);
+  --text:#eef1f3;
+  --text2:#8a9099;
+  --text3:#4a5260;
+  --blue:#4da6ff;
+  --blue-dim:rgba(77,166,255,0.1);
+  --pink:#ff6eb4;
+  --pink-dim:rgba(255,110,180,0.1);
+  --metro:#ff4b6e;
+  --bus:#ffa040;
+  --airbnb:#ff5a5f;
+  --hotel:#4da6ff;
+  --radius:12px;
+  --radius-sm:8px;
+  --panel:320px;
+}
+html,body{height:100%;overflow:hidden;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── HEADER ── */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 24px;
+  border-bottom:1px solid var(--border);
+  z-index:50;
+  flex-shrink:0;
+  background:var(--bg);
+}
+.logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:20px;
+  letter-spacing:-0.5px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.logo-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+
+.header-context{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+  padding:8px 14px;
+  font-size:13px;
+  color:var(--text2);
+}
+.header-context strong{color:var(--text);font-weight:500;}
+.header-context .divider{color:var(--text3);margin:0 4px;}
+.flight-tag{
+  background:var(--accent-dim);
+  color:var(--accent);
+  border:1px solid rgba(0,229,160,0.2);
+  border-radius:20px;
+  padding:3px 10px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.3px;
+}
+
+.header-actions{display:flex;gap:8px;}
+.hdr-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text2);
+  font-family:'DM Sans',sans-serif;
+  font-size:12px;
+  padding:7px 14px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  transition:all .2s;
+}
+.hdr-btn:hover{border-color:var(--border2);color:var(--text);}
+.hdr-btn.accent{background:var(--accent);color:#051a0f;font-weight:600;border-color:var(--accent);}
+.hdr-btn.accent:hover{background:#00f5ad;}
+
+/* ── MAIN LAYOUT ── */
+.main{
+  display:flex;
+  flex:1;
+  overflow:hidden;
+}
+
+/* ── LEFT PANEL ── */
+.panel{
+  width:var(--panel);
+  flex-shrink:0;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.panel-top{
+  padding:16px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+
+.panel-search{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.panel-input{
+  flex:1;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:9px 12px;
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;
+  outline:none;
+  transition:border-color .2s;
+}
+.panel-input:focus{border-color:rgba(0,229,160,0.4);}
+.panel-input::placeholder{color:var(--text3);}
+
+.filter-row{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.filter-chip{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--text2);
+  font-size:11px;
+  font-weight:500;
+  padding:5px 10px;
+  border-radius:20px;
+  cursor:pointer;
+  transition:all .2s;
+  white-space:nowrap;
+}
+.filter-chip.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.filter-chip:hover{border-color:var(--border2);color:var(--text);}
+
+.sort-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 16px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.sort-label{font-size:11px;color:var(--text3);}
+.sort-select{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--text2);
+  font-family:'DM Sans',sans-serif;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:6px;
+  outline:none;
+  cursor:pointer;
+}
+
+/* ── LISTING CARDS ── */
+.listings{
+  flex:1;
+  overflow-y:auto;
+  padding:10px;
+}
+.listings::-webkit-scrollbar{width:4px;}
+.listings::-webkit-scrollbar-track{background:transparent;}
+.listings::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:2px;}
+
+.listing-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px;
+  margin-bottom:8px;
+  cursor:pointer;
+  transition:all .2s;
+  position:relative;
+  animation:fadeUp .3s ease-out both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.listing-card:nth-child(1){animation-delay:.05s;}
+.listing-card:nth-child(2){animation-delay:.1s;}
+.listing-card:nth-child(3){animation-delay:.15s;}
+.listing-card:nth-child(4){animation-delay:.2s;}
+.listing-card:nth-child(5){animation-delay:.25s;}
+.listing-card:nth-child(6){animation-delay:.3s;}
+
+.listing-card:hover{border-color:var(--border2);background:var(--surface3);}
+.listing-card.active{border-color:rgba(0,229,160,0.4);background:rgba(0,229,160,0.04);}
+
+.listing-card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:10px;
+  gap:8px;
+}
+.listing-name{
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.3;
+  flex:1;
+}
+.listing-price{
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  font-weight:800;
+  color:var(--text);
+  flex-shrink:0;
+  text-align:right;
+}
+.listing-price span{
+  font-family:'DM Sans',sans-serif;
+  font-size:10px;
+  font-weight:400;
+  color:var(--text3);
+  display:block;
+}
+
+.listing-type-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:10px;
+  font-weight:600;
+  padding:3px 8px;
+  border-radius:20px;
+  margin-bottom:8px;
+  letter-spacing:0.3px;
+}
+.badge-airbnb{background:rgba(255,90,95,0.12);color:#ff5a5f;border:1px solid rgba(255,90,95,0.2);}
+.badge-hotel{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(77,166,255,0.2);}
+
+.listing-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+.stat-item{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:11px;
+  color:var(--text2);
+}
+.stat-icon{font-size:10px;flex-shrink:0;}
+.stat-good{color:var(--accent);}
+.stat-warn{color:var(--warn);}
+.stat-bad{color:#ff5c5c;}
+
+.listing-transit{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+}
+.transit-line-chips{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+}
+.transit-chip{
+  font-size:10px;
+  font-weight:700;
+  padding:2px 7px;
+  border-radius:4px;
+  letter-spacing:0.3px;
+}
+.t-metro{background:rgba(255,75,110,0.15);color:var(--metro);border:1px solid rgba(255,75,110,0.2);}
+.t-bus{background:rgba(255,160,64,0.12);color:var(--bus);border:1px solid rgba(255,160,64,0.2);}
+.t-tram{background:rgba(77,166,255,0.12);color:var(--blue);border:1px solid rgba(77,166,255,0.2);}
+
+.safety-bar{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:8px;
+}
+.safety-label{font-size:10px;color:var(--text3);min-width:42px;}
+.safety-track{
+  flex:1;
+  height:3px;
+  background:var(--surface4);
+  border-radius:2px;
+  overflow:hidden;
+}
+.safety-fill{height:100%;border-radius:2px;transition:width .6s ease;}
+.safety-score{font-size:10px;font-weight:600;min-width:24px;text-align:right;}
+
+/* ── MAP AREA ── */
+.map-area{
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  background:#0d1117;
+}
+
+/* Simulated map using CSS grid of blocks */
+.map-canvas{
+  width:100%;
+  height:100%;
+  position:relative;
+  background:#0d1117;
+}
+
+/* Street grid overlay */
+.map-canvas::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+}
+
+/* City blocks */
+.city-block{
+  position:absolute;
+  border-radius:4px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+}
+
+/* Distance rings */
+.dist-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px dashed;
+  pointer-events:none;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+  transform:translate(-50%,-50%);
+}
+.ring-label{
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  padding:2px 5px;
+  border-radius:4px;
+  margin:4px;
+}
+
+/* Airport marker */
+.airport-marker{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  z-index:20;
+  cursor:default;
+}
+.airport-pin{
+  width:36px;
+  height:36px;
+  background:var(--surface);
+  border:2px solid rgba(77,166,255,0.6);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  box-shadow:0 0 0 6px rgba(77,166,255,0.08);
+}
+.airport-label{
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:0.8px;
+  color:var(--blue);
+  background:var(--surface);
+  border:1px solid rgba(77,166,255,0.2);
+  padding:2px 6px;
+  border-radius:4px;
+}
+
+/* Transit stops */
+.transit-stop{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  z-index:15;
+  cursor:pointer;
+  transition:transform .2s;
+}
+.transit-stop:hover{transform:translate(-50%,-50%) scale(1.3);}
+
+.metro-pin{
+  width:14px;height:14px;
+  border-radius:50%;
+  background:var(--metro);
+  border:2px solid rgba(255,75,110,0.3);
+  box-shadow:0 0 6px rgba(255,75,110,0.4);
+}
+.bus-pin{
+  width:10px;height:10px;
+  border-radius:3px;
+  background:var(--bus);
+  border:1px solid rgba(255,160,64,0.4);
+}
+.tram-pin{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--blue);
+  border:1px solid rgba(77,166,255,0.4);
+}
+
+/* Accommodation pins */
+.stay-pin{
+  position:absolute;
+  transform:translate(-50%,-100%);
+  z-index:25;
+  cursor:pointer;
+  transition:all .2s;
+}
+.stay-pin:hover{transform:translate(-50%,-100%) scale(1.1);}
+.stay-pin.active-pin .pin-bubble{
+  background:var(--accent);
+  color:#051a0f;
+  border-color:var(--accent2);
+  box-shadow:0 4px 16px rgba(0,229,160,0.4);
+}
+
+.pin-bubble{
+  background:var(--surface);
+  border:1.5px solid var(--border2);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  padding:5px 9px;
+  border-radius:8px;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  transition:all .2s;
+}
+.pin-bubble::after{
+  content:'';
+  position:absolute;
+  bottom:-6px;
+  left:50%;
+  transform:translateX(-50%);
+  border:4px solid transparent;
+  border-top-color:var(--border2);
+}
+.pin-bubble.airbnb-pin{border-color:rgba(255,90,95,0.4);}
+.pin-bubble.hotel-pin{border-color:rgba(77,166,255,0.4);}
+
+/* ── MAP CONTROLS ── */
+.map-controls{
+  position:absolute;
+  top:16px;
+  right:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  z-index:30;
+}
+
+.map-layer-panel{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:14px;
+  min-width:180px;
+}
+
+.layer-title{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--text3);
+  margin-bottom:10px;
+}
+
+.layer-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+  cursor:pointer;
+  user-select:none;
+}
+.layer-toggle:last-child{margin-bottom:0;}
+
+.layer-info{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:12px;
+  color:var(--text2);
+}
+.layer-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+/* Toggle switch */
+.toggle{
+  width:28px;height:16px;
+  background:var(--surface3);
+  border-radius:8px;
+  position:relative;
+  transition:background .2s;
+  flex-shrink:0;
+}
+.toggle.on{background:var(--accent);}
+.toggle::after{
+  content:'';
+  position:absolute;
+  top:2px;left:2px;
+  width:12px;height:12px;
+  background:#fff;
+  border-radius:50%;
+  transition:left .2s;
+}
+.toggle.on::after{left:14px;}
+
+.zoom-btns{
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+  overflow:hidden;
+}
+.zoom-btn{
+  background:none;
+  border:none;
+  color:var(--text2);
+  font-size:16px;
+  padding:8px 12px;
+  cursor:pointer;
+  transition:all .2s;
+  border-bottom:1px solid var(--border);
+  line-height:1;
+}
+.zoom-btn:last-child{border-bottom:none;}
+.zoom-btn:hover{background:var(--surface2);color:var(--text);}
+
+/* ── MAP TOOLTIP ── */
+.map-tooltip{
+  position:absolute;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:14px;
+  width:220px;
+  z-index:40;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .15s;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+}
+.map-tooltip.visible{opacity:1;}
+.tt-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:4px;}
+.tt-type{font-size:11px;color:var(--text2);margin-bottom:10px;}
+.tt-stats{display:flex;flex-direction:column;gap:5px;}
+.tt-stat{display:flex;justify-content:space-between;font-size:11px;}
+.tt-stat-label{color:var(--text3);}
+.tt-stat-val{color:var(--text);font-weight:500;}
+
+/* ── DETAIL DRAWER ── */
+.detail-drawer{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  background:var(--surface);
+  border-top:1px solid var(--border2);
+  border-radius:16px 16px 0 0;
+  padding:20px 24px;
+  z-index:35;
+  transform:translateY(100%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  max-height:55%;
+  overflow-y:auto;
+}
+.detail-drawer.open{transform:translateY(0);}
+
+.drawer-handle{
+  width:36px;height:3px;
+  background:var(--surface4);
+  border-radius:2px;
+  margin:0 auto 16px;
+}
+.drawer-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:16px;
+}
+.drawer-title{
+  font-family:'Syne',sans-serif;
+  font-size:18px;
+  font-weight:800;
+}
+.drawer-price{
+  text-align:right;
+}
+.drawer-price .big{
+  font-family:'Syne',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  color:var(--accent);
+}
+.drawer-price .small{font-size:11px;color:var(--text3);}
+
+.drawer-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:16px;
+}
+.d-stat{
+  background:var(--surface2);
+  border-radius:var(--radius-sm);
+  padding:10px;
+  text-align:center;
+}
+.d-stat-val{
+  font-family:'Syne',sans-serif;
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:3px;
+}
+.d-stat-label{font-size:10px;color:var(--text3);}
+
+.drawer-transit{margin-bottom:16px;}
+.drawer-transit-title{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.8px;
+  text-transform:uppercase;
+  color:var(--text3);
+  margin-bottom:8px;
+}
+.transit-stop-list{display:flex;flex-direction:column;gap:6px;}
+.transit-stop-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--surface2);
+  border-radius:var(--radius-sm);
+  padding:8px 12px;
+  font-size:12px;
+}
+.transit-stop-row-left{display:flex;align-items:center;gap:8px;color:var(--text2);}
+.transit-walk{font-size:11px;color:var(--text3);}
+
+.drawer-actions{display:flex;gap:10px;}
+.drawer-btn{
+  flex:1;
+  padding:12px;
+  border-radius:var(--radius-sm);
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s;
+  border:none;
+}
+.drawer-btn.primary{background:var(--accent);color:#051a0f;}
+.drawer-btn.primary:hover{background:#00f5ad;}
+.drawer-btn.secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border2);}
+.drawer-btn.secondary:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ── API NOTE ── */
+.api-note{
+  position:absolute;
+  bottom:16px;left:16px;
+  background:var(--surface);
+  border:1px dashed var(--border2);
+  border-radius:var(--radius-sm);
+  padding:8px 12px;
+  font-size:10px;
+  color:var(--text3);
+  max-width:260px;
+  z-index:20;
+  line-height:1.5;
+}
+.api-note code{
+  font-size:9px;
+  background:var(--surface2);
+  padding:1px 5px;
+  border-radius:3px;
+  color:var(--blue);
+}
+
+/* ── LEGEND ── */
+.map-legend{
+  position:absolute;
+  bottom:16px;
+  right:16px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  z-index:20;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:11px;
+  color:var(--text2);
+}
+
+@media(max-width:768px){
+  .panel{display:none;}
+  .map-controls{top:10px;right:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><span class="logo-dot"></span>Waylo</div>
+
+  <div class="header-context">
+    <strong>Lisbon, Portugal</strong>
+    <span class="divider">·</span>
+    <span>Apr 15 – Apr 22</span>
+    <span class="divider">·</span>
+    <span>1 guest</span>
+    <span class="flight-tag">✈ LATAM split · $500</span>
+  </div>
+
+  <div class="header-actions">
+    <button class="hdr-btn" onclick="showApiInfo()">🔌 API notes</button>
+    <button class="hdr-btn accent" id="save-btn" onclick="saveTrip()">Save trip</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="panel">
+    <div class="panel-top">
+      <div class="panel-search">
+        <input class="panel-input" type="text" placeholder="Search area, neighborhood..." value="Lisbon">
+        <button class="hdr-btn" style="padding:9px 12px;flex-shrink:0" onclick="filterListings()">↺</button>
+      </div>
+      <div class="filter-row">
+        <button class="filter-chip active" onclick="toggleFilter(this,'all')">All</button>
+        <button class="filter-chip" onclick="toggleFilter(this,'airbnb')">Airbnb</button>
+        <button class="filter-chip" onclick="toggleFilter(this,'hotel')">Hotels</button>
+        <button class="filter-chip" onclick="toggleFilter(this,'budget')">Under $80</button>
+        <button class="filter-chip" onclick="toggleFilter(this,'transit')">Near metro</button>
+      </div>
+    </div>
+
+    <div class="sort-row">
+      <span class="sort-label" id="listing-count">7 stays found</span>
+      <select class="sort-select" onchange="sortListings(this.value)">
+        <option value="price">Sort: Price</option>
+        <option value="transit">Sort: Transit</option>
+        <option value="safety">Sort: Safety</option>
+        <option value="airport">Sort: Airport dist.</option>
+      </select>
+    </div>
+
+    <div class="listings" id="listings-container"></div>
+  </div>
+
+  <!-- MAP AREA -->
+  <div class="map-area">
+    <div class="map-canvas" id="map-canvas">
+
+      <!-- City blocks (decorative) -->
+      <div class="city-block" style="left:15%;top:20%;width:120px;height:70px;opacity:.6"></div>
+      <div class="city-block" style="left:22%;top:35%;width:80px;height:100px;opacity:.5"></div>
+      <div class="city-block" style="left:35%;top:15%;width:100px;height:55px;opacity:.6"></div>
+      <div class="city-block" style="left:45%;top:28%;width:130px;height:80px;opacity:.5"></div>
+      <div class="city-block" style="left:60%;top:18%;width:90px;height:65px;opacity:.6"></div>
+      <div class="city-block" style="left:55%;top:40%;width:110px;height:75px;opacity:.5"></div>
+      <div class="city-block" style="left:70%;top:32%;width:85px;height:90px;opacity:.6"></div>
+      <div class="city-block" style="left:20%;top:55%;width:95px;height:60px;opacity:.5"></div>
+      <div class="city-block" style="left:38%;top:58%;width:120px;height:55px;opacity:.6"></div>
+      <div class="city-block" style="left:62%;top:60%;width:100px;height:70px;opacity:.5"></div>
+      <div class="city-block" style="left:10%;top:40%;width:70px;height:80px;opacity:.4"></div>
+      <div class="city-block" style="left:75%;top:55%;width:80px;height:60px;opacity:.5"></div>
+      <div class="city-block" style="left:30%;top:72%;width:110px;height:50px;opacity:.4"></div>
+      <div class="city-block" style="left:55%;top:70%;width:90px;height:55px;opacity:.4"></div>
+
+      <!-- Distance rings from airport -->
+      <div class="dist-ring" id="ring-3km" style="left:18%;top:72%;width:160px;height:160px;border-color:rgba(77,166,255,0.2);">
+        <div class="ring-label" style="background:rgba(77,166,255,0.08);color:var(--blue);font-size:8px">3km</div>
+      </div>
+      <div class="dist-ring" id="ring-7km" style="left:18%;top:72%;width:300px;height:300px;border-color:rgba(77,166,255,0.12);">
+        <div class="ring-label" style="background:rgba(77,166,255,0.06);color:var(--blue);font-size:8px">7km</div>
+      </div>
+      <div class="dist-ring" id="ring-15km" style="left:18%;top:72%;width:500px;height:500px;border-color:rgba(77,166,255,0.07);">
+        <div class="ring-label" style="background:rgba(77,166,255,0.04);color:var(--blue);font-size:8px">15km</div>
+      </div>
+
+      <!-- Airport -->
+      <div class="airport-marker" style="left:18%;top:72%">
+        <div class="airport-pin">✈</div>
+        <div class="airport-label">LIS Airport</div>
+      </div>
+
+      <!-- Metro stops -->
+      <div class="transit-stop" id="ts-m1" style="left:38%;top:38%" onclick="showTransitTip('Oriente','Metro · Blue/Red lines',this)">
+        <div class="metro-pin"></div>
+      </div>
+      <div class="transit-stop" id="ts-m2" style="left:52%;top:45%" onclick="showTransitTip('Marquês de Pombal','Metro · Blue/Yellow lines',this)">
+        <div class="metro-pin"></div>
+      </div>
+      <div class="transit-stop" id="ts-m3" style="left:46%;top:33%" onclick="showTransitTip('Aeroporto','Metro · Red line · Airport',this)">
+        <div class="metro-pin" style="background:#ff9500;box-shadow:0 0 6px rgba(255,149,0,0.5)"></div>
+      </div>
+      <div class="transit-stop" id="ts-m4" style="left:44%;top:55%" onclick="showTransitTip('Baixa-Chiado','Metro · Blue/Green lines',this)">
+        <div class="metro-pin"></div>
+      </div>
+      <div class="transit-stop" id="ts-m5" style="left:62%;top:42%" onclick="showTransitTip('Picoas','Metro · Yellow line',this)">
+        <div class="metro-pin"></div>
+      </div>
+      <div class="transit-stop" id="ts-m6" style="left:56%;top:57%" onclick="showTransitTip('Rato','Metro · Yellow line',this)">
+        <div class="metro-pin"></div>
+      </div>
+
+      <!-- Bus stops -->
+      <div class="transit-stop" style="left:33%;top:44%"><div class="bus-pin"></div></div>
+      <div class="transit-stop" style="left:42%;top:48%"><div class="bus-pin"></div></div>
+      <div class="transit-stop" style="left:50%;top:36%"><div class="bus-pin"></div></div>
+      <div class="transit-stop" style="left:58%;top:50%"><div class="bus-pin"></div></div>
+      <div class="transit-stop" style="left:66%;top:46%"><div class="bus-pin"></div></div>
+      <div class="transit-stop" style="left:48%;top:62%"><div class="bus-pin"></div></div>
+      <div class="transit-stop" style="left:35%;top:60%"><div class="bus-pin"></div></div>
+
+      <!-- Tram stops -->
+      <div class="transit-stop" style="left:41%;top:52%"><div class="tram-pin"></div></div>
+      <div class="transit-stop" style="left:48%;top:56%"><div class="tram-pin"></div></div>
+      <div class="transit-stop" style="left:55%;top:52%"><div class="tram-pin"></div></div>
+
+      <!-- Stay pins (injected by JS) -->
+      <div id="stay-pins"></div>
+
+    </div>
+
+    <!-- Map layer controls -->
+    <div class="map-controls">
+      <div class="map-layer-panel">
+        <div class="layer-title">Map layers</div>
+
+        <div class="layer-toggle" onclick="toggleLayer('airbnb',this)">
+          <div class="layer-info">
+            <div class="layer-dot" style="background:var(--airbnb)"></div>
+            <span>Airbnb</span>
+          </div>
+          <div class="toggle on" id="layer-airbnb"></div>
+        </div>
+
+        <div class="layer-toggle" onclick="toggleLayer('hotel',this)">
+          <div class="layer-info">
+            <div class="layer-dot" style="background:var(--hotel)"></div>
+            <span>Hotels</span>
+          </div>
+          <div class="toggle on" id="layer-hotel"></div>
+        </div>
+
+        <div class="layer-toggle" onclick="toggleLayer('metro',this)">
+          <div class="layer-info">
+            <div class="layer-dot" style="background:var(--metro)"></div>
+            <span>Metro stops</span>
+          </div>
+          <div class="toggle on" id="layer-metro"></div>
+        </div>
+
+        <div class="layer-toggle" onclick="toggleLayer('bus',this)">
+          <div class="layer-info">
+            <div class="layer-dot" style="background:var(--bus)"></div>
+            <span>Bus stops</span>
+          </div>
+          <div class="toggle on" id="layer-bus"></div>
+        </div>
+
+        <div class="layer-toggle" onclick="toggleLayer('rings',this)">
+          <div class="layer-info">
+            <div class="layer-dot" style="background:var(--blue)"></div>
+            <span>Distance rings</span>
+          </div>
+          <div class="toggle on" id="layer-rings"></div>
+        </div>
+      </div>
+
+      <div class="zoom-btns">
+        <button class="zoom-btn">+</button>
+        <button class="zoom-btn">−</button>
+      </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="map-tooltip" id="map-tooltip">
+      <div class="tt-name" id="tt-name"></div>
+      <div class="tt-type" id="tt-type"></div>
+      <div class="tt-stats" id="tt-stats"></div>
+    </div>
+
+    <!-- Legend -->
+    <div class="map-legend">
+      <div class="legend-item"><div style="width:10px;height:10px;border-radius:50%;background:var(--metro);flex-shrink:0"></div> Metro</div>
+      <div class="legend-item"><div style="width:8px;height:8px;border-radius:2px;background:var(--bus);flex-shrink:0"></div> Bus</div>
+      <div class="legend-item"><div style="width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0"></div> Tram</div>
+      <div class="legend-item"><div style="width:10px;height:10px;border-radius:3px;background:var(--airbnb);flex-shrink:0"></div> Airbnb</div>
+      <div class="legend-item"><div style="width:10px;height:10px;border-radius:3px;background:var(--hotel);flex-shrink:0"></div> Hotel</div>
+    </div>
+
+    <!-- API note -->
+    <div class="api-note">
+      🔌 Map: replace with <code>Mapbox GL JS</code> or <code>Google Maps JS API</code>. Transit data: <code>Google Maps Places API</code> or <code>OpenTripPlanner</code>. Stays: <code>Booking.com Affiliate API</code>.
+    </div>
+
+    <!-- Detail Drawer -->
+    <div class="detail-drawer" id="detail-drawer">
+      <div class="drawer-handle"></div>
+      <div id="drawer-content"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL (API info) -->
+<div id="api-modal" style="display:none;position:fixed;inset:0;background:rgba(5,10,15,.85);z-index:100;align-items:center;justify-content:center;padding:20px;" onclick="closeApiModal(event)">
+  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:28px;max-width:500px;width:100%;animation:fadeUp .25s ease-out">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700">API connection points</div>
+      <button onclick="document.getElementById('api-modal').style.display='none'" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:13px;color:var(--text2);line-height:1.6">
+      <div style="background:var(--surface2);border-radius:8px;padding:12px">
+        <strong style="color:var(--text);display:block;margin-bottom:4px">🗺 Map rendering</strong>
+        Replace the CSS grid map with <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">Mapbox GL JS</code> (free tier: 50k loads/mo) or <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">Google Maps JavaScript API</code>.
+      </div>
+      <div style="background:var(--surface2);border-radius:8px;padding:12px">
+        <strong style="color:var(--text);display:block;margin-bottom:4px">🏨 Accommodation data</strong>
+        <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">Booking.com Affiliate API</code> for hotels + some apartments. For Airbnb specifically, use a channel manager like <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">Lodgify</code> or scraping via <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">Apify Airbnb Scraper</code>.
+      </div>
+      <div style="background:var(--surface2);border-radius:8px;padding:12px">
+        <strong style="color:var(--text);display:block;margin-bottom:4px">🚇 Transit stops</strong>
+        <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">Google Maps Places API</code> (nearby search: type=transit_station) or <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">OpenStreetMap Overpass API</code> (free, open data).
+      </div>
+      <div style="background:var(--surface2);border-radius:8px;padding:12px">
+        <strong style="color:var(--text);display:block;margin-bottom:4px">🛡 Safety scores</strong>
+        <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">Numbeo API</code> or <code style="background:var(--surface3);padding:2px 6px;border-radius:4px;color:var(--blue);font-size:11px">TravelSafe API</code> — both provide neighborhood-level safety indices by city.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DEMO DATA ─────────────────────────────────────────────────────────────
+// Airport coords for Google Maps deep-links (LIS Lisbon Airport)
+const AIRPORT_COORDS = '38.7742,-9.1342';
+const AIRPORT_NAME = 'Lisbon+Airport+LIS';
+
+const STAYS = [
+  {
+    id:'s1', type:'airbnb',
+    name:'Bright flat in Alfama',
+    price:72, neighborhood:'Alfama',
+    mapX:'44%', mapY:'50%',
+    stayCoords:'38.7139,-9.1334',
+    distAirport:'7.2km', airportMin:22,
+    walkTransit:4, safetyScore:82,
+    transitLines:['Metro Blue','Tram 28','Bus 737'],
+    nearStops:[
+      {type:'metro',name:'Baixa-Chiado',walk:'4 min'},
+      {type:'tram',name:'Tram 28 – Alfama',walk:'2 min'},
+      {type:'bus',name:'Bus 737',walk:'3 min'},
+    ],
+    airportRoute:{
+      best:{ mode:'Metro', icon:'🚇', steps:'Walk 4 min → Baixa-Chiado → Red line → Aeroporto', duration:'28 min', cost:'€1.65', transfers:1, color:'var(--metro)' },
+      options:[
+        { mode:'Metro (Red line)', icon:'🚇', duration:'28 min', cost:'€1.65', note:'Walk to Baixa-Chiado, change at Alameda to Red line' },
+        { mode:'Bus 744', icon:'🚌', duration:'40 min', cost:'€1.65', note:'Direct airport bus, runs every 20 min' },
+        { mode:'Taxi / Uber', icon:'🚕', duration:'15 min', cost:'€12–16', note:'Fastest option, surge pricing possible' },
+      ]
+    }
+  },
+  {
+    id:'s2', type:'hotel',
+    name:'Bairro Alto Hotel',
+    price:195, neighborhood:'Bairro Alto',
+    mapX:'52%', mapY:'44%',
+    stayCoords:'38.7121,-9.1425',
+    distAirport:'6.8km', airportMin:20,
+    walkTransit:3, safetyScore:88,
+    transitLines:['Metro Yellow','Bus 758'],
+    nearStops:[
+      {type:'metro',name:'Marquês de Pombal',walk:'3 min'},
+      {type:'bus',name:'Bus 758',walk:'5 min'},
+    ],
+    airportRoute:{
+      best:{ mode:'Metro', icon:'🚇', steps:'Walk 3 min → Marquês de Pombal → Yellow line → change Alameda → Red line → Aeroporto', duration:'25 min', cost:'€1.65', transfers:1, color:'var(--metro)' },
+      options:[
+        { mode:'Metro (Yellow → Red)', icon:'🚇', duration:'25 min', cost:'€1.65', note:'Change at Alameda station, runs every 6 min' },
+        { mode:'Aerobus 1', icon:'🚌', duration:'35 min', cost:'€4.00', note:'Tourist express bus, direct to airport' },
+        { mode:'Taxi / Uber', icon:'🚕', duration:'18 min', cost:'€11–15', note:'Estimated fare, no motorway needed' },
+      ]
+    }
+  },
+  {
+    id:'s3', type:'airbnb',
+    name:'Cozy room, Mouraria',
+    price:48, neighborhood:'Mouraria',
+    mapX:'40%', mapY:'55%',
+    stayCoords:'38.7175,-9.1358',
+    distAirport:'8.1km', airportMin:26,
+    walkTransit:6, safetyScore:74,
+    transitLines:['Bus 737','Bus 706'],
+    nearStops:[
+      {type:'bus',name:'Bus 737 – Mouraria',walk:'6 min'},
+      {type:'bus',name:'Bus 706',walk:'8 min'},
+    ],
+    airportRoute:{
+      best:{ mode:'Bus + Metro', icon:'🚌', steps:'Bus 737 → Intendente → Metro Green → change Alameda → Red line → Aeroporto', duration:'42 min', cost:'€1.65', transfers:2, color:'var(--bus)' },
+      options:[
+        { mode:'Bus 737 + Metro', icon:'🚌', duration:'42 min', cost:'€1.65', note:'Longer route but cheapest option' },
+        { mode:'Taxi / Uber', icon:'🚕', duration:'20 min', cost:'€13–18', note:'Most practical given limited metro access' },
+        { mode:'Aerobus 1', icon:'🚌', duration:'45 min', cost:'€4.00', note:'Catch at Praça do Comércio, ~10 min walk' },
+      ]
+    }
+  },
+  {
+    id:'s4', type:'hotel',
+    name:'Ibis Lisboa Liberdade',
+    price:89, neighborhood:'Avenida',
+    mapX:'60%', mapY:'38%',
+    stayCoords:'38.7196,-9.1449',
+    distAirport:'5.9km', airportMin:18,
+    walkTransit:2, safetyScore:90,
+    transitLines:['Metro Yellow','Metro Blue','Bus 736'],
+    nearStops:[
+      {type:'metro',name:'Picoas',walk:'2 min'},
+      {type:'metro',name:'Marquês de Pombal',walk:'5 min'},
+      {type:'bus',name:'Bus 736',walk:'3 min'},
+    ],
+    airportRoute:{
+      best:{ mode:'Metro', icon:'🚇', steps:'Walk 2 min → Picoas → Yellow line → change Alameda → Red line → Aeroporto', duration:'22 min', cost:'€1.65', transfers:1, color:'var(--metro)' },
+      options:[
+        { mode:'Metro (Yellow → Red)', icon:'🚇', duration:'22 min', cost:'€1.65', note:'Best value — only 1 change at Alameda' },
+        { mode:'Aerobus 1', icon:'🚌', duration:'30 min', cost:'€4.00', note:'Stops on Av. da Liberdade, very close' },
+        { mode:'Taxi / Uber', icon:'🚕', duration:'14 min', cost:'€10–14', note:'Shortest ride of all 7 stays' },
+      ]
+    }
+  },
+  {
+    id:'s5', type:'airbnb',
+    name:'Modern loft, Príncipe Real',
+    price:110, neighborhood:'Príncipe Real',
+    mapX:'55%', mapY:'52%',
+    stayCoords:'38.7148,-9.1462',
+    distAirport:'7.4km', airportMin:22,
+    walkTransit:5, safetyScore:86,
+    transitLines:['Metro Yellow','Tram 28'],
+    nearStops:[
+      {type:'metro',name:'Rato',walk:'5 min'},
+      {type:'tram',name:'Tram 28',walk:'4 min'},
+    ],
+    airportRoute:{
+      best:{ mode:'Metro', icon:'🚇', steps:'Walk 5 min → Rato → Yellow line → change Alameda → Red line → Aeroporto', duration:'27 min', cost:'€1.65', transfers:1, color:'var(--metro)' },
+      options:[
+        { mode:'Metro (Yellow → Red)', icon:'🚇', duration:'27 min', cost:'€1.65', note:'Via Rato station, frequent service' },
+        { mode:'Aerobus 1', icon:'🚌', duration:'38 min', cost:'€4.00', note:'Catch near Marquês de Pombal' },
+        { mode:'Taxi / Uber', icon:'🚕', duration:'16 min', cost:'€12–16', note:'Reliable, no transfers' },
+      ]
+    }
+  },
+  {
+    id:'s6', type:'airbnb',
+    name:'Budget studio, Intendente',
+    price:38, neighborhood:'Intendente',
+    mapX:'36%', mapY:'42%',
+    stayCoords:'38.7218,-9.1327',
+    distAirport:'9.2km', airportMin:30,
+    walkTransit:8, safetyScore:65,
+    transitLines:['Metro Green','Bus 706'],
+    nearStops:[
+      {type:'metro',name:'Intendente (Green)',walk:'8 min'},
+      {type:'bus',name:'Bus 706',walk:'5 min'},
+    ],
+    airportRoute:{
+      best:{ mode:'Metro', icon:'🚇', steps:'Walk 8 min → Intendente → Green line → change Alameda → Red line → Aeroporto', duration:'35 min', cost:'€1.65', transfers:1, color:'var(--metro)' },
+      options:[
+        { mode:'Metro (Green → Red)', icon:'🚇', duration:'35 min', cost:'€1.65', note:'Longer walk to station but cheap' },
+        { mode:'Bus 706 + Metro', icon:'🚌', duration:'38 min', cost:'€1.65', note:'Bus to Intendente then metro' },
+        { mode:'Taxi / Uber', icon:'🚕', duration:'22 min', cost:'€14–20', note:'Pricier given distance from airport' },
+      ]
+    }
+  },
+  {
+    id:'s7', type:'hotel',
+    name:'Hotel do Chiado',
+    price:148, neighborhood:'Chiado',
+    mapX:'46%', mapY:'47%',
+    stayCoords:'38.7108,-9.1399',
+    distAirport:'7.0km', airportMin:21,
+    walkTransit:2, safetyScore:91,
+    transitLines:['Metro Blue','Metro Green','Tram 28'],
+    nearStops:[
+      {type:'metro',name:'Baixa-Chiado',walk:'2 min'},
+      {type:'tram',name:'Tram 28 – Chiado',walk:'3 min'},
+    ],
+    airportRoute:{
+      best:{ mode:'Metro', icon:'🚇', steps:'Walk 2 min → Baixa-Chiado → Blue line → change Alameda → Red line → Aeroporto', duration:'24 min', cost:'€1.65', transfers:1, color:'var(--metro)' },
+      options:[
+        { mode:'Metro (Blue → Red)', icon:'🚇', duration:'24 min', cost:'€1.65', note:'Only 1 transfer, very convenient' },
+        { mode:'Aerobus 1', icon:'🚌', duration:'32 min', cost:'€4.00', note:'Stops at Praça do Comércio, 5 min walk' },
+        { mode:'Taxi / Uber', icon:'🚕', duration:'15 min', cost:'€11–15', note:'Quick and direct' },
+      ]
+    }
+  },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let activeStay = null;
+let activeFilter = 'all';
+let currentSort = 'price';
+let layerStates = {airbnb:true,hotel:true,metro:true,bus:true,rings:true};
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  renderListings();
+  renderPins();
+});
+
+// ── RENDER LISTINGS ───────────────────────────────────────────────────────
+function renderListings() {
+  let data = [...STAYS];
+
+  if (activeFilter === 'airbnb') data = data.filter(s => s.type === 'airbnb');
+  else if (activeFilter === 'hotel') data = data.filter(s => s.type === 'hotel');
+  else if (activeFilter === 'budget') data = data.filter(s => s.price < 80);
+  else if (activeFilter === 'transit') data = data.filter(s => s.walkTransit <= 5);
+
+  if (currentSort === 'price') data.sort((a,b) => a.price - b.price);
+  else if (currentSort === 'transit') data.sort((a,b) => a.walkTransit - b.walkTransit);
+  else if (currentSort === 'safety') data.sort((a,b) => b.safetyScore - a.safetyScore);
+  else if (currentSort === 'airport') data.sort((a,b) => parseFloat(a.distAirport) - parseFloat(b.distAirport));
+
+  document.getElementById('listing-count').textContent = `${data.length} stay${data.length!==1?'s':''} found`;
+
+  const container = document.getElementById('listings-container');
+  container.innerHTML = '';
+  data.forEach(s => container.appendChild(buildListingCard(s)));
+}
+
+function buildListingCard(s) {
+  const div = document.createElement('div');
+  div.className = 'listing-card' + (activeStay===s.id?' active':'');
+  div.onclick = () => selectStay(s.id);
+
+  const safeColor = s.safetyScore >= 85 ? 'var(--accent)' : s.safetyScore >= 70 ? 'var(--warn)' : '#ff5c5c';
+  const transitColor = s.walkTransit <= 4 ? 'stat-good' : s.walkTransit <= 7 ? '' : 'stat-warn';
+  const transitBadge = s.walkTransit <= 4 ? 'stat-good' : '';
+
+  div.innerHTML = `
+    <div class="listing-card-top">
+      <div class="listing-name">${s.name}</div>
+      <div class="listing-price">$${s.price}<span>/ night</span></div>
+    </div>
+    <div class="listing-type-badge ${s.type==='airbnb'?'badge-airbnb':'badge-hotel'}">
+      ${s.type==='airbnb'?'● Airbnb':'▪ Hotel'}
+    </div>
+    <div class="listing-stats">
+      <div class="stat-item">
+        <span class="stat-icon">✈</span>
+        <span>${s.distAirport} from airport</span>
+      </div>
+      <div class="stat-item ${transitBadge}">
+        <span class="stat-icon">🚇</span>
+        <span>${s.walkTransit} min walk to transit</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-icon">🚕</span>
+        <span>~${s.airportMin} min to airport</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-icon">📍</span>
+        <span>${s.neighborhood}</span>
+      </div>
+    </div>
+    <div class="listing-transit">
+      <div class="transit-line-chips">
+        ${s.transitLines.map(l => {
+          const cls = l.startsWith('Metro') ? 't-metro' : l.startsWith('Tram') ? 't-tram' : 't-bus';
+          return `<span class="transit-chip ${cls}">${l}</span>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="safety-bar">
+      <span class="safety-label">Safety</span>
+      <div class="safety-track">
+        <div class="safety-fill" style="width:${s.safetyScore}%;background:${safeColor}"></div>
+      </div>
+      <span class="safety-score" style="color:${safeColor}">${s.safetyScore}</span>
+    </div>
+  `;
+  return div;
+}
+
+// ── RENDER PINS ───────────────────────────────────────────────────────────
+function renderPins() {
+  const container = document.getElementById('stay-pins');
+  container.innerHTML = '';
+  STAYS.forEach(s => {
+    const div = document.createElement('div');
+    div.className = `stay-pin ${activeStay===s.id?'active-pin':''}`;
+    div.id = `pin-${s.id}`;
+    div.style.left = s.mapX;
+    div.style.top = s.mapY;
+    div.onclick = () => selectStay(s.id);
+
+    const pinClass = s.type === 'airbnb' ? 'airbnb-pin' : 'hotel-pin';
+    div.innerHTML = `<div class="pin-bubble ${pinClass}">$${s.price}</div>`;
+    container.appendChild(div);
+  });
+}
+
+// ── SELECT STAY ───────────────────────────────────────────────────────────
+function selectStay(id) {
+  activeStay = activeStay === id ? null : id;
+  renderListings();
+  renderPins();
+
+  if (activeStay) {
+    const s = STAYS.find(x => x.id === id);
+    openDrawer(s);
+    // Scroll listing into view
+    setTimeout(() => {
+      const card = document.querySelector('.listing-card.active');
+      if (card) card.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }, 50);
+  } else {
+    closeDrawer();
+  }
+}
+
+// ── DRAWER ────────────────────────────────────────────────────────────────
+function openDrawer(s) {
+  const safeColor = s.safetyScore >= 85 ? 'var(--accent)' : s.safetyScore >= 70 ? 'var(--warn)' : '#ff5c5c';
+  const r = s.airportRoute;
+
+  // Build Google Maps transit deep-link (stay → airport)
+  const gmTransitURL = `https://www.google.com/maps/dir/?api=1&origin=${s.stayCoords}&destination=${AIRPORT_COORDS}&travelmode=transit`;
+  // Google Maps driving (for taxi reference)
+  const gmDrivingURL = `https://www.google.com/maps/dir/?api=1&origin=${s.stayCoords}&destination=${AIRPORT_COORDS}&travelmode=driving`;
+  // Rome2rio link
+  const r2rURL = `https://www.rome2rio.com/map/${encodeURIComponent(s.neighborhood+' Lisbon')}/${encodeURIComponent('Lisbon Airport')}`;
+  // Citymapper link (Lisbon supported)
+  const cmURL = `https://citymapper.com/directions?endcoord=${AIRPORT_COORDS}&endname=${AIRPORT_NAME}&startcoord=${s.stayCoords}&startname=${encodeURIComponent(s.name)}`;
+
+  document.getElementById('drawer-content').innerHTML = `
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">${s.name}</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:3px">${s.neighborhood} · ${s.type==='airbnb'?'Airbnb':'Hotel'}</div>
+      </div>
+      <div class="drawer-price">
+        <div class="big">$${s.price}</div>
+        <div class="small">per night</div>
+      </div>
+    </div>
+
+    <div class="drawer-stats">
+      <div class="d-stat">
+        <div class="d-stat-val" style="color:var(--blue)">${s.distAirport}</div>
+        <div class="d-stat-label">From airport</div>
+      </div>
+      <div class="d-stat">
+        <div class="d-stat-val" style="color:var(--accent)">${s.walkTransit} min</div>
+        <div class="d-stat-label">To nearest stop</div>
+      </div>
+      <div class="d-stat">
+        <div class="d-stat-val" style="color:${r.best.color}">${r.best.duration}</div>
+        <div class="d-stat-label">Best transit time</div>
+      </div>
+      <div class="d-stat">
+        <div class="d-stat-val" style="color:${safeColor}">${s.safetyScore}/100</div>
+        <div class="d-stat-label">Safety score</div>
+      </div>
+    </div>
+
+    <div class="drawer-transit" style="margin-bottom:14px">
+      <div class="drawer-transit-title">Nearby transit stops</div>
+      <div class="transit-stop-list">
+        ${s.nearStops.map(t => {
+          const icon = t.type==='metro'?'🚇':t.type==='tram'?'🚃':'🚌';
+          const cls = t.type==='metro'?'t-metro':t.type==='tram'?'t-tram':'t-bus';
+          return `
+            <div class="transit-stop-row">
+              <div class="transit-stop-row-left">${icon}
+                <span class="transit-chip ${cls}" style="border-radius:4px">${t.name}</span>
+              </div>
+              <span class="transit-walk">${t.walk} walk</span>
+            </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- AIRPORT TRANSIT SECTION -->
+    <div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px">
+      <div class="drawer-transit-title" style="margin-bottom:10px">✈ Getting to LIS Airport</div>
+
+      <!-- Best option highlight -->
+      <div style="background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.18);border-radius:10px;padding:12px 14px;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent)">Recommended</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--accent)">${r.best.cost}</span>
+            <span style="font-size:11px;color:var(--text3)">· ${r.best.duration}</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6">${r.best.icon} ${r.best.steps}</div>
+      </div>
+
+      <!-- All options table -->
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+        ${r.options.map((o,i) => `
+          <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;background:var(--surface2);border-radius:8px;padding:10px 12px;${i===0?'border:1px solid rgba(0,229,160,0.15)':'border:1px solid var(--border)'}">
+            <span style="font-size:14px">${o.icon}</span>
+            <div>
+              <div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px">${o.mode}</div>
+              <div style="font-size:11px;color:var(--text3)">${o.note}</div>
+            </div>
+            <div style="text-align:right;white-space:nowrap">
+              <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:${i===0?'var(--accent)':'var(--text)'}">${o.cost}</div>
+              <div style="font-size:10px;color:var(--text3)">${o.duration}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- External map links -->
+      <div style="margin-bottom:4px">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:7px">Open route in</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <a href="${gmTransitURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">
+            🗺 Google Maps (transit)
+          </a>
+          <a href="${gmDrivingURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='var(--warn)';this.style.color='var(--warn)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">
+            🚕 Google Maps (taxi)
+          </a>
+          <a href="${cmURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">
+            🏙 Citymapper
+          </a>
+          <a href="${r2rURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='var(--metro)';this.style.color='var(--metro)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">
+            🌐 Rome2rio
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-actions">
+      <button class="drawer-btn secondary" onclick="closeDrawer()">✕ Close</button>
+      <button class="drawer-btn primary" onclick="bookStay('${s.id}')">Book on ${s.type==='airbnb'?'Airbnb':'Booking.com'} →</button>
+    </div>
+  `;
+
+  document.getElementById('detail-drawer').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('detail-drawer').classList.remove('open');
+  activeStay = null;
+  renderListings();
+  renderPins();
+}
+
+function bookStay(id) {
+  const s = STAYS.find(x=>x.id===id);
+  alert(`🔌 API note: In production, this opens ${s.type==='airbnb'?'Airbnb':'Booking.com'} with pre-filled dates (Apr 15–22) and location via affiliate deep-link.\n\nWaylo earns 3–8% commission on the booking.`);
+}
+
+// ── TRANSIT TOOLTIP ───────────────────────────────────────────────────────
+function showTransitTip(name, type, el) {
+  const tt = document.getElementById('map-tooltip');
+  document.getElementById('tt-name').textContent = name;
+  document.getElementById('tt-type').textContent = type;
+  document.getElementById('tt-stats').innerHTML = `
+    <div class="tt-stat"><span class="tt-stat-label">Type</span><span class="tt-stat-val">${type.split('·')[0].trim()}</span></div>
+    <div class="tt-stat"><span class="tt-stat-label">Lines</span><span class="tt-stat-val">${type.split('·').slice(1).join('·').trim()||'—'}</span></div>
+  `;
+  const rect = el.getBoundingClientRect();
+  const mapRect = document.getElementById('map-canvas').getBoundingClientRect();
+  let x = rect.left - mapRect.left + 20;
+  let y = rect.top - mapRect.top - 10;
+  if (x + 220 > mapRect.width) x -= 240;
+  tt.style.left = x+'px';
+  tt.style.top = y+'px';
+  tt.classList.add('visible');
+  setTimeout(() => tt.classList.remove('visible'), 2500);
+}
+
+// ── LAYER TOGGLES ─────────────────────────────────────────────────────────
+function toggleLayer(layer, row) {
+  layerStates[layer] = !layerStates[layer];
+  const tog = document.getElementById('layer-'+layer);
+  if (layerStates[layer]) tog.classList.add('on');
+  else tog.classList.remove('on');
+
+  if (layer==='metro') {
+    document.querySelectorAll('.metro-pin').forEach(el=>el.closest('.transit-stop').style.display=layerStates.metro?'':'none');
+  } else if (layer==='bus') {
+    document.querySelectorAll('.bus-pin').forEach(el=>el.closest('.transit-stop').style.display=layerStates.bus?'':'none');
+  } else if (layer==='airbnb') {
+    document.querySelectorAll('.airbnb-pin').forEach(el=>el.closest('.stay-pin').style.display=layerStates.airbnb?'':'none');
+    if (!layerStates.airbnb) renderListingsForLayer();
+    else renderListings();
+  } else if (layer==='hotel') {
+    document.querySelectorAll('.hotel-pin').forEach(el=>el.closest('.stay-pin').style.display=layerStates.hotel?'':'none');
+  } else if (layer==='rings') {
+    ['ring-3km','ring-7km','ring-15km'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.style.display=layerStates.rings?'flex':'none';
+    });
+  }
+}
+
+function renderListingsForLayer() { renderListings(); }
+
+// ── FILTER / SORT ─────────────────────────────────────────────────────────
+function toggleFilter(btn, filter) {
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = filter;
+  renderListings();
+}
+
+function sortListings(val) {
+  currentSort = val;
+  renderListings();
+}
+
+function filterListings() { renderListings(); }
+
+// ── MODALS ────────────────────────────────────────────────────────────────
+function showApiInfo() {
+  document.getElementById('api-modal').style.display='flex';
+}
+
+function closeApiModal(e) {
+  if(e.target===document.getElementById('api-modal'))
+    document.getElementById('api-modal').style.display='none';
+}
+
+function saveTrip() {
+  const btn = document.getElementById('save-btn');
+  btn.textContent = '✓ Saved!';
+  setTimeout(()=>btn.textContent='Save trip',2000);
+}
+</script>
+</body>
+</html>

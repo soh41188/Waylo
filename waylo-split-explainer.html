@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waylo — How Split Tickets Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#070a0c;
+  --s1:#0e1316;
+  --s2:#151b1f;
+  --s3:#1c2328;
+  --s4:#232c33;
+  --b1:rgba(255,255,255,0.06);
+  --b2:rgba(255,255,255,0.1);
+  --b3:rgba(255,255,255,0.16);
+  --accent:#00e5a0;
+  --adim:rgba(0,229,160,0.1);
+  --adim2:rgba(0,229,160,0.05);
+  --tx:#eceff1;
+  --tx2:#7c8590;
+  --tx3:#3d4a54;
+  --ok:#00c97a;
+  --warn:#f5a623;
+  --red:#ff4f4f;
+  --reddim:rgba(255,79,79,0.08);
+  --blue:#4aa8ff;
+  --r:14px;--rs:8px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;}
+
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid var(--b1);position:sticky;top:0;background:rgba(7,10,12,.95);backdrop-filter:blur(12px);z-index:50;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--tx);}
+.logo-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.75);}}
+.nav{display:flex;gap:6px;}
+.nav-link{background:none;border:1px solid var(--b2);color:var(--tx2);font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 14px;border-radius:20px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.nav-link:hover{border-color:var(--b3);color:var(--tx);}
+.nav-link.active{background:var(--adim);border-color:rgba(0,229,160,.25);color:var(--accent);}
+
+/* HERO */
+.hero{text-align:center;padding:64px 24px 0;max-width:700px;margin:0 auto;}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(34px,5.5vw,58px);font-weight:800;line-height:1.04;letter-spacing:-2px;margin-bottom:18px;}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero p{font-size:17px;color:var(--tx2);font-weight:300;line-height:1.65;max-width:500px;margin:0 auto 48px;}
+
+/* SAVINGS COUNTER */
+.savings-hero{
+  display:flex;flex-direction:column;align-items:center;
+  padding:48px 24px;
+  border-top:1px solid var(--b1);
+  border-bottom:1px solid var(--b1);
+  margin-bottom:80px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.savings-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 100%,rgba(0,229,160,0.06),transparent);
+  pointer-events:none;
+}
+.counter-label{font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:12px;}
+.counter-num{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(56px,10vw,96px);
+  font-weight:800;
+  color:var(--accent);
+  line-height:1;
+  letter-spacing:-3px;
+  margin-bottom:10px;
+}
+.counter-sub{font-size:16px;color:var(--tx2);font-weight:300;}
+
+/* SECTION LAYOUT */
+.section{max-width:820px;margin:0 auto 80px;padding:0 24px;}
+.section-eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:16px;}
+.section-body{font-size:15px;color:var(--tx2);line-height:1.7;max-width:600px;}
+
+/* ANIMATED COMPARISON */
+.compare-wrap{max-width:820px;margin:0 auto 80px;padding:0 24px;}
+.compare-toggle{display:flex;gap:8px;margin-bottom:24px;}
+.ctog{background:var(--s2);border:1px solid var(--b1);color:var(--tx2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:9px 20px;border-radius:20px;cursor:pointer;transition:all .2s;}
+.ctog.on{background:var(--adim);border-color:rgba(0,229,160,.3);color:var(--accent);}
+
+.compare-board{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:600px){.compare-board{grid-template-columns:1fr;}}
+
+.compare-col{border-radius:var(--r);overflow:hidden;}
+.col-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+.col-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
+.col-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:.4px;text-transform:uppercase;}
+
+.bundled-col .col-header{background:rgba(255,79,79,0.07);border-bottom:1px solid rgba(255,79,79,0.1);}
+.bundled-col .col-title{color:var(--red);}
+.bundled-col .col-tag{background:var(--reddim);color:var(--red);border:1px solid rgba(255,79,79,.15);}
+.bundled-col{border:1px solid rgba(255,79,79,0.15);}
+
+.split-col .col-header{background:rgba(0,229,160,0.06);border-bottom:1px solid rgba(0,229,160,0.12);}
+.split-col .col-title{color:var(--accent);}
+.split-col .col-tag{background:var(--adim);color:var(--accent);border:1px solid rgba(0,229,160,.2);}
+.split-col{border:1px solid rgba(0,229,160,0.2);}
+
+.col-body{background:var(--s1);padding:20px;}
+
+/* Flight leg display */
+.leg{
+  background:var(--s2);border-radius:var(--rs);padding:14px 16px;
+  margin-bottom:10px;position:relative;
+  border:1px solid var(--b1);transition:all .3s;
+}
+.leg:last-of-type{margin-bottom:0;}
+.leg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.leg-airline{font-size:12px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;}
+.airline-badge{background:rgba(255,79,79,0.12);color:#ff7070;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.4px;}
+.leg-route{display:flex;align-items:center;gap:8px;}
+.leg-airport{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+.leg-arrow{flex:1;display:flex;align-items:center;gap:4px;padding:0 8px;}
+.leg-dash{flex:1;height:1px;background:var(--b2);}
+.leg-plane{font-size:11px;color:var(--tx3);}
+.leg-duration{font-size:11px;color:var(--tx3);text-align:center;}
+.leg-price-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--b1);}
+.leg-ticket-label{font-size:11px;color:var(--tx3);}
+.leg-price{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+
+/* Connector line between legs */
+.leg-connector{display:flex;align-items:center;gap:8px;padding:4px 16px;margin-bottom:0;}
+.conn-line{flex:1;height:1px;border-top:1px dashed var(--b2);}
+.conn-label{font-size:10px;color:var(--tx3);white-space:nowrap;}
+
+/* Total row */
+.total-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px;margin-top:14px;
+  border-radius:var(--rs);
+}
+.bundled-col .total-row{background:rgba(255,79,79,0.07);border:1px solid rgba(255,79,79,.12);}
+.split-col .total-row{background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,.15);}
+.total-label{font-size:12px;color:var(--tx2);}
+.total-price{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;}
+.bundled-col .total-price{color:var(--red);}
+.split-col .total-price{color:var(--accent);}
+.saving-pill{background:var(--adim);border:1px solid rgba(0,229,160,.2);color:var(--accent);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;}
+
+/* STEP EXPLAINER */
+.steps-wrap{max-width:820px;margin:0 auto 80px;padding:0 24px;}
+.step-list{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--b1);}
+.step:last-child{border-bottom:none;}
+.step-num{
+  font-family:'Syne',sans-serif;font-size:32px;font-weight:800;
+  color:var(--tx3);min-width:48px;line-height:1;padding-top:3px;
+}
+.step-content{}
+.step-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;}
+.step-body{font-size:14px;color:var(--tx2);line-height:1.7;}
+.step-body strong{color:var(--tx);}
+.step-example{
+  background:var(--s2);border:1px solid var(--b1);border-left:3px solid var(--accent);
+  border-radius:0 var(--rs) var(--rs) 0;padding:12px 16px;margin-top:12px;
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--tx2);line-height:1.8;
+}
+.step-example .hi{color:var(--accent);}
+.step-example .warn{color:var(--warn);}
+.step-example .red{color:var(--red);}
+
+/* WARNING BOX */
+.warning-box{
+  background:rgba(245,166,35,0.07);border:1px solid rgba(245,166,35,.18);
+  border-radius:var(--r);padding:20px 24px;margin:0 24px 80px;max-width:820px;
+  margin-left:auto;margin-right:auto;
+}
+.wb-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--warn);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.wb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.wb-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--tx2);line-height:1.6;}
+.wb-list li::before{content:'→';color:var(--warn);flex-shrink:0;margin-top:1px;}
+
+/* INTERACTIVE CALCULATOR */
+.calc-wrap{max-width:820px;margin:0 auto 80px;padding:0 24px;}
+.calc-card{background:var(--s1);border:1px solid var(--b2);border-radius:20px;padding:28px;}
+.calc-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;}
+.calc-sub{font-size:14px;color:var(--tx2);margin-bottom:24px;}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;}
+@media(max-width:560px){.calc-grid{grid-template-columns:1fr;}}
+.calc-field{display:flex;flex-direction:column;gap:6px;}
+.calc-label{font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--tx3);}
+.calc-input{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:11px 14px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;}
+.calc-input:focus{border-color:rgba(0,229,160,.4);}
+.calc-result{background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,.2);border-radius:var(--rs);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.cr-left{}
+.cr-saving-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:6px;}
+.cr-saving-amt{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--accent);line-height:1;}
+.cr-saving-pct{font-size:14px;color:var(--ok);margin-top:4px;}
+.cr-breakdown{font-size:13px;color:var(--tx2);line-height:1.8;}
+.cr-breakdown s{color:var(--tx3);}
+.cr-breakdown strong{color:var(--tx);}
+
+/* CTA */
+.cta-strip{
+  text-align:center;padding:64px 24px;
+  border-top:1px solid var(--b1);
+}
+.cta-strip h2{font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,40px);font-weight:800;letter-spacing:-1px;margin-bottom:16px;}
+.cta-strip p{font-size:15px;color:var(--tx2);margin-bottom:28px;}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#041a0d;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;padding:15px 32px;border-radius:var(--rs);text-decoration:none;transition:all .2s;border:none;cursor:pointer;}
+.cta-btn:hover{background:#00f5ad;transform:translateY(-2px);}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#"><span class="logo-dot"></span>Waylo</a>
+  <nav class="nav">
+    <a class="nav-link" href="faresplit.html">Flights</a>
+    <a class="nav-link" href="waylo-stays.html">Stays</a>
+    <a class="nav-link" href="waylo-visa.html">Visa check</a>
+    <a class="nav-link active" href="#">How splits work</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Split ticket intelligence</div>
+  <h1>The same flight.<br><em>$200 cheaper.</em></h1>
+  <p>Airlines price connecting itineraries differently than individual legs — even when the flights are identical. Here's how Waylo finds the gap.</p>
+</div>
+
+<!-- SAVINGS COUNTER -->
+<div class="savings-hero">
+  <div class="counter-label">Average saving detected per search</div>
+  <div class="counter-num" id="counter">$0</div>
+  <div class="counter-sub">across all Waylo split ticket detections this month</div>
+</div>
+
+<!-- LIVE COMPARISON -->
+<div class="compare-wrap">
+  <div class="section-eyebrow">Side by side</div>
+  <div class="section-title" style="margin-bottom:8px">The exact same journey.</div>
+  <p style="font-size:15px;color:var(--tx2);margin-bottom:24px;max-width:560px">BSB → GRU → LIS on LATAM. One booking vs two. Same flights, same seats, same airline. Different price.</p>
+
+  <div class="compare-toggle">
+    <button class="ctog on" onclick="setScenario('latam',this)">LATAM example (your route)</button>
+    <button class="ctog" onclick="setScenario('iberia',this)">Iberia example</button>
+    <button class="ctog" onclick="setScenario('united',this)">United example</button>
+  </div>
+
+  <div class="compare-board">
+    <!-- BUNDLED -->
+    <div class="compare-col bundled-col">
+      <div class="col-header">
+        <div class="col-title">Bundled itinerary</div>
+        <div class="col-tag">What they show you</div>
+      </div>
+      <div class="col-body">
+        <div class="leg" id="b-leg1">
+          <div class="leg-header">
+            <div class="leg-airline"><span class="airline-badge" id="b-badge1">LA</span><span id="b-airline1">LATAM Airlines</span></div>
+            <div style="font-size:11px;color:var(--tx3)" id="b-flight1">LA3491</div>
+          </div>
+          <div class="leg-route">
+            <div class="leg-airport" id="b-from1">BSB</div>
+            <div class="leg-arrow"><div class="leg-dash"></div><div class="leg-plane">✈</div><div class="leg-dash"></div></div>
+            <div class="leg-airport" id="b-to1">GRU</div>
+          </div>
+          <div class="leg-duration" id="b-dur1">2h 05m · Nonstop</div>
+          <div class="leg-price-row">
+            <div class="leg-ticket-label">Part of bundle</div>
+            <div class="leg-price" style="color:var(--tx3);font-size:14px">—</div>
+          </div>
+        </div>
+        <div class="leg-connector"><div class="conn-line"></div><div class="conn-label" id="b-layover">3h 40m layover · GRU</div><div class="conn-line"></div></div>
+        <div class="leg" id="b-leg2">
+          <div class="leg-header">
+            <div class="leg-airline"><span class="airline-badge" id="b-badge2">LA</span><span id="b-airline2">LATAM Airlines</span></div>
+            <div style="font-size:11px;color:var(--tx3)" id="b-flight2">LA8014</div>
+          </div>
+          <div class="leg-route">
+            <div class="leg-airport" id="b-from2">GRU</div>
+            <div class="leg-arrow"><div class="leg-dash"></div><div class="leg-plane">✈</div><div class="leg-dash"></div></div>
+            <div class="leg-airport" id="b-to2">LIS</div>
+          </div>
+          <div class="leg-duration" id="b-dur2">9h 50m · Nonstop</div>
+          <div class="leg-price-row">
+            <div class="leg-ticket-label">Part of bundle</div>
+            <div class="leg-price" style="color:var(--tx3);font-size:14px">—</div>
+          </div>
+        </div>
+        <div class="total-row">
+          <div>
+            <div class="total-label">1 booking · 1 ticket</div>
+            <div style="font-size:11px;color:var(--tx3);margin-top:2px">Protected if delayed</div>
+          </div>
+          <div class="total-price" id="b-total">$700</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPLIT -->
+    <div class="compare-col split-col">
+      <div class="col-header">
+        <div class="col-title">Split tickets</div>
+        <div class="col-tag">What Waylo finds</div>
+      </div>
+      <div class="col-body">
+        <div class="leg">
+          <div class="leg-header">
+            <div class="leg-airline"><span class="airline-badge" style="background:rgba(0,229,160,.12);color:var(--accent)" id="s-badge1">LA</span><span id="s-airline1">LATAM Airlines</span></div>
+            <div style="font-size:11px;color:var(--tx3)" id="s-flight1">LA3491</div>
+          </div>
+          <div class="leg-route">
+            <div class="leg-airport" id="s-from1">BSB</div>
+            <div class="leg-arrow"><div class="leg-dash"></div><div class="leg-plane">✈</div><div class="leg-dash"></div></div>
+            <div class="leg-airport" id="s-to1">GRU</div>
+          </div>
+          <div class="leg-duration" id="s-dur1">2h 05m · Nonstop</div>
+          <div class="leg-price-row">
+            <div class="leg-ticket-label">Ticket 1 of 2</div>
+            <div class="leg-price" style="color:var(--tx)" id="s-price1">$89</div>
+          </div>
+        </div>
+        <div class="leg-connector"><div class="conn-line"></div><div class="conn-label" id="s-layover">3h 40m layover · GRU</div><div class="conn-line"></div></div>
+        <div class="leg">
+          <div class="leg-header">
+            <div class="leg-airline"><span class="airline-badge" style="background:rgba(0,229,160,.12);color:var(--accent)" id="s-badge2">LA</span><span id="s-airline2">LATAM Airlines</span></div>
+            <div style="font-size:11px;color:var(--tx3)" id="s-flight2">LA8014</div>
+          </div>
+          <div class="leg-route">
+            <div class="leg-airport" id="s-from2">GRU</div>
+            <div class="leg-arrow"><div class="leg-dash"></div><div class="leg-plane">✈</div><div class="leg-dash"></div></div>
+            <div class="leg-airport" id="s-to2">LIS</div>
+          </div>
+          <div class="leg-duration" id="s-dur2">9h 50m · Nonstop</div>
+          <div class="leg-price-row">
+            <div class="leg-ticket-label">Ticket 2 of 2</div>
+            <div class="leg-price" style="color:var(--tx)" id="s-price2">$411</div>
+          </div>
+        </div>
+        <div class="total-row">
+          <div>
+            <div class="total-label">2 bookings · 2 tickets</div>
+            <div style="font-size:11px;color:var(--tx3);margin-top:2px">Allow extra layover time</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <div class="total-price" id="s-total">$500</div>
+            <div class="saving-pill" id="s-saving">Save $200</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP EXPLAINER -->
+<div class="steps-wrap">
+  <div class="section-eyebrow">Why this happens</div>
+  <div class="section-title" style="margin-bottom:32px">The pricing logic airlines use</div>
+
+  <div class="step-list">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">Airlines price routes, not legs</div>
+        <div class="step-body">When you search BSB → LIS as one trip, the airline's revenue management system prices it as a single <strong>origin-destination market</strong> (O&D). That BSB–LIS market has its own demand curve, competitor fares, and yield targets — completely separate from the BSB–GRU or GRU–LIS markets.</div>
+        <div class="step-example">
+          BSB → LIS  <span class="red">$700</span>   (O&D market: transatlantic)<br>
+          BSB → GRU  <span class="hi">$89</span>    (O&D market: domestic Brazil)<br>
+          GRU → LIS  <span class="hi">$411</span>   (O&D market: GRU–Europe hub)
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">Hub premiums inflate bundled fares</div>
+        <div class="step-body">The GRU–LIS route is operated as a <strong>hub-to-hub long haul</strong>. When you buy the full BSB–LIS bundle, the airline applies its long-haul pricing to the entire ticket. But GRU–LIS sold alone is cheaper because it's competing with TAP, Air France, and Iberia on that specific leg — driving the price down independently.</div>
+        <div class="step-example">
+          GRU → LIS bundled  <span class="warn">~$611</span>  (implied in $700 bundle)<br>
+          GRU → LIS separate <span class="hi">$411</span>   (competing with 4 airlines)<br>
+          <span class="hi">Difference: $200 on a single leg</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">How Waylo detects the gap</div>
+        <div class="step-body">Waylo queries the airline (or flight API) for both the bundled fare <strong>and</strong> each individual leg simultaneously. It then sums the legs and compares. If the sum of legs is lower than the bundle, it surfaces the split — along with the exact booking steps and the risk disclaimer.</div>
+        <div class="step-example">
+          query: BSB→LIS one-ticket     → <span class="red">$700</span><br>
+          query: BSB→GRU leg-only       → <span class="hi">$89</span><br>
+          query: GRU→LIS leg-only       → <span class="hi">$411</span><br>
+          sum of legs:                     <span class="hi">$500</span><br>
+          split_saving = 700 - 500      = <span class="hi">$200 ✓ surface this</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">Search each leg individually — not as a connecting flight</div>
+        <div class="step-body">This is the most important step and where most people get tripped up. On the airline's own website, if you search "BSB to LIS" you get the bundled price. You need to search <strong>BSB to GRU</strong> as a standalone trip, then separately search <strong>GRU to LIS</strong> as a standalone trip. Do not use "add connecting flight" — that rebundles the pricing.</div>
+        <div class="step-example">
+          ✗  latam.com → "BSB to LIS"              → <span class="red">$700</span><br>
+          ✓  latam.com → "BSB to GRU" (standalone) → <span class="hi">$89</span><br>
+          ✓  latam.com → "GRU to LIS" (standalone) → <span class="hi">$411</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RISK WARNING -->
+<div class="warning-box">
+  <div class="wb-title">⚠️ Know the risks before you split</div>
+  <ul class="wb-list">
+    <li>These are two separate bookings with different confirmation numbers. The airline has no legal obligation to rebook you on Leg 2 if Leg 1 is delayed.</li>
+    <li>Build in a generous layover — at least 2–3 hours for domestic connections, 3–4 hours for international. Waylo flags if your layover is too tight.</li>
+    <li>Check baggage rules. On separate tickets you may need to collect and re-check your luggage at the layover airport, even on the same airline.</li>
+    <li>Travel insurance can cover a missed connection on separate tickets. Waylo will suggest a policy at checkout.</li>
+    <li>Prices on individual legs can change between the time you check Leg 1 and the time you book Leg 2. Book both in the same session.</li>
+  </ul>
+</div>
+
+<!-- CALCULATOR -->
+<div class="calc-wrap">
+  <div class="calc-card">
+    <div class="calc-title">Calculate your split saving</div>
+    <div class="calc-sub">Enter the prices you found and see if splitting makes sense.</div>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label class="calc-label">Bundled fare ($)</label>
+        <input class="calc-input" id="c-bundle" type="number" placeholder="700" value="700" oninput="calcSaving()">
+      </div>
+      <div class="calc-field">
+        <label class="calc-label">Leg 1 price ($)</label>
+        <input class="calc-input" id="c-leg1" type="number" placeholder="89" value="89" oninput="calcSaving()">
+      </div>
+      <div class="calc-field">
+        <label class="calc-label">Leg 2 price ($)</label>
+        <input class="calc-input" id="c-leg2" type="number" placeholder="411" value="411" oninput="calcSaving()">
+      </div>
+    </div>
+    <div class="calc-result" id="calc-result">
+      <div class="cr-left">
+        <div class="cr-saving-label">You save</div>
+        <div class="cr-saving-amt" id="cr-amt">$200</div>
+        <div class="cr-saving-pct" id="cr-pct">29% cheaper than bundled</div>
+      </div>
+      <div class="cr-breakdown" id="cr-breakdown">
+        Bundled: <s>$700</s><br>
+        Leg 1 + Leg 2: <strong>$500</strong><br>
+        Saving: <strong style="color:var(--accent)">$200</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Ready to find your split?</h2>
+  <p>Waylo checks every route automatically. No manual math required.</p>
+  <a class="cta-btn" href="faresplit.html">Search flights with Waylo →</a>
+</div>
+
+<script>
+// ── SCENARIO DATA ─────────────────────────────────────────────────────────
+const SCENARIOS = {
+  latam:{
+    b:{from1:'BSB',to1:'GRU',from2:'GRU',to2:'LIS',airline1:'LATAM Airlines',airline2:'LATAM Airlines',badge1:'LA',badge2:'LA',flight1:'LA3491',flight2:'LA8014',dur1:'2h 05m · Nonstop',dur2:'9h 50m · Nonstop',layover:'3h 40m layover · GRU',total:700},
+    s:{price1:89,price2:411,total:500,saving:200}
+  },
+  iberia:{
+    b:{from1:'GRU',to1:'MAD',from2:'MAD',to2:'BCN',airline1:'Iberia',airline2:'Iberia',badge1:'IB',badge2:'IB',flight1:'IB6831',flight2:'IB3167',dur1:'10h 40m · Nonstop',dur2:'1h 10m · Nonstop',layover:'2h 20m layover · MAD',total:880},
+    s:{price1:530,price2:195,total:725,saving:155}
+  },
+  united:{
+    b:{from1:'LAX',to1:'ORD',from2:'ORD',to2:'LHR',airline1:'United Airlines',airline2:'United Airlines',badge1:'UA',badge2:'UA',flight1:'UA2341',flight2:'UA930',dur1:'4h 10m · Nonstop',dur2:'8h 40m · Nonstop',layover:'3h 15m layover · ORD',total:1240},
+    s:{price1:189,price2:820,total:1009,saving:231}
+  }
+};
+
+function setScenario(key, btn) {
+  document.querySelectorAll('.ctog').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const sc = SCENARIOS[key];
+  const b = sc.b; const s = sc.s;
+
+  // Bundled col
+  ['from1','to1','from2','to2'].forEach(k=>document.getElementById('b-'+k).textContent=b[k]);
+  ['airline1','airline2','badge1','badge2','flight1','flight2','dur1','dur2','layover'].forEach(k=>document.getElementById('b-'+k).textContent=b[k]);
+  document.getElementById('b-total').textContent='$'+b.total;
+
+  // Split col
+  document.getElementById('s-from1').textContent=b.from1;
+  document.getElementById('s-to1').textContent=b.to1;
+  document.getElementById('s-from2').textContent=b.from2;
+  document.getElementById('s-to2').textContent=b.to2;
+  document.getElementById('s-airline1').textContent=b.airline1;
+  document.getElementById('s-airline2').textContent=b.airline2;
+  document.getElementById('s-badge1').textContent=b.badge1;
+  document.getElementById('s-badge2').textContent=b.badge2;
+  document.getElementById('s-flight1').textContent=b.flight1;
+  document.getElementById('s-flight2').textContent=b.flight2;
+  document.getElementById('s-dur1').textContent=b.dur1;
+  document.getElementById('s-dur2').textContent=b.dur2;
+  document.getElementById('s-layover').textContent=b.layover;
+  document.getElementById('s-price1').textContent='$'+s.price1;
+  document.getElementById('s-price2').textContent='$'+s.price2;
+  document.getElementById('s-total').textContent='$'+s.total;
+  document.getElementById('s-saving').textContent='Save $'+s.saving;
+
+  // Update calculator defaults
+  document.getElementById('c-bundle').value=b.total;
+  document.getElementById('c-leg1').value=s.price1;
+  document.getElementById('c-leg2').value=s.price2;
+  calcSaving();
+}
+
+// ── CALCULATOR ────────────────────────────────────────────────────────────
+function calcSaving() {
+  const bundle = parseFloat(document.getElementById('c-bundle').value)||0;
+  const leg1   = parseFloat(document.getElementById('c-leg1').value)||0;
+  const leg2   = parseFloat(document.getElementById('c-leg2').value)||0;
+  const splitTotal = leg1 + leg2;
+  const saving = bundle - splitTotal;
+  const pct = bundle > 0 ? Math.round((saving/bundle)*100) : 0;
+
+  const resultEl = document.getElementById('calc-result');
+  if (saving > 0) {
+    document.getElementById('cr-amt').textContent = '$'+saving.toFixed(0);
+    document.getElementById('cr-pct').textContent = pct+'% cheaper than bundled';
+    document.getElementById('cr-amt').style.color = 'var(--accent)';
+    document.getElementById('cr-pct').style.color = 'var(--ok)';
+    resultEl.style.borderColor = 'rgba(0,229,160,.2)';
+    resultEl.style.background = 'rgba(0,229,160,0.05)';
+  } else if (saving === 0) {
+    document.getElementById('cr-amt').textContent = '$0';
+    document.getElementById('cr-pct').textContent = 'Same price — no benefit to splitting';
+    document.getElementById('cr-amt').style.color = 'var(--tx2)';
+    document.getElementById('cr-pct').style.color = 'var(--tx3)';
+    resultEl.style.borderColor = 'var(--b2)';
+    resultEl.style.background = 'var(--s2)';
+  } else {
+    document.getElementById('cr-amt').textContent = '-$'+Math.abs(saving).toFixed(0);
+    document.getElementById('cr-pct').textContent = 'Bundled is cheaper — don\'t split';
+    document.getElementById('cr-amt').style.color = 'var(--red)';
+    document.getElementById('cr-pct').style.color = 'var(--red)';
+    resultEl.style.borderColor = 'rgba(255,79,79,.2)';
+    resultEl.style.background = 'var(--reddim)';
+  }
+  document.getElementById('cr-breakdown').innerHTML =
+    `Bundled: <s>$${bundle.toFixed(0)}</s><br>` +
+    `Leg 1 + Leg 2: <strong>$${splitTotal.toFixed(0)}</strong><br>` +
+    `${saving>0?'Saving':'Difference'}: <strong style="color:${saving>0?'var(--accent)':'var(--red)'}">$${Math.abs(saving).toFixed(0)}</strong>`;
+}
+
+// ── COUNTER ANIMATION ─────────────────────────────────────────────────────
+function animateCounter(target, duration) {
+  const el = document.getElementById('counter');
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(()=>{
+    start = Math.min(start + step, target);
+    el.textContent = '$' + Math.round(start).toLocaleString();
+    if (start >= target) clearInterval(timer);
+  }, 16);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  calcSaving();
+  // Animate counter when it scrolls into view
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ animateCounter(148200, 1800); obs.disconnect(); }
+    });
+  },{threshold:.3});
+  obs.observe(document.getElementById('counter'));
+});
+</script>
+</body>
+</html>
