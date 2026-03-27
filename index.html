@@ -207,7 +207,7 @@ function parseItineraries(data){
     if(f.provider && f.provider.name) airline = f.provider.name;
 
     // Booking link from id — we reconstruct Kiwi link
-    var bookLink = 'https://www.kiwi.com/deep?from=LHR&to=CDG';
+    var bookLink = 'https://www.kiwi.com/en/booking/cheapest-flights/' + origin + '/' + dest + '?outboundDate=' + date;
     if(f.id){
       // Extract base64 encoded route data from id
       try {
