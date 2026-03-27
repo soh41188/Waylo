@@ -16,9 +16,10 @@
   --b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.1);
   --accent:#00e5a0;--adim:rgba(0,229,160,0.1);
   --tx:#ecf0f2;--tx2:#7c8892;--tx3:#3d4a56;
-  --ok:#00c97a;--warn:#f5a623;--red:#ff5050;
+  --ok:#00c97a;--warn:#f5a623;--red:#ff5050;--reddim:rgba(255,80,80,0.08);
   --r:12px;--rs:8px;
 }
+html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;}
 header{display:flex;align-items:center;justify-content:space-between;padding:16px 36px;border-bottom:1px solid var(--b1);position:sticky;top:0;background:rgba(8,11,13,.96);backdrop-filter:blur(14px);z-index:60;}
 .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--tx);}
@@ -39,31 +40,48 @@ h1 em{font-style:normal;color:var(--accent);}
 .fl{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--tx3);}
 .fi{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:11px 13px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;width:100%;}
 .fi:focus{border-color:rgba(0,229,160,.4);}
-.btn{width:100%;background:var(--accent);color:#041a0d;border:none;border-radius:var(--rs);padding:14px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.btn{width:100%;background:var(--accent);color:#041a0d;border:none;border-radius:var(--rs);padding:14px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
 .btn:hover{background:#00f5ad;}
 .btn:disabled{background:var(--s3);color:var(--tx3);cursor:not-allowed;}
-#status{text-align:center;padding:20px;font-size:14px;color:var(--tx2);display:none;}
-#status.show{display:block;}
-.fc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
-.fc:first-child{border-color:rgba(0,229,160,.25);}
-.fc-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;}
-.fc-left{display:flex;align-items:center;gap:16px;}
-.fc-times{display:flex;align-items:center;gap:12px;}
+.loading{display:none;text-align:center;padding:32px 24px;}
+.loading.show{display:block;}
+.ld-bar{width:280px;height:2px;background:var(--s3);border-radius:1px;margin:12px auto;overflow:hidden;}
+.ld-fill{height:100%;background:var(--accent);animation:ld 1.6s ease-in-out infinite;}
+@keyframes ld{0%{width:0;margin-left:0;}50%{width:65%;margin-left:20%;}100%{width:0;margin-left:100%;}}
+.result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.result-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;}
+.result-count{font-size:12px;color:var(--tx2);}
+.split-box{background:rgba(0,229,160,0.04);border:1px solid rgba(0,229,160,0.2);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.split-box-left strong{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--accent);display:block;margin-bottom:3px;}
+.split-box-left span{font-size:12px;color:var(--tx2);}
+.split-amt{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--accent);white-space:nowrap;}
+.fc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);margin-bottom:10px;overflow:hidden;position:relative;animation:fadeUp .3s ease-out both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.fc.best{border-color:rgba(0,229,160,.3);background:rgba(0,229,160,.02);}
+.fc-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;gap:16px;}
+.fc-left{display:flex;align-items:center;gap:20px;flex:1;}
+.fc-times{display:flex;align-items:center;gap:10px;}
 .fc-time{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;}
-.fc-arrow{color:var(--tx3);font-size:12px;}
-.fc-info{font-size:12px;color:var(--tx2);}
-.fc-price{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);}
-.fc-price.normal{color:var(--tx);}
-.fc-book{border-top:1px solid var(--b1);padding:10px 20px;background:var(--s2);}
-.book-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:5px 12px;border-radius:6px;text-decoration:none;border:1px solid rgba(0,229,160,.2);background:var(--adim);color:var(--accent);}
-.err{background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,.2);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;}
+.fc-arrow{color:var(--tx3);font-size:14px;padding:0 4px;}
+.fc-meta{display:flex;flex-direction:column;gap:3px;}
+.fc-airline{font-size:13px;font-weight:500;color:var(--tx);}
+.fc-details{font-size:11px;color:var(--tx2);}
+.fc-price-block{text-align:right;flex-shrink:0;}
+.fc-price{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;}
+.fc-price.best-price{color:var(--accent);}
+.fc-ppax{font-size:10px;color:var(--tx3);}
+.fc-book{border-top:1px solid var(--b1);padding:10px 20px;background:var(--s2);display:flex;align-items:center;gap:8px;}
+.book-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:5px 12px;border-radius:6px;text-decoration:none;border:1px solid rgba(0,229,160,.2);background:var(--adim);color:var(--accent);transition:all .2s;}
+.book-link:hover{background:rgba(0,229,160,.2);}
+.tag-best{position:absolute;top:0;right:0;background:var(--accent);color:#041a0d;font-family:'Syne',sans-serif;font-size:8px;font-weight:800;letter-spacing:.8px;padding:3px 9px;border-bottom-left-radius:7px;}
+.err{background:var(--reddim);border:1px solid rgba(255,80,80,.2);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;}
 .err strong{color:var(--red);display:block;margin-bottom:4px;font-family:'Syne',sans-serif;}
 .err p{font-size:13px;color:var(--tx2);}
-.split-box{background:rgba(0,229,160,0.04);border:1px solid rgba(0,229,160,0.2);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
-.split-box strong{color:var(--accent);font-family:'Syne',sans-serif;display:block;}
-.split-box span{font-size:12px;color:var(--tx2);}
-.split-amt{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--accent);}
-@media(max-width:600px){.row{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){
+  .row{grid-template-columns:1fr 1fr;}
+  header{padding:14px 18px;}
+  .fc-left{flex-direction:column;align-items:flex-start;gap:8px;}
+}
 </style>
 </head>
 <body>
@@ -81,44 +99,40 @@ h1 em{font-style:normal;color:var(--accent);}
 <div class="wrap">
   <div class="eyebrow">Your personal travel agent</div>
   <h1>Find every way to<br><em>get there cheaper.</em></h1>
-  <p class="sub">Real live flight prices — split tickets, every angle searched automatically.</p>
+  <p class="sub">Real live flight prices — split tickets and every angle searched automatically.</p>
 
   <div class="card">
     <div class="row">
-      <div class="fg"><label class="fl">From</label><input class="fi" id="origin" value="LHR" placeholder="Airport code"></div>
-      <div class="fg"><label class="fl">To</label><input class="fi" id="dest" value="CDG" placeholder="Airport code"></div>
-      <div class="fg"><label class="fl">Date</label><input class="fi" id="depart" type="date" value="2026-04-20"></div>
+      <div class="fg"><label class="fl">From</label><input class="fi" id="origin" value="LHR" placeholder="e.g. LHR, BSB, GRU"></div>
+      <div class="fg"><label class="fl">To</label><input class="fi" id="dest" value="CDG" placeholder="e.g. CDG, LIS, NAP"></div>
+      <div class="fg"><label class="fl">Date</label><input class="fi" id="depart" type="date" value="2026-04-15"></div>
       <div class="fg"><label class="fl">Pax</label><input class="fi" id="pax" type="number" value="1" min="1" max="9"></div>
     </div>
     <button class="btn" id="btn" onclick="go()">Search live flights →</button>
   </div>
 
-  <div id="status">Searching...</div>
+  <div class="loading" id="loading">
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--tx2)" id="ld-msg">Fetching live prices...</div>
+    <div class="ld-bar"><div class="ld-fill"></div></div>
+  </div>
+
+  <div id="split-section" style="display:none"></div>
+  <div id="result-header" style="display:none" class="result-header">
+    <div class="result-title">Live fares · <span id="route-lbl" style="color:var(--tx2);font-weight:400;font-size:14px"></span></div>
+    <div class="result-count" id="fare-count"></div>
+  </div>
   <div id="output"></div>
 </div>
 
 <script>
-// PUT YOUR RAPIDAPI KEY BETWEEN THESE QUOTES
+// ── YOUR API KEY — replace 0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4 between the quotes ───────────
 var KEY = '0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4';
+// ─────────────────────────────────────────────────────────────────────────
 
-async function go(){
-  var origin = document.getElementById('origin').value.trim().toUpperCase();
-  var dest = document.getElementById('dest').value.trim().toUpperCase();
-  var date = document.getElementById('depart').value;
-  var pax = document.getElementById('pax').value || '1';
+var HOST = 'kiwi-com-cheap-flights.p.rapidapi.com';
+var BASE = 'https://kiwi-com-cheap-flights.p.rapidapi.com';
 
-  if(!origin || !dest || !date){ alert('Fill in all fields.'); return; }
-
-  var btn = document.getElementById('btn');
-  var status = document.getElementById('status');
-  var output = document.getElementById('output');
-
-  btn.disabled = true;
-  btn.textContent = 'Searching...';
-  status.className = 'show';
-  status.textContent = 'Fetching live prices from Kiwi...';
-  output.innerHTML = '';
-
+async function fetchFlights(origin, dest, date, pax){
   var params = new URLSearchParams({
     source: 'Airport:' + origin,
     destination: 'Airport:' + dest,
@@ -148,72 +162,190 @@ async function go(){
     limit: '8'
   });
 
-  try {
-    var res = await fetch('https://kiwi-com-cheap-flights.p.rapidapi.com/one-way?' + params.toString(), {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': 'kiwi-com-cheap-flights.p.rapidapi.com',
-        'x-rapidapi-key': KEY
-      }
-    });
+  var res = await fetch(BASE + '/one-way?' + params.toString(), {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-host': HOST,
+      'x-rapidapi-key': KEY
+    }
+  });
 
-    status.textContent = 'Got response — status ' + res.status;
+  if(!res.ok) throw new Error('API error ' + res.status);
+  return await res.json();
+}
 
-    if(!res.ok){
-      var errText = await res.text();
-      output.innerHTML = '<div class="err"><strong>API Error ' + res.status + '</strong><p>' + errText + '</p></div>';
-      btn.disabled = false;
-      btn.textContent = 'Search live flights →';
-      status.className = '';
-      return;
+function parseItineraries(data){
+  // The API returns data in metadata.itineraries array
+  var itineraries = [];
+
+  // Try top-level itineraries array first
+  if(data && data.itineraries && Array.isArray(data.itineraries)){
+    itineraries = data.itineraries;
+  }
+  // Try nested under data key
+  else if(data && data.data && data.data.itineraries){
+    itineraries = data.data.itineraries;
+  }
+  // Try metadata path
+  else if(data && data.metadata && data.metadata.itineraries){
+    itineraries = data.metadata.itineraries;
+  }
+
+  if(itineraries.length === 0) return [];
+
+  return itineraries.map(function(f, i){
+    // Price is in price.amount as a string
+    var price = f.price && f.price.amount ? Math.round(parseFloat(f.price.amount)) : 0;
+    if(price <= 0) return null;
+
+    // Duration in seconds
+    var durSecs = f.duration || 0;
+    var durStr = durSecs > 0 ? Math.floor(durSecs/3600)+'h '+Math.floor((durSecs%3600)/60)+'m' : '--';
+
+    // Provider/airline
+    var airline = 'Unknown';
+    if(f.provider && f.provider.name) airline = f.provider.name;
+
+    // Booking link from id — we reconstruct Kiwi link
+    var bookLink = 'https://www.kiwi.com/deep?from=LHR&to=CDG';
+    if(f.id){
+      // Extract base64 encoded route data from id
+      try {
+        var idPart = f.id.replace('ItineraryOneWay:','');
+        var decoded = atob(idPart);
+        var parsed = JSON.parse(decoded);
+        if(parsed.route_data){
+          bookLink = 'https://www.kiwi.com/booking?token=' + idPart;
+        }
+      } catch(e){}
     }
 
-    var data = await res.json();
-    status.className = '';
+    return {
+      price: price,
+      airline: airline,
+      duration: durStr,
+      isBest: i === 0,
+      bookLink: bookLink
+    };
+  }).filter(function(f){ return f !== null; });
+}
+
+async function go(){
+  var origin = document.getElementById('origin').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+  var dest = document.getElementById('dest').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+  var date = document.getElementById('depart').value;
+  var pax = document.getElementById('pax').value || '1';
+
+  if(!origin || !dest || !date){ alert('Please fill in all fields.'); return; }
+
+  var btn = document.getElementById('btn');
+  var loading = document.getElementById('loading');
+  var output = document.getElementById('output');
+  var splitSection = document.getElementById('split-section');
+  var resultHeader = document.getElementById('result-header');
+
+  btn.disabled = true;
+  btn.textContent = 'Searching...';
+  loading.className = 'loading show';
+  output.innerHTML = '';
+  splitSection.style.display = 'none';
+  resultHeader.style.display = 'none';
+
+  document.getElementById('ld-msg').textContent = 'Fetching live prices for ' + origin + ' → ' + dest + '...';
+
+  try {
+    var data = await fetchFlights(origin, dest, date, pax);
+    var fares = parseItineraries(data);
+
+    loading.className = 'loading';
     btn.disabled = false;
     btn.textContent = 'Search live flights →';
 
-    if(!data.data || data.data.length === 0){
-      output.innerHTML = '<div class="err"><strong>No results</strong><p>No flights found for ' + origin + ' → ' + dest + ' on ' + date + '. Try LHR → CDG which is a very common route.</p></div>';
+    if(fares.length === 0){
+      output.innerHTML = '<div class="err"><strong>No flights found</strong><p>No results for ' + origin + ' → ' + dest + ' on ' + date + '. Try a different date or route like LHR → CDG.</p></div>';
       return;
     }
 
-    var html = '<p style="font-size:13px;color:var(--tx2);margin-bottom:14px">' + data.data.length + ' live fares found · ' + origin + ' → ' + dest + '</p>';
+    // Show results
+    document.getElementById('route-lbl').textContent = origin + ' → ' + dest;
+    document.getElementById('fare-count').textContent = fares.length + ' live fares';
+    resultHeader.style.display = 'flex';
 
-    data.data.forEach(function(f, i){
-      var price = Math.round(f.price || 0);
-      var airline = (f.airlines && f.airlines[0]) ? f.airlines[0] : 'Unknown';
-      var depart = f.local_departure ? f.local_departure.substring(11,16) : '--:--';
-      var arrive = f.local_arrival ? f.local_arrival.substring(11,16) : '--:--';
-      var stops = f.route ? Math.max(f.route.length-1,0) : 0;
-      var stopTxt = stops===0 ? 'Nonstop' : stops+' stop'+(stops>1?'s':'');
-      var dur = f.duration && f.duration.departure ? Math.floor(f.duration.departure/3600)+'h '+Math.floor((f.duration.departure%3600)/60)+'m' : '--';
-      var link = f.deep_link || '#';
-      var isFirst = i===0;
-
-      html += '<div class="fc">' +
+    var html = '';
+    fares.forEach(function(f, i){
+      html += '<div class="fc' + (f.isBest?' best':'') + '" style="animation-delay:' + (i*0.05) + 's">' +
+        (f.isBest ? '<div class="tag-best">BEST PRICE</div>' : '') +
         '<div class="fc-top">' +
           '<div class="fc-left">' +
-            '<div class="fc-times">' +
-              '<div class="fc-time">'+depart+'</div>' +
-              '<div class="fc-arrow">→</div>' +
-              '<div class="fc-time">'+arrive+'</div>' +
+            '<div class="fc-meta">' +
+              '<div class="fc-airline">' + f.airline + '</div>' +
+              '<div class="fc-details">' + f.duration + ' · Economy</div>' +
             '</div>' +
-            '<div class="fc-info">'+airline+' · '+dur+' · '+stopTxt+'</div>' +
           '</div>' +
-          '<div class="fc-price'+(isFirst?'':' normal')+'" >$'+price+'</div>' +
+          '<div class="fc-price-block">' +
+            '<div class="fc-price' + (f.isBest?' best-price':'') + '">$' + f.price + '</div>' +
+            '<div class="fc-ppax">per person</div>' +
+          '</div>' +
         '</div>' +
-        '<div class="fc-book"><a class="book-link" href="'+link+'" target="_blank" rel="noopener">🌐 Book this flight →</a></div>' +
+        '<div class="fc-book">' +
+          '<a class="book-link" href="' + f.bookLink + '" target="_blank" rel="noopener">🌐 Book this flight →</a>' +
+        '</div>' +
       '</div>';
     });
-
     output.innerHTML = html;
 
+    // Try split ticket detection if more than one airport on common hub routes
+    var HUBS = {
+      'BSB':['GRU'],'GRU':['LIS','MAD'],'LIS':['MAD','CDG'],
+      'NAP':['FCO','MXP'],'RAK':['LIS','MAD'],'TIA':['FCO','LHR'],
+      'LHR':['CDG','AMS','MAD'],'CDG':['MAD','AMS','FCO']
+    };
+    var hubs = HUBS[origin] || [];
+    if(hubs.length > 0 && fares.length > 0){
+      var hub = hubs[0];
+      document.getElementById('ld-msg').textContent = 'Checking split ticket via ' + hub + '...';
+      loading.className = 'loading show';
+      detectSplit(origin, dest, date, pax, hub, fares[0].price);
+    }
+
   } catch(err){
-    status.className = '';
+    loading.className = 'loading';
     btn.disabled = false;
     btn.textContent = 'Search live flights →';
-    output.innerHTML = '<div class="err"><strong>Connection failed</strong><p>' + err.message + '</p></div>';
+    output.innerHTML = '<div class="err"><strong>Search failed</strong><p>' + err.message + '</p></div>';
+  }
+}
+
+async function detectSplit(origin, dest, date, pax, hub, bundledPrice){
+  var loading = document.getElementById('loading');
+  try {
+    var leg1Data = await fetchFlights(origin, hub, date, pax);
+    var leg2Data = await fetchFlights(hub, dest, date, pax);
+    var leg1 = parseItineraries(leg1Data);
+    var leg2 = parseItineraries(leg2Data);
+
+    loading.className = 'loading';
+
+    if(leg1.length === 0 || leg2.length === 0) return;
+
+    var splitTotal = leg1[0].price + leg2[0].price;
+    var saving = bundledPrice - splitTotal;
+
+    if(saving >= 30){
+      var splitSection = document.getElementById('split-section');
+      splitSection.innerHTML =
+        '<div class="split-box">' +
+          '<div class="split-box-left">' +
+            '<strong>✂️ Split ticket saves $' + Math.round(saving) + '</strong>' +
+            '<span>' + origin + '→' + hub + ' ($' + leg1[0].price + ') + ' + hub + '→' + dest + ' ($' + leg2[0].price + ') = $' + splitTotal + ' vs bundled $' + bundledPrice + '</span>' +
+          '</div>' +
+          '<div class="split-amt">$' + Math.round(saving) + '</div>' +
+        '</div>';
+      splitSection.style.display = 'block';
+    }
+  } catch(e){
+    loading.className = 'loading';
+    console.log('Split detection error:', e.message);
   }
 }
 </script>
