@@ -83,8 +83,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .sort-bar{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
 .sort-chip{background:var(--s1);border:1px solid var(--b1);color:var(--tx2);font-size:11px;font-weight:500;padding:5px 13px;border-radius:20px;cursor:pointer;transition:all .2s;}
 .sort-chip.on,.sort-chip:hover{border-color:rgba(0,229,160,.3);color:var(--accent);}
-.split-banner{background:rgba(0,229,160,0.04);border:1px solid rgba(0,229,160,0.2);border-radius:var(--r);padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;animation:slideIn .4s ease-out .05s both;}
-@keyframes slideIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.split-banner{background:rgba(0,229,160,0.04);border:1px solid rgba(0,229,160,0.2);border-radius:var(--r);padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .sb-left{display:flex;align-items:center;gap:12px;}
 .sb-icon{width:38px;height:38px;background:var(--adim);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .sb-text strong{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--accent);display:block;margin-bottom:2px;}
@@ -92,13 +91,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .sb-right{text-align:right;flex-shrink:0;}
 .sb-right .amt{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);}
 .sb-right .lbl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;}
-.flight-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);margin-bottom:10px;overflow:hidden;animation:fadeUp .3s ease-out both;transition:border-color .2s;}
+.flight-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);margin-bottom:10px;overflow:hidden;animation:fadeUp .3s ease-out both;transition:border-color .2s;position:relative;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .flight-card:hover{border-color:var(--b2);}
 .flight-card.best{border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.02);}
-.flight-card.split{border-color:rgba(0,229,160,.18);border-style:dashed;}
 .fc-main{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:18px 20px;}
-.fc-route{display:flex;align-items:center;gap:0;}
+.fc-route{display:flex;align-items:center;}
 .fc-airport{text-align:center;}
 .fc-time{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;line-height:1;margin-bottom:3px;}
 .fc-code{font-size:11px;color:var(--tx2);font-weight:500;}
@@ -122,22 +120,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .book-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:5px 12px;border-radius:6px;text-decoration:none;transition:all .2s;border:1px solid var(--b1);background:var(--s3);color:var(--tx2);}
 .book-link:hover{border-color:var(--accent);color:var(--accent);}
 .book-link.airline{border-color:rgba(0,229,160,.2);color:var(--accent);}
-.book-link.airline:hover{background:var(--adim);}
 .tag-best{position:absolute;top:0;right:0;background:var(--accent);color:#041a0d;font-family:'Syne',sans-serif;font-size:8px;font-weight:800;letter-spacing:.8px;padding:3px 9px;border-bottom-left-radius:7px;}
-.tag-split{position:absolute;top:0;right:0;background:var(--s3);color:var(--accent);font-family:'Syne',sans-serif;font-size:8px;font-weight:800;letter-spacing:.8px;padding:3px 9px;border-bottom-left-radius:7px;border:1px solid rgba(0,229,160,.2);border-top:none;border-right:none;}
 .error-card{background:var(--reddim);border:1px solid rgba(255,80,80,.2);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;text-align:center;}
 .error-card p{font-size:13px;color:var(--tx2);margin-top:8px;}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(5,9,12,.88);z-index:100;align-items:center;justify-content:center;padding:20px;}
-.modal-bg.open{display:flex;}
-.modal{background:var(--s1);border:1px solid var(--b2);border-radius:16px;padding:26px;max-width:500px;width:100%;animation:slideIn .25s ease-out;max-height:85vh;overflow-y:auto;}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
-.modal-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;}
-.modal-x{background:var(--s2);border:1px solid var(--b1);color:var(--tx2);width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
-.modal-x:hover{color:var(--tx);}
-.modal-body{font-size:13px;color:var(--tx2);line-height:1.7;}
-.modal-row{display:flex;justify-content:space-between;align-items:center;background:var(--s2);border-radius:var(--rs);padding:10px 14px;margin-bottom:6px;font-size:12px;}
-.modal-row-label{color:var(--tx2);}
-.modal-row-val{font-weight:600;color:var(--tx);}
 @media(max-width:680px){
   header{padding:14px 18px;}
   .search-wrap,.results-wrap{padding-left:16px;padding-right:16px;}
@@ -166,22 +151,21 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 
   <div class="search-card">
     <div class="tabs">
-      <button class="tab on">One way</button>
-      <button class="tab">Round trip</button>
-      <button class="tab">Multi-city</button>
+      <button class="tab on" onclick="setTab(this)">One way</button>
+      <button class="tab" onclick="setTab(this)">Round trip</button>
+      <button class="tab" onclick="setTab(this)">Multi-city</button>
     </div>
 
     <div class="field-row">
-      <div class="fg"><label class="fl">From</label><input class="fi" id="origin" placeholder="e.g. BSB or Brasilia" value="BSB"></div>
+      <div class="fg"><label class="fl">From</label><input class="fi" id="origin" placeholder="Airport code e.g. BSB" value="BSB"></div>
       <div style="display:flex;align-items:flex-end;padding-bottom:1px"><button class="swap" onclick="swapAirports()">⇄</button></div>
-      <div class="fg"><label class="fl">To</label><input class="fi" id="dest" placeholder="e.g. LIS or Lisbon" value="LIS"></div>
+      <div class="fg"><label class="fl">To</label><input class="fi" id="dest" placeholder="Airport code e.g. LIS" value="LIS"></div>
       <div class="fg"><label class="fl">Depart</label><input class="fi" id="depart" type="date" value="2026-04-15"></div>
       <div class="fg"><label class="fl">Passengers</label><input class="fi" id="pax" type="number" min="1" max="9" value="1"></div>
     </div>
 
     <div class="options-row">
       <label class="opt"><input type="checkbox" checked id="opt-split"> Detect split ticket savings</label>
-      <label class="opt"><input type="checkbox" checked id="opt-flex"> Flexible ±3 days</label>
     </div>
 
     <div class="book-pref">
@@ -198,10 +182,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 </div>
 
 <div class="loading" id="loading">
-  <div class="ld-text" id="ld-text">Searching live flights...</div>
+  <div class="ld-text">Searching live flights...</div>
   <div class="ld-bar"><div class="ld-fill"></div></div>
   <div class="ld-steps">
-    <div class="ld-step" id="ls1"><span class="ld-dot"></span>Scanning bundled fares</div>
+    <div class="ld-step" id="ls1"><span class="ld-dot"></span>Scanning fares</div>
     <div class="ld-step" id="ls2"><span class="ld-dot"></span>Checking split legs</div>
     <div class="ld-step" id="ls3"><span class="ld-dot"></span>Comparing prices</div>
     <div class="ld-step" id="ls4"><span class="ld-dot"></span>Finding best deals</div>
@@ -209,13 +193,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 </div>
 
 <div class="results-wrap" id="results">
-  <div id="split-section" style="display:none;margin-bottom:8px">
+  <div id="split-section" style="display:none;margin-bottom:16px">
     <div class="split-banner">
       <div class="sb-left">
         <div class="sb-icon">✂️</div>
         <div class="sb-text">
-          <strong id="split-title">Same-airline split ticket found</strong>
-          <span id="split-desc">Buying separate legs costs less than the bundled fare.</span>
+          <strong id="split-title">Split ticket saving found</strong>
+          <span id="split-desc">Buying legs separately is cheaper than one itinerary.</span>
         </div>
       </div>
       <div class="sb-right">
@@ -237,68 +221,67 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
   <div id="flight-list"></div>
 </div>
 
-<div class="modal-bg" id="modal-bg" onclick="closeModal(event)">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title" id="modal-title">Details</div>
-      <button class="modal-x" onclick="closeModalDirect()">✕</button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-  </div>
-</div>
-
 <script>
-// ── CONFIG — replace YOUR_API_KEY_HERE with your actual RapidAPI key ──────
-const RAPIDAPI_KEY = '0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4';
-const KIWI_HOST = 'kiwi-com-cheap-flights.p.rapidapi.com';
-const KIWI_BASE = 'https://kiwi-com-cheap-flights.p.rapidapi.com';
+// CONFIG — replace YOUR_API_KEY_HERE with your RapidAPI key (between the quotes)
+var RAPIDAPI_KEY = '0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4';
+var KIWI_HOST = 'kiwi-com-cheap-flights.p.rapidapi.com';
+var KIWI_BASE = 'https://kiwi-com-cheap-flights.p.rapidapi.com';
 
-// ── STATE ─────────────────────────────────────────────────────────────────
-let bookPref = 'all';
-let sortMode = 'price';
-let allFares = [];
+var bookPref = 'all';
+var sortMode = 'price';
+var allFares = [];
 
-// ── HELPERS ───────────────────────────────────────────────────────────────
-function swapAirports(){
-  const o=document.getElementById('origin'),d=document.getElementById('dest');
-  [o.value,d.value]=[d.value,o.value];
+function setTab(t){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+  t.classList.add('on');
 }
+
+function swapAirports(){
+  var o=document.getElementById('origin');
+  var d=document.getElementById('dest');
+  var tmp=o.value; o.value=d.value; d.value=tmp;
+}
+
 function setPref(chip){
-  document.querySelectorAll('.bp-chip').forEach(c=>c.classList.remove('on'));
+  document.querySelectorAll('.bp-chip').forEach(function(c){c.classList.remove('on');});
   chip.classList.add('on');
   bookPref=chip.dataset.pref;
 }
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-  t.classList.add('on');
-}));
 
-// ── FORMAT HELPERS ────────────────────────────────────────────────────────
-function formatTime(ts){
-  if(!ts) return '--:--';
-  const d=new Date(ts*1000);
-  return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',hour12:false});
+function formatTime(isoStr){
+  if(!isoStr) return '--:--';
+  try {
+    var d = new Date(isoStr);
+    var h = d.getUTCHours().toString().padStart(2,'0');
+    var m = d.getUTCMinutes().toString().padStart(2,'0');
+    return h+':'+m;
+  } catch(e){ return '--:--'; }
 }
+
 function formatDur(secs){
   if(!secs) return '--';
-  const h=Math.floor(secs/3600), m=Math.floor((secs%3600)/60);
-  return `${h}h ${m}m`;
-}
-function parseDur(str){
-  const m=str.match(/(\d+)h\s*(\d+)?/);
-  return m?+m[1]*60+(+m[2]||0):999;
+  var h=Math.floor(secs/3600);
+  var m=Math.floor((secs%3600)/60);
+  return h+'h '+m+'m';
 }
 
-// ── API CALL ──────────────────────────────────────────────────────────────
+function parseDurMins(str){
+  if(!str) return 999;
+  var m=str.match(/(\d+)h\s*(\d+)?m?/);
+  return m ? parseInt(m[1])*60+(parseInt(m[2])||0) : 999;
+}
+
 async function fetchFlights(origin, dest, date){
-  const dateStr = date + 'T00:00:00';
-  const params = new URLSearchParams({
-    source: `Airport:${origin.toUpperCase()}`,
-    destination: `Airport:${dest.toUpperCase()}`,
+  var dateStr = date + 'T00:00:00';
+  var pax = document.getElementById('pax').value || '1';
+
+  var params = new URLSearchParams({
+    source: 'Airport:' + origin.toUpperCase(),
+    destination: 'Airport:' + dest.toUpperCase(),
     outboundDepartmentDateStart: dateStr,
     currency: 'usd',
     locale: 'en',
-    adults: document.getElementById('pax').value || '1',
+    adults: pax,
     children: '0',
     infants: '0',
     handbags: '1',
@@ -321,7 +304,7 @@ async function fetchFlights(origin, dest, date){
     limit: '10'
   });
 
-  const res = await fetch(`${KIWI_BASE}/one-way?${params}`, {
+  var res = await fetch(KIWI_BASE + '/one-way?' + params.toString(), {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -330,133 +313,44 @@ async function fetchFlights(origin, dest, date){
     }
   });
 
-  if(!res.ok) throw new Error(`API error: ${res.status}`);
-  return await res.json();
-}
-  // Format date for API: needs YYYY-MM-DDT00:00:00
-  const dateStr = date + 'T00:00:00';
-  // Add 3 days for end range
-  const endDate = new Date(date);
-  endDate.setDate(endDate.getDate()+3);
-  const endStr = endDate.toISOString().split('T')[0] + 'T00:00:00';
-
-  const params = new URLSearchParams({
-    source: `Airport:${origin.toUpperCase()}`,
-    destination: `Airport:${dest.toUpperCase()}`,
-    outboundDepartmentDateStart: dateStr,
-    outboundDepartmentDateEnd: endStr,
-    currency: 'usd',
-    locale: 'en',
-    adults: document.getElementById('pax').value || '1',
-    cabinClass: 'ECONOMY',
-    sortBy: 'PRICE',
-    enableSelfTransfer: 'true',
-    enableThrowAwayTicketing: 'true',
-    allowOvernightStopover: 'true',
-    limit: '10'
-  });
-
-  const res = await fetch(`${KIWI_BASE}/one-way?${params}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-rapidapi-host': KIWI_HOST,
-      'x-rapidapi-key': RAPIDAPI_KEY
-    }
-  });
-
-  if(!res.ok) throw new Error(`API error: ${res.status}`);
+  if(!res.ok) throw new Error('API error: ' + res.status);
   return await res.json();
 }
 
-// ── PARSE API RESPONSE INTO WAYLO FARE FORMAT ─────────────────────────────
-function parseFares(data, origin, dest){
+function parseFares(data){
   if(!data || !data.data || !Array.isArray(data.data)) return [];
-
-  return data.data.map((f, i) => {
-    const price = f.price || 0;
-    const airline = f.airlines?.[0] || 'Unknown';
-    const duration = f.duration?.departure || 0;
-    const stops = f.route?.length - 1 || 0;
-    const departTime = f.local_departure ? formatTime(new Date(f.local_departure).getTime()/1000) : '--:--';
-    const arriveTime = f.local_arrival ? formatTime(new Date(f.local_arrival).getTime()/1000) : '--:--';
-    const bookingLink = f.deep_link || '#';
-
-    return {
-      id: `f${i}`,
+  var results = [];
+  for(var i=0; i<data.data.length; i++){
+    var f = data.data[i];
+    var price = f.price || 0;
+    if(price <= 0) continue;
+    var airlines = f.airlines || [];
+    var airline = airlines.length > 0 ? airlines[0] : 'Unknown';
+    var stops = f.route ? Math.max(f.route.length - 1, 0) : 0;
+    results.push({
+      id: 'f'+i,
       airline: airline,
       code: airline.substring(0,2).toUpperCase(),
-      color: '#00e5a0',
-      depart: departTime,
-      arrive: arriveTime,
-      duration: formatDur(duration),
+      depart: formatTime(f.local_departure),
+      arrive: formatTime(f.local_arrival),
+      duration: formatDur(f.duration && f.duration.departure ? f.duration.departure : 0),
       stops: stops,
-      stopLabel: stops === 0 ? 'Nonstop' : `${stops} stop${stops>1?'s':''}`,
+      stopLabel: stops===0 ? 'Nonstop' : stops+' stop'+(stops>1?'s':''),
       price: Math.round(price),
-      isBest: i === 0,
-      isSplit: false,
-      bookLinks:[
-        {label:`🌐 Book this flight`, url: bookingLink, type:'ota'},
-      ]
-    };
-  }).filter(f => f.price > 0);
-}
-
-// ── SPLIT TICKET DETECTION ────────────────────────────────────────────────
-async function detectSplitSaving(origin, dest, date, bundledPrice){
-  // For routes with a likely hub, try to find a cheaper split
-  // We'll use common hubs based on the route
-  const HUBS = {
-    'BSB': ['GRU', 'CGH', 'GIG'],
-    'GRU': ['LIS', 'MAD', 'CDG'],
-    'LIS': ['MAD', 'CDG', 'AMS'],
-  };
-
-  const originHubs = HUBS[origin.toUpperCase()] || [];
-  if(originHubs.length === 0) return null;
-
-  // Try the most likely hub
-  const hub = originHubs[0];
-
-  try {
-    const [leg1Data, leg2Data] = await Promise.all([
-      fetchFlights(origin, hub, date),
-      fetchFlights(hub, dest, date)
-    ]);
-
-    const leg1Fares = parseFares(leg1Data, origin, hub);
-    const leg2Fares = parseFares(leg2Data, hub, dest);
-
-    if(leg1Fares.length === 0 || leg2Fares.length === 0) return null;
-
-    const cheapLeg1 = leg1Fares[0].price;
-    const cheapLeg2 = leg2Fares[0].price;
-    const splitTotal = cheapLeg1 + cheapLeg2;
-    const saving = bundledPrice - splitTotal;
-
-    if(saving >= 30){
-      return {
-        saving: Math.round(saving),
-        leg1: { ...leg1Fares[0], dest: hub },
-        leg2: { ...leg2Fares[0], origin: hub },
-        hub,
-        splitTotal
-      };
-    }
-  } catch(e){
-    console.log('Split detection failed:', e);
+      isBest: i===0,
+      bookLink: f.deep_link || '#'
+    });
   }
-  return null;
+  return results;
 }
 
-// ── MAIN SEARCH ───────────────────────────────────────────────────────────
 async function runSearch(){
-  const origin = document.getElementById('origin').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
-  const dest = document.getElementById('dest').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
-  const date = document.getElementById('depart').value;
+  var origin = document.getElementById('origin').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+  var dest = document.getElementById('dest').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+  var date = document.getElementById('depart').value;
 
   if(!origin || !dest || !date){
-    alert('Please fill in origin, destination, and date.');
+    alert('Please enter origin airport, destination airport, and a date.');
     return;
   }
 
@@ -465,169 +359,164 @@ async function runSearch(){
     return;
   }
 
-  // Reset UI
   document.getElementById('results').classList.remove('show');
   document.getElementById('split-section').style.display = 'none';
-  const btn = document.getElementById('search-btn');
-  btn.disabled = true;
-  btn.textContent = 'Searching...';
+  document.getElementById('flight-list').innerHTML = '';
 
-  const ld = document.getElementById('loading');
+  var btn = document.getElementById('search-btn');
+  btn.disabled = true;
+  btn.textContent = 'Searching live flights...';
+
+  var ld = document.getElementById('loading');
   ld.classList.add('show');
 
-  const steps = ['ls1','ls2','ls3','ls4'];
-  steps.forEach(id=>document.getElementById(id).classList.remove('done','active'));
+  var steps = ['ls1','ls2','ls3','ls4'];
+  for(var i=0; i<steps.length; i++){
+    document.getElementById(steps[i]).classList.remove('done','active');
+  }
 
-  // Animate loading steps
-  steps.forEach((id,i)=>{
-    setTimeout(()=>{
-      if(i>0){
-        document.getElementById(steps[i-1]).classList.remove('active');
-        document.getElementById(steps[i-1]).classList.add('done');
-      }
-      document.getElementById(id).classList.add('active');
-    }, 400 + i*600);
-  });
+  var stepIdx = 0;
+  var stepTimer = setInterval(function(){
+    if(stepIdx > 0) {
+      document.getElementById(steps[stepIdx-1]).classList.remove('active');
+      document.getElementById(steps[stepIdx-1]).classList.add('done');
+    }
+    if(stepIdx < steps.length){
+      document.getElementById(steps[stepIdx]).classList.add('active');
+      stepIdx++;
+    } else {
+      clearInterval(stepTimer);
+    }
+  }, 700);
 
   try {
-    // Fetch real flights
-    const data = await fetchFlights(origin, dest, date);
-    const fares = parseFares(data, origin, dest);
-
-    // Mark last loading step done
-    document.getElementById('ls4').classList.remove('active');
-    document.getElementById('ls4').classList.add('done');
+    var data = await fetchFlights(origin, dest, date);
+    clearInterval(stepTimer);
+    steps.forEach(function(id){
+      document.getElementById(id).classList.remove('active');
+      document.getElementById(id).classList.add('done');
+    });
 
     ld.classList.remove('show');
     btn.disabled = false;
     btn.textContent = 'Search real flights →';
 
+    var fares = parseFares(data);
+
     if(fares.length === 0){
-      document.getElementById('flight-list').innerHTML = `
-        <div class="error-card">
-          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--warn)">No flights found</div>
-          <p>Try different dates or check that your airport codes are correct (e.g. BSB, LIS, GRU).</p>
-        </div>`;
+      document.getElementById('flight-list').innerHTML =
+        '<div class="error-card"><div style="font-family:\'Syne\',sans-serif;font-size:15px;font-weight:700;color:var(--warn)">No flights found</div><p>Try different dates or check your airport codes are correct (e.g. BSB, LIS, GRU).</p></div>';
       document.getElementById('results').classList.add('show');
       return;
     }
 
     allFares = fares;
-    document.getElementById('route-lbl').textContent = `${origin} → ${dest}`;
-    document.getElementById('fare-count').textContent = `${fares.length} live fares`;
+    document.getElementById('route-lbl').textContent = origin + ' → ' + dest;
+    document.getElementById('fare-count').textContent = fares.length + ' live fares found';
 
     renderFlights();
     document.getElementById('results').classList.add('show');
-    setTimeout(()=>document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}),100);
+    setTimeout(function(){
+      document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+    }, 100);
 
-    // Run split detection in background if enabled
+    // Split ticket detection in background
     if(document.getElementById('opt-split').checked && fares.length > 0){
-      const bundledPrice = fares[0].price;
-      detectSplitSaving(origin, dest, date, bundledPrice).then(split => {
-        if(split){
-          document.getElementById('split-title').textContent = `Split ticket saves you $${split.saving}`;
-          document.getElementById('split-desc').textContent =
-            `${origin}→${split.hub} + ${split.hub}→${dest} separately costs $${split.splitTotal} vs bundled $${bundledPrice}`;
-          document.getElementById('split-saving').textContent = `$${split.saving}`;
-          document.getElementById('split-section').style.display = 'block';
-        }
-      });
+      detectSplit(origin, dest, date, fares[0].price);
     }
 
   } catch(err){
+    clearInterval(stepTimer);
     ld.classList.remove('show');
     btn.disabled = false;
     btn.textContent = 'Search real flights →';
-    document.getElementById('flight-list').innerHTML = `
-      <div class="error-card">
-        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--red)">Search failed</div>
-        <p>Could not connect to flight data. Check your API key is correct and you have requests remaining on your free tier. Error: ${err.message}</p>
-      </div>`;
+    document.getElementById('flight-list').innerHTML =
+      '<div class="error-card"><div style="font-family:\'Syne\',sans-serif;font-size:15px;font-weight:700;color:var(--red)">Search failed</div><p>Could not connect to flight data. Check your API key is correct and you have requests remaining. Error: '+err.message+'</p></div>';
     document.getElementById('results').classList.add('show');
   }
 }
 
-// ── RENDER FLIGHTS ────────────────────────────────────────────────────────
-function renderFlights(){
-  let fares = [...allFares];
-  if(sortMode === 'price') fares.sort((a,b)=>a.price-b.price);
-  else fares.sort((a,b)=>parseDur(a.duration)-parseDur(b.duration));
+async function detectSplit(origin, dest, date, bundledPrice){
+  var HUBS = {
+    'BSB':['GRU','CGH'],
+    'GRU':['LIS','MAD','CDG'],
+    'LIS':['MAD','CDG','AMS'],
+    'RAK':['LIS','MAD','CDG'],
+    'NAP':['FCO','MXP'],
+    'FCO':['LHR','CDG','AMS'],
+  };
+  var hubs = HUBS[origin] || [];
+  if(hubs.length === 0) return;
+  var hub = hubs[0];
 
-  const list = document.getElementById('flight-list');
+  try {
+    var leg1Data = await fetchFlights(origin, hub, date);
+    var leg2Data = await fetchFlights(hub, dest, date);
+    var leg1 = parseFares(leg1Data);
+    var leg2 = parseFares(leg2Data);
+    if(leg1.length === 0 || leg2.length === 0) return;
+    var splitTotal = leg1[0].price + leg2[0].price;
+    var saving = bundledPrice - splitTotal;
+    if(saving >= 30){
+      document.getElementById('split-title').textContent = 'Split ticket saves $'+Math.round(saving);
+      document.getElementById('split-desc').textContent =
+        origin+'→'+hub+' ($'+leg1[0].price+') + '+hub+'→'+dest+' ($'+leg2[0].price+') = $'+splitTotal+' vs bundled $'+bundledPrice;
+      document.getElementById('split-saving').textContent = '$'+Math.round(saving);
+      document.getElementById('split-section').style.display = 'block';
+    }
+  } catch(e){
+    console.log('Split detection:', e.message);
+  }
+}
+
+function renderFlights(){
+  var fares = allFares.slice();
+  if(sortMode === 'price') fares.sort(function(a,b){return a.price-b.price;});
+  else fares.sort(function(a,b){return parseDurMins(a.duration)-parseDurMins(b.duration);});
+  var list = document.getElementById('flight-list');
   list.innerHTML = '';
-  fares.forEach((f,i) => list.appendChild(buildCard(f,i)));
+  fares.forEach(function(f,i){list.appendChild(buildCard(f,i));});
 }
 
 function buildCard(f, idx){
-  const div = document.createElement('div');
-  div.className = 'flight-card' + (f.isBest?' best':'') + (f.isSplit?' split':'');
-  div.style.position = 'relative';
+  var div = document.createElement('div');
+  div.className = 'flight-card' + (f.isBest?' best':'');
   div.style.animationDelay = (idx*0.05)+'s';
-
-  let links = f.bookLinks || [];
-  if(bookPref==='airline') links = links.filter(l=>l.type==='airline');
-  else if(bookPref==='ota') links = links.filter(l=>l.type==='ota');
-
-  const stopsClass = f.stops===0?'ns':'os';
-  const linksHtml = links.map(l=>
-    `<a class="book-link ${l.type==='airline'?'airline':''}" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
-  ).join('');
-
-  div.innerHTML = `
-    ${f.isBest?'<div class="tag-best">BEST PRICE</div>':''}
-    ${f.isSplit?'<div class="tag-split">SPLIT TICKET</div>':''}
-    <div class="fc-main">
-      <div class="fc-route">
-        <div class="fc-airport">
-          <div class="fc-time">${f.depart}</div>
-          <div class="fc-code">${f.from||''}</div>
-        </div>
-        <div class="fc-line">
-          <div class="fc-dur">${f.duration}</div>
-          <div class="fc-path">
-            <div class="fc-dot"></div>
-            <div class="fc-dash"></div>
-            <div class="fc-plane">✈</div>
-            <div class="fc-dash"></div>
-            <div class="fc-dot"></div>
-          </div>
-          <div class="fc-stops ${stopsClass}">${f.stopLabel}</div>
-        </div>
-        <div class="fc-airport">
-          <div class="fc-time">${f.arrive}</div>
-          <div class="fc-code">${f.to||''}</div>
-        </div>
-      </div>
-      <div class="fc-airline">
-        <div class="fc-logo" style="background:rgba(0,229,160,.15);color:var(--accent)">${f.code}</div>
-        <div class="fc-name">${f.airline}</div>
-      </div>
-      <div class="fc-price-block">
-        <div class="fc-price" style="color:${f.isBest?'var(--accent)':'var(--tx)'}">$${f.price}</div>
-        <div class="fc-ppax">per person · taxes incl.</div>
-      </div>
-    </div>
-    <div class="fc-book">
-      <span class="fc-book-label">Book via</span>
-      ${linksHtml||'<span style="font-size:11px;color:var(--tx3)">Direct link available after booking</span>'}
-    </div>`;
+  var stopsClass = f.stops===0?'ns':'os';
+  div.innerHTML =
+    (f.isBest?'<div class="tag-best">BEST PRICE</div>':'')+
+    '<div class="fc-main">'+
+      '<div class="fc-route">'+
+        '<div class="fc-airport"><div class="fc-time">'+f.depart+'</div></div>'+
+        '<div class="fc-line">'+
+          '<div class="fc-dur">'+f.duration+'</div>'+
+          '<div class="fc-path"><div class="fc-dot"></div><div class="fc-dash"></div><div class="fc-plane">✈</div><div class="fc-dash"></div><div class="fc-dot"></div></div>'+
+          '<div class="fc-stops '+stopsClass+'">'+f.stopLabel+'</div>'+
+        '</div>'+
+        '<div class="fc-airport"><div class="fc-time">'+f.arrive+'</div></div>'+
+      '</div>'+
+      '<div class="fc-airline">'+
+        '<div class="fc-logo" style="background:rgba(0,229,160,.15);color:var(--accent)">'+f.code+'</div>'+
+        '<div class="fc-name">'+f.airline+'</div>'+
+      '</div>'+
+      '<div class="fc-price-block">'+
+        '<div class="fc-price" style="color:'+(f.isBest?'var(--accent)':'var(--tx)')+'">$'+f.price+'</div>'+
+        '<div class="fc-ppax">per person</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="fc-book">'+
+      '<span class="fc-book-label">Book via</span>'+
+      '<a class="book-link airline" href="'+f.bookLink+'" target="_blank" rel="noopener">🌐 Book this flight →</a>'+
+    '</div>';
   return div;
 }
 
 function doSort(mode, btn){
   sortMode = mode;
-  document.querySelectorAll('.sort-chip').forEach(c=>c.classList.remove('on'));
+  document.querySelectorAll('.sort-chip').forEach(function(c){c.classList.remove('on');});
   btn.classList.add('on');
   renderFlights();
 }
-
-function openModal(title,bodyHtml){
-  document.getElementById('modal-title').textContent=title;
-  document.getElementById('modal-body').innerHTML=bodyHtml;
-  document.getElementById('modal-bg').classList.add('open');
-}
-function closeModal(e){if(e.target===document.getElementById('modal-bg'))closeModalDirect();}
-function closeModalDirect(){document.getElementById('modal-bg').classList.remove('open');}
 </script>
 </body>
 </html>
