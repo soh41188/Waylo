@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+  <script>
+  (function() {
+    const correct = "waylo2026";
+    const attempt = prompt("Enter password to access Waylo:");
+    if (attempt !== correct) {
+      document.documentElement.innerHTML = "<div style='background:#080b0d;min-height:100vh;display:flex;align-items:center;justify-content:center'><h2 style='font-family:sans-serif;color:white;text-align:center'>Access denied.<br><span style='font-size:14px;color:#666'>Incorrect or no password entered.</span></h2></div>";
+      document.title = "Access Denied";
+    }
+  })();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Waylo — Find Your Stay · Lisbon</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
