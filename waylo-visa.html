@@ -12,15 +12,14 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#080b0d;--s1:#0f1417;--s2:#161c21;--s3:#1d252c;--s4:#242e37;
+  --bg:#080b0d;--s1:#0f1417;--s2:#161c21;--s3:#1d252c;
   --b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.11);--b3:rgba(255,255,255,0.17);
-  --accent:#00e5a0;--adim:rgba(0,229,160,0.1);--adim2:rgba(0,229,160,0.05);
+  --accent:#00e5a0;--adim:rgba(0,229,160,0.1);
   --tx:#edf0f2;--tx2:#7e8794;--tx3:#3e4a56;
   --ok:#00c97a;--okdim:rgba(0,201,122,0.1);
   --warn:#f5a623;--warndim:rgba(245,166,35,0.1);
   --red:#ff4f4f;--reddim:rgba(255,79,79,0.1);
   --blue:#4aa8ff;--bluedim:rgba(74,168,255,0.1);
-  --purple:#a78bfa;--purpdim:rgba(167,139,250,0.1);
   --r:12px;--rs:8px;
 }
 html{scroll-behavior:smooth;}
@@ -40,32 +39,25 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .hero p{font-size:16px;color:var(--tx2);font-weight:300;line-height:1.65;max-width:480px;margin:0 auto;}
 .checker-wrap{max-width:780px;margin:0 auto 56px;padding:0 24px;}
 .checker-card{background:var(--s1);border:1px solid var(--b2);border-radius:20px;padding:30px;}
-.checker-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:end;margin-bottom:20px;}
+.checker-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:end;margin-bottom:24px;}
 .field-group{display:flex;flex-direction:column;gap:7px;}
 .field-label{font-size:11px;font-weight:500;letter-spacing:.9px;text-transform:uppercase;color:var(--tx3);}
 .country-select{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:13px 14px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;cursor:pointer;transition:border-color .2s;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5260' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
 .country-select:focus{border-color:rgba(0,229,160,.4);}
 .arrow-div{display:flex;align-items:flex-end;padding-bottom:3px;}
 .arrow-badge{background:var(--s3);border:1px solid var(--b2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:18px;}
-.route-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.route-chip{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s;flex:1;min-width:160px;}
-.route-chip:hover{border-color:var(--b2);}
-.route-chip.active{border-color:rgba(0,229,160,.3);background:var(--adim2);}
-.route-chip-flag{font-size:18px;}
-.route-chip-text{font-size:13px;color:var(--tx2);}
-.route-chip-text strong{display:block;font-size:12px;font-weight:600;color:var(--tx);margin-bottom:1px;}
-.chip-check{margin-left:auto;font-size:14px;color:var(--accent);opacity:0;}
-.route-chip.active .chip-check{opacity:1;}
-.check-btn{width:100%;background:var(--accent);color:#041a0d;border:none;border-radius:var(--rs);padding:15px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.2px;}
+.check-btn{width:100%;background:var(--accent);color:#041a0d;border:none;border-radius:var(--rs);padding:15px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;}
 .check-btn:hover{background:#00f5ad;transform:translateY(-1px);}
-#results{display:none;margin-top:0;}
+.check-btn:disabled{background:var(--s3);color:var(--tx3);cursor:not-allowed;transform:none;}
+.loading{display:none;text-align:center;padding:32px 24px;}
+.loading.show{display:block;}
+.ld-bar{width:280px;height:2px;background:var(--s3);border-radius:1px;margin:12px auto;overflow:hidden;}
+.ld-fill{height:100%;background:var(--accent);animation:ld 1.6s ease-in-out infinite;}
+@keyframes ld{0%{width:0;margin-left:0;}50%{width:65%;margin-left:20%;}100%{width:0;margin-left:100%;}}
+#results{display:none;margin-top:28px;}
 #results.show{display:block;}
-.result-section{margin-bottom:16px;animation:slideUp .35s ease-out both;}
+.result-card{border-radius:var(--r);overflow:hidden;margin-bottom:16px;animation:slideUp .35s ease-out both;}
 @keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-.result-section:nth-child(2){animation-delay:.07s;}
-.result-section:nth-child(3){animation-delay:.14s;}
-.result-section:nth-child(4){animation-delay:.21s;}
-.result-card{border-radius:var(--r);overflow:hidden;}
 .result-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;}
 .result-header-left{display:flex;align-items:center;gap:12px;}
 .status-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
@@ -98,7 +90,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .info-card{border:1px solid rgba(74,168,255,.18);}
 .result-body{background:var(--s1);padding:16px 20px;}
 .result-body p{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:10px;}
-.result-body p:last-child{margin-bottom:0;}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
 .detail-item{background:var(--s2);border-radius:var(--rs);padding:12px;}
 .detail-item-label{font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--tx3);margin-bottom:5px;}
@@ -109,38 +100,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
 .ext-link{display:inline-flex;align-items:center;gap:5px;background:var(--s2);border:1px solid var(--b2);color:var(--tx2);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .2s;}
 .ext-link:hover{border-color:var(--accent);color:var(--accent);}
-.layover-section{margin-top:14px;}
-.layover-title{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;}
-.layover-list{display:flex;flex-direction:column;gap:6px;}
-.layover-row{display:flex;align-items:center;justify-content:space-between;background:var(--s2);border-radius:var(--rs);padding:10px 14px;border-left:3px solid transparent;}
-.layover-row.safe{border-left-color:var(--ok);}
-.layover-row.caution{border-left-color:var(--warn);}
-.layover-row.required{border-left-color:var(--red);}
-.layover-left{display:flex;align-items:center;gap:10px;font-size:13px;}
-.layover-country{font-weight:500;color:var(--tx);}
-.layover-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.3px;}
-.lb-safe{background:var(--okdim);color:var(--ok);}
-.lb-caution{background:var(--warndim);color:var(--warn);}
-.lb-req{background:var(--reddim);color:var(--red);}
-.layover-note{font-size:11px;color:var(--tx3);}
-.validity-bar{margin-top:14px;}
-.vb-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
-.vb-label{font-size:12px;color:var(--tx2);min-width:140px;}
-.vb-track{flex:1;height:6px;background:var(--s3);border-radius:3px;overflow:hidden;}
-.vb-fill{height:100%;border-radius:3px;}
-.vb-val{font-size:12px;font-weight:600;min-width:60px;text-align:right;}
-.api-strip{background:var(--s2);border:1px dashed var(--b2);border-radius:var(--rs);padding:10px 14px;font-size:11px;color:var(--tx3);display:flex;align-items:flex-start;gap:8px;margin-top:14px;line-height:1.6;}
-.api-strip code{background:var(--s3);padding:1px 5px;border-radius:3px;color:var(--blue);font-size:10px;}
-.summary-bar{display:flex;align-items:center;gap:14px;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);padding:16px 20px;margin-bottom:20px;flex-wrap:wrap;}
-.sb-flag{font-size:24px;}
-.sb-route{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;}
-.sb-dots{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;}
-.sb-dot{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--tx2);}
-.sd{width:8px;height:8px;border-radius:50%;}
+.reg-box{background:var(--warndim);border:1px solid rgba(245,166,35,.2);border-radius:var(--rs);padding:12px 14px;margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.reg-box span{font-size:12px;color:var(--warn);}
+.reg-link{font-size:11px;font-weight:600;color:var(--warn);text-decoration:none;border-bottom:1px dashed rgba(245,166,35,.4);}
 @media(max-width:600px){
   header{padding:14px 20px;}
-  .hero{padding:40px 20px 36px;}
-  .checker-card{padding:20px;}
   .checker-grid{grid-template-columns:1fr;}
   .arrow-div{display:none;}
   .detail-grid{grid-template-columns:1fr;}
@@ -162,7 +126,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 <div class="hero">
   <div class="eyebrow">Entry requirements</div>
   <h1>Know before<br>you <em>book.</em></h1>
-  <p>Visa requirements, transit rules, passport validity, and health entry checks — for every country on your route, including layovers.</p>
+  <p>Real-time visa requirements for 200 passports and 211 destinations — including transit rules and registration requirements.</p>
 </div>
 
 <div class="checker-wrap">
@@ -171,8 +135,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
       <div class="field-group">
         <label class="field-label">Your passport</label>
         <select class="country-select" id="passport-select">
-          <option value="">Select your nationality...</option>
-          <option value="BR" selected>🇧🇷 Brazil</option>
+          <option value="BR">🇧🇷 Brazil</option>
           <option value="US">🇺🇸 United States</option>
           <option value="GB">🇬🇧 United Kingdom</option>
           <option value="IN">🇮🇳 India</option>
@@ -182,6 +145,17 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
           <option value="AR">🇦🇷 Argentina</option>
           <option value="ZA">🇿🇦 South Africa</option>
           <option value="PH">🇵🇭 Philippines</option>
+          <option value="AU">🇦🇺 Australia</option>
+          <option value="CA">🇨🇦 Canada</option>
+          <option value="DE">🇩🇪 Germany</option>
+          <option value="FR">🇫🇷 France</option>
+          <option value="IT">🇮🇹 Italy</option>
+          <option value="ES">🇪🇸 Spain</option>
+          <option value="PT">🇵🇹 Portugal</option>
+          <option value="NL">🇳🇱 Netherlands</option>
+          <option value="TR">🇹🇷 Turkey</option>
+          <option value="AL">🇦🇱 Albania</option>
+          <option value="MK">🇲🇰 North Macedonia</option>
         </select>
       </div>
       <div class="arrow-div">
@@ -190,309 +164,240 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
       <div class="field-group">
         <label class="field-label">Destination country</label>
         <select class="country-select" id="dest-select">
-          <option value="">Select destination...</option>
-          <option value="PT" selected>🇵🇹 Portugal</option>
+          <option value="PT">🇵🇹 Portugal</option>
+          <option value="MA">🇲🇦 Morocco</option>
+          <option value="IT">🇮🇹 Italy</option>
+          <option value="AL">🇦🇱 Albania</option>
+          <option value="MK">🇲🇰 North Macedonia</option>
+          <option value="GR">🇬🇷 Greece</option>
+          <option value="GB">🇬🇧 United Kingdom</option>
           <option value="FR">🇫🇷 France</option>
           <option value="DE">🇩🇪 Germany</option>
-          <option value="JP">🇯🇵 Japan</option>
+          <option value="ES">🇪🇸 Spain</option>
           <option value="US">🇺🇸 United States</option>
-          <option value="GB">🇬🇧 United Kingdom</option>
           <option value="AU">🇦🇺 Australia</option>
           <option value="CA">🇨🇦 Canada</option>
-          <option value="AE">🇦🇪 UAE</option>
+          <option value="JP">🇯🇵 Japan</option>
           <option value="TH">🇹🇭 Thailand</option>
+          <option value="AE">🇦🇪 UAE</option>
+          <option value="TR">🇹🇷 Turkey</option>
+          <option value="ID">🇮🇩 Indonesia</option>
+          <option value="MX">🇲🇽 Mexico</option>
+          <option value="HR">🇭🇷 Croatia</option>
+          <option value="RS">🇷🇸 Serbia</option>
         </select>
       </div>
     </div>
-
-    <div style="margin-bottom:18px">
-      <div class="field-label" style="margin-bottom:10px">Layover countries on your route</div>
-      <div class="route-row" id="layover-row">
-        <div class="route-chip active" data-country="none" onclick="toggleLayover(this)">
-          <span class="route-chip-flag">✈️</span>
-          <div class="route-chip-text"><strong>Direct flight</strong>No layovers</div>
-          <span class="chip-check">✓</span>
-        </div>
-        <div class="route-chip" data-country="BR-GRU" onclick="toggleLayover(this)">
-          <span class="route-chip-flag">🇧🇷</span>
-          <div class="route-chip-text"><strong>via São Paulo (GRU)</strong>Brazil</div>
-          <span class="chip-check">✓</span>
-        </div>
-        <div class="route-chip" data-country="GB" onclick="toggleLayover(this)">
-          <span class="route-chip-flag">🇬🇧</span>
-          <div class="route-chip-text"><strong>via London (LHR)</strong>United Kingdom</div>
-          <span class="chip-check">✓</span>
-        </div>
-        <div class="route-chip" data-country="FR" onclick="toggleLayover(this)">
-          <span class="route-chip-flag">🇫🇷</span>
-          <div class="route-chip-text"><strong>via Paris (CDG)</strong>France</div>
-          <span class="chip-check">✓</span>
-        </div>
-      </div>
-    </div>
-
-    <button class="check-btn" onclick="runCheck()">Check visa requirements →</button>
-
-    <div class="api-strip">
-      <span>🔌</span>
-      <span>Production: replace demo data with <code>Sherpa° API</code>, <code>VisaHQ API</code>, or <code>IATA Travel Centre API</code>. All return real-time requirements by passport + destination pair.</span>
-    </div>
+    <button class="check-btn" id="check-btn" onclick="runCheck()">Check visa requirements →</button>
   </div>
 
-  <div id="results">
-    <div style="margin:28px 0 18px">
-      <div class="summary-bar" id="summary-bar"></div>
-    </div>
-    <div id="result-cards"></div>
+  <div class="loading" id="loading">
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--tx2)">Checking real-time visa requirements...</div>
+    <div class="ld-bar"><div class="ld-fill"></div></div>
   </div>
+
+  <div id="results"></div>
 </div>
 
 <script>
-const VISA_DB = {
-  BR: {
-    PT: {
-      status:'ok',statusLabel:'Visa Free',title:'No visa required',sub:'Schengen Area — 90 days',icon:'✅',
-      summary:'As a Brazilian passport holder you can enter Portugal and the entire Schengen Area without a visa for up to 90 days in any 180-day period. This covers tourism, business, and short-stay purposes.',
-      details:[
-        {label:'Max stay',val:'90 days / 180-day period',color:'green'},
-        {label:'Purpose',val:'Tourism, Business, Transit',color:''},
-        {label:'Entry',val:'Multiple entries allowed',color:'green'},
-        {label:'Passport validity',val:'Min. 3 months after departure',color:'amber'},
-        {label:'ETIAS (from 2025)',val:'€7 — required from mid-2025',color:'amber'},
-        {label:'Proof of funds',val:'~€75/day recommended',color:''},
-      ],
-      healthReqs:[
-        {label:'COVID requirements',val:'None currently'},
-        {label:'Yellow fever',val:'Not required for Brazil nationals'},
-        {label:'Travel insurance',val:'Recommended (not mandatory)'},
-      ],
-      passportValidity:3,
-      officialLinks:[
-        {label:'Portuguese SEF (immigration)',url:'https://imigrante.sef.pt/'},
-        {label:'Schengen rules — Europa.eu',url:'https://home-affairs.ec.europa.eu/'},
-        {label:'ETIAS information',url:'https://travel-europe.europa.eu/etias_en'},
-      ]
-    },
-    US: {
-      status:'warn',statusLabel:'Visa Required',title:'Visa required — B1/B2',sub:'Apply in advance · 3–8 weeks processing',icon:'⚠️',
-      summary:'Brazilian passport holders require a B1/B2 tourist visa to enter the United States. You must apply at a US Embassy or Consulate with an interview. Processing times vary but typically take 3–8 weeks.',
-      details:[
-        {label:'Visa type',val:'B1/B2 Tourist/Business',color:''},
-        {label:'Max stay',val:'Up to 180 days (officer decides)',color:''},
-        {label:'Apply at',val:'US Embassy Brasília or consulates',color:''},
-        {label:'Interview',val:'Required',color:'amber'},
-        {label:'Fee',val:'$185 USD (non-refundable)',color:'amber'},
-        {label:'Processing',val:'3–8 weeks typical',color:'amber'},
-      ],
-      healthReqs:[
-        {label:'COVID requirements',val:'None currently'},
-        {label:'Vaccinations',val:'No specific requirements'},
-        {label:'ESTA',val:'Not eligible — full visa required'},
-      ],
-      passportValidity:6,
-      officialLinks:[
-        {label:'US Embassy Brasília — visa info',url:'https://br.usembassy.gov/visas/'},
-        {label:'DS-160 application form',url:'https://ceac.state.gov/genniv/'},
-      ]
-    },
-    GB: {
-      status:'warn',statusLabel:'Visa Required',title:'Standard Visitor Visa required',sub:'Apply online · 3+ weeks processing',icon:'⚠️',
-      summary:'Brazilian nationals need a UK Standard Visitor Visa to enter the United Kingdom. Applications are made online and typically require proof of accommodation, funds, and return travel.',
-      details:[
-        {label:'Visa type',val:'Standard Visitor Visa',color:''},
-        {label:'Max stay',val:'Up to 6 months',color:''},
-        {label:'Apply online',val:'gov.uk/apply-uk-visa',color:''},
-        {label:'Fee',val:'£115 (approx $145)',color:'amber'},
-        {label:'Processing',val:'3 weeks standard / Priority available',color:'amber'},
-        {label:'Biometrics',val:'Required at visa application centre',color:''},
-      ],
-      healthReqs:[
-        {label:'COVID requirements',val:'None currently'},
-        {label:'NHS surcharge',val:'Paid during application (£470/yr)'},
-      ],
-      passportValidity:6,
-      officialLinks:[
-        {label:'UK Visas — gov.uk',url:'https://www.gov.uk/browse/visas-immigration'},
-        {label:'Check if you need a visa',url:'https://www.gov.uk/check-uk-visa'},
-      ]
+// ── YOUR RAPIDAPI KEY ─────────────────────────────────────────────────────
+var KEY = '0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4';
+// ─────────────────────────────────────────────────────────────────────────
+
+var HOST = 'visa-requirement.p.rapidapi.com';
+var BASE = 'https://visa-requirement.p.rapidapi.com';
+
+function getColorClass(color) {
+  if (!color) return '';
+  var c = color.toLowerCase();
+  if (c === 'green') return 'ok';
+  if (c === 'blue') return 'ok';
+  if (c === 'yellow') return 'warn-card';
+  if (c === 'red') return 'bad';
+  return 'warn-card';
+}
+
+function getStatusIcon(color) {
+  if (!color) return '🔍';
+  var c = color.toLowerCase();
+  if (c === 'green') return '✅';
+  if (c === 'blue') return '✅';
+  if (c === 'yellow') return '⚠️';
+  if (c === 'red') return '🚫';
+  return '🔍';
+}
+
+function getPassportName(code) {
+  var names = {
+    'BR':'Brazil','US':'United States','GB':'United Kingdom','IN':'India',
+    'CN':'China','NG':'Nigeria','MX':'Mexico','AR':'Argentina','ZA':'South Africa',
+    'PH':'Philippines','AU':'Australia','CA':'Canada','DE':'Germany','FR':'France',
+    'IT':'Italy','ES':'Spain','PT':'Portugal','NL':'Netherlands','TR':'Turkey',
+    'AL':'Albania','MK':'North Macedonia'
+  };
+  return names[code] || code;
+}
+
+async function runCheck() {
+  var passport = document.getElementById('passport-select').value;
+  var dest = document.getElementById('dest-select').value;
+
+  var btn = document.getElementById('check-btn');
+  var loading = document.getElementById('loading');
+  var results = document.getElementById('results');
+
+  btn.disabled = true;
+  btn.textContent = 'Checking...';
+  loading.className = 'loading show';
+  results.innerHTML = '';
+  results.className = '';
+
+  try {
+    var res = await fetch(BASE + '/VisaRequirements', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-rapidapi-host': HOST,
+        'x-rapidapi-key': KEY
+      },
+      body: JSON.stringify({
+        passport: passport,
+        destination: dest
+      })
+    });
+
+    loading.className = 'loading';
+    btn.disabled = false;
+    btn.textContent = 'Check visa requirements →';
+
+    if (!res.ok) {
+      results.innerHTML = buildErrorCard('API error ' + res.status, 'Could not fetch visa data. Please try again.');
+      results.className = 'show';
+      return;
     }
+
+    var data = await res.json();
+    results.innerHTML = buildResults(data, passport, dest);
+    results.className = 'show';
+    setTimeout(function(){ results.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
+
+  } catch(err) {
+    loading.className = 'loading';
+    btn.disabled = false;
+    btn.textContent = 'Check visa requirements →';
+    results.innerHTML = buildErrorCard('Connection failed', err.message);
+    results.className = 'show';
   }
-};
-
-const TRANSIT_DB = {
-  BR: {
-    'GB':{ required:true, note:'Brazilians need a Direct Airside Transit Visa (DATV) for UK transit unless they hold a valid US, Canadian, or Schengen visa', badge:'required' },
-    'FR':{ required:false, note:'No transit visa needed — Schengen transit included in visa-free access', badge:'safe' },
-    'BR-GRU':{ required:false, note:'Domestic layover in Brazil — no additional requirements', badge:'safe' },
-  }
-};
-
-let selectedLayovers = new Set(['none']);
-
-function toggleLayover(chip) {
-  const country = chip.dataset.country;
-  document.querySelectorAll('.route-chip').forEach(c=>{
-    c.classList.remove('active');
-    c.querySelector('.chip-check').style.opacity='0';
-  });
-  selectedLayovers.clear();
-  selectedLayovers.add(country);
-  chip.classList.add('active');
-  chip.querySelector('.chip-check').style.opacity='1';
 }
 
-function runCheck() {
-  const passport = document.getElementById('passport-select').value || 'BR';
-  const dest = document.getElementById('dest-select').value || 'PT';
-  const passportEmoji = {BR:'🇧🇷',US:'🇺🇸',GB:'🇬🇧',IN:'🇮🇳',CN:'🇨🇳',NG:'🇳🇬',MX:'🇲🇽',AR:'🇦🇷',ZA:'🇿🇦',PH:'🇵🇭'};
-  const destName = {PT:'Portugal',US:'United States',FR:'France',DE:'Germany',JP:'Japan',GB:'United Kingdom',AU:'Australia',CA:'Canada',AE:'UAE',TH:'Thailand'};
-  const passName = {BR:'Brazil',US:'United States',GB:'United Kingdom',IN:'India',CN:'China',NG:'Nigeria',MX:'Mexico',AR:'Argentina',ZA:'South Africa',PH:'Philippines'};
-  const result = (VISA_DB[passport]||{})[dest];
-  const resultsEl = document.getElementById('results');
-  const cardsEl = document.getElementById('result-cards');
-  const summaryEl = document.getElementById('summary-bar');
-
-  summaryEl.innerHTML = `
-    <span class="sb-flag">${passportEmoji[passport]||'🌍'}</span>
-    <span class="sb-route" style="font-size:14px;color:var(--tx2)">${passName[passport]||passport}</span>
-    <span style="color:var(--tx3);font-size:18px;margin:0 4px">→</span>
-    <span class="sb-route">${destName[dest]||dest}</span>
-    <div class="sb-dots">
-      ${[...selectedLayovers].filter(l=>l!=='none').map(l=>`<div class="sb-dot"><div class="sd" style="background:var(--warn)"></div>via ${l}</div>`).join('')}
-    </div>`;
-
-  cardsEl.innerHTML = '';
-
-  if (!result) {
-    cardsEl.innerHTML = `
-      <div class="result-section">
-        <div class="result-card warn-card">
-          <div class="result-header">
-            <div class="result-header-left">
-              <div class="status-icon">🔍</div>
-              <div><div class="result-title">Check official sources</div><div class="result-sub">Demo data not available for this combination</div></div>
-            </div>
-            <div class="status-badge">Check required</div>
-          </div>
-          <div class="result-body">
-            <p>This combination isn't in the demo database. In production, Waylo queries the <strong style="color:var(--tx)">Sherpa° API</strong> in real time for every passport/destination pair.</p>
-            <div class="link-row">
-              <a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank">🔍 Sherpa° Travel Requirements</a>
-              <a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank">✈️ IATA Travel Centre</a>
-              <a class="ext-link" href="https://visadb.io/" target="_blank">🗺 VisaDB</a>
-            </div>
-          </div>
-        </div>
-      </div>`;
-    resultsEl.classList.add('show');
-    resultsEl.scrollIntoView({behavior:'smooth',block:'start'});
-    return;
+function buildResults(data, passport, dest) {
+  if (!data || !data.data) {
+    return buildErrorCard('No data returned', 'Try a different passport and destination combination.');
   }
 
-  const detailsHtml = result.details.map(d=>`<div class="detail-item"><div class="detail-item-label">${d.label}</div><div class="detail-item-val ${d.color}">${d.val}</div></div>`).join('');
-  const healthHtml = result.healthReqs.map(h=>`<div class="detail-item"><div class="detail-item-label">${h.label}</div><div class="detail-item-val">${h.val}</div></div>`).join('');
-  const linksHtml = result.officialLinks.map(l=>`<a class="ext-link" href="${l.url}" target="_blank" rel="noopener">🔗 ${l.label}</a>`).join('');
+  var d = data.data;
+  var visaRules = d.visa_rules || {};
+  var primaryRule = visaRules.primary_rule || {};
+  var secondaryRule = visaRules.secondary_rule || null;
+  var mandatoryReg = d.mandatory_registration || null;
+  var destination = d.destination || {};
+  var passportName = getPassportName(passport);
 
-  cardsEl.innerHTML += `
-    <div class="result-section">
-      <div class="result-card ${result.status==='ok'?'ok':result.status==='warn'?'warn-card':'bad'}">
-        <div class="result-header">
-          <div class="result-header-left">
-            <div class="status-icon">${result.icon}</div>
-            <div><div class="result-title">${result.title}</div><div class="result-sub">${result.sub}</div></div>
-          </div>
-          <div class="status-badge">${result.statusLabel}</div>
-        </div>
-        <div class="result-body">
-          <p>${result.summary}</p>
-          <div class="detail-grid">${detailsHtml}</div>
-          <div style="margin-top:16px">
-            <div class="field-label" style="margin-bottom:10px;color:var(--tx3)">Health & entry requirements</div>
-            <div class="detail-grid">${healthHtml}</div>
-          </div>
-          <div class="validity-bar">
-            <div class="field-label" style="margin-bottom:10px;color:var(--tx3)">Passport validity required</div>
-            <div class="vb-row"><span class="vb-label">Min. validity needed</span><div class="vb-track"><div class="vb-fill" style="width:${result.passportValidity/12*100}%;background:var(--warn)"></div></div><span class="vb-val" style="color:var(--warn)">${result.passportValidity} months</span></div>
-            <div class="vb-row"><span class="vb-label">Recommended buffer</span><div class="vb-track"><div class="vb-fill" style="width:75%;background:var(--ok)"></div></div><span class="vb-val" style="color:var(--ok)">9 months</span></div>
-          </div>
-          <div class="link-row">${linksHtml}</div>
-        </div>
-      </div>
-    </div>`;
+  var cardClass = getColorClass(primaryRule.color);
+  var icon = getStatusIcon(primaryRule.color);
+  var ruleName = primaryRule.name || 'Check required';
+  var duration = primaryRule.duration || 'See official source';
 
-  const layovers = [...selectedLayovers].filter(l=>l!=='none');
-  const transitRules = TRANSIT_DB[passport]||{};
-  let transitHtml = '';
+  var html = '';
 
-  if (layovers.length > 0) {
-    const rows = layovers.map(l=>{
-      const rule = transitRules[l];
-      if (!rule) return `<div class="layover-row caution"><div class="layover-left"><span class="layover-country">Layover: ${l}</span><span class="layover-badge lb-caution">Check required</span></div><span class="layover-note">Not in demo DB — verify officially</span></div>`;
-      return `<div class="layover-row ${rule.badge==='safe'?'safe':rule.badge==='required'?'required':'caution'}"><div class="layover-left"><span class="layover-country">Layover: ${l}</span><span class="layover-badge ${rule.badge==='safe'?'lb-safe':rule.badge==='required'?'lb-req':'lb-caution'}">${rule.badge==='safe'?'No visa needed':rule.badge==='required'?'Visa required':'Check'}</span></div><span class="layover-note" style="max-width:280px;text-align:right;font-size:11px">${rule.note}</span></div>`;
-    }).join('');
-    const hasRequired = layovers.some(l=>transitRules[l]?.badge==='required');
-    transitHtml = `
-      <div class="result-section">
-        <div class="result-card ${hasRequired?'bad':'warn-card'}">
-          <div class="result-header">
-            <div class="result-header-left">
-              <div class="status-icon">${hasRequired?'🚨':'🔄'}</div>
-              <div><div class="result-title">${hasRequired?'Transit visa required for layover':'Layover transit check'}</div><div class="result-sub">Rules apply even if you don't leave the airport</div></div>
-            </div>
-            <div class="status-badge">${hasRequired?'Action needed':'Review'}</div>
-          </div>
-          <div class="result-body">
-            <p>Transit visa rules apply even if you stay airside and never pass through immigration. Some countries require a <strong style="color:var(--tx)">Direct Airside Transit Visa (DATV)</strong> just to change planes.</p>
-            <div class="layover-section"><div class="layover-title">Your layover countries</div><div class="layover-list">${rows}</div></div>
-          </div>
-        </div>
-      </div>`;
-  } else {
-    transitHtml = `
-      <div class="result-section">
-        <div class="result-card ok">
-          <div class="result-header">
-            <div class="result-header-left">
-              <div class="status-icon">✅</div>
-              <div><div class="result-title">No transit visa concerns</div><div class="result-sub">Direct flight selected</div></div>
-            </div>
-            <div class="status-badge">Clear</div>
-          </div>
-          <div class="result-body"><p>You selected a direct flight so no transit visa rules apply. If your route changes and you add a layover, Waylo will automatically check transit requirements for every country on your route.</p></div>
-        </div>
-      </div>`;
+  // Main visa card
+  html += '<div class="result-card ' + cardClass + '">' +
+    '<div class="result-header">' +
+      '<div class="result-header-left">' +
+        '<div class="status-icon">' + icon + '</div>' +
+        '<div>' +
+          '<div class="result-title">' + ruleName + '</div>' +
+          '<div class="result-sub">' + passportName + ' → ' + (destination.name || dest) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="status-badge">' + ruleName + '</div>' +
+    '</div>' +
+    '<div class="result-body">';
+
+  // Details grid
+  html += '<div class="detail-grid">' +
+    '<div class="detail-item"><div class="detail-item-label">Stay allowed</div><div class="detail-item-val green">' + duration + '</div></div>' +
+    '<div class="detail-item"><div class="detail-item-label">Passport validity</div><div class="detail-item-val amber">' + (destination.passport_validity || 'Check requirements') + '</div></div>' +
+    '<div class="detail-item"><div class="detail-item-label">Capital</div><div class="detail-item-val">' + (destination.capital || '--') + '</div></div>' +
+    '<div class="detail-item"><div class="detail-item-label">Currency</div><div class="detail-item-val">' + (destination.currency || '--') + '</div></div>' +
+    '<div class="detail-item"><div class="detail-item-label">Timezone</div><div class="detail-item-val">' + (destination.timezone || '--') + '</div></div>' +
+    '<div class="detail-item"><div class="detail-item-label">Phone code</div><div class="detail-item-val">' + (destination.phone_code || '--') + '</div></div>' +
+  '</div>';
+
+  // Secondary rule (eVisa option etc)
+  if (secondaryRule && secondaryRule.name) {
+    html += '<div style="margin-top:14px;background:var(--s2);border-radius:var(--rs);padding:12px 14px;">' +
+      '<div style="font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--tx3);margin-bottom:6px">Alternative option</div>' +
+      '<div style="font-size:13px;font-weight:500;color:var(--tx);margin-bottom:3px">' + secondaryRule.name + '</div>' +
+      '<div style="font-size:12px;color:var(--tx2)">' + (secondaryRule.duration || '') + '</div>' +
+      (secondaryRule.link ? '<a href="' + secondaryRule.link + '" target="_blank" rel="noopener" class="ext-link" style="margin-top:8px">🔗 Apply here</a>' : '') +
+    '</div>';
   }
-  cardsEl.innerHTML += transitHtml;
 
-  cardsEl.innerHTML += `
-    <div class="result-section">
-      <div class="result-card info-card">
-        <div class="result-header">
-          <div class="result-header-left">
-            <div class="status-icon">ℹ️</div>
-            <div><div class="result-title">Always verify before you book</div><div class="result-sub">Entry rules change — sometimes with little notice</div></div>
-          </div>
-        </div>
-        <div class="result-body">
-          <p>Visa requirements can change with little or no notice. Waylo updates its database regularly but <strong style="color:var(--tx)">always confirm with the official embassy or consulate</strong> before booking non-refundable tickets.</p>
-          <div class="link-row">
-            <a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank">🔍 Sherpa° (live requirements)</a>
-            <a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank">✈️ IATA Travel Centre</a>
-            <a class="ext-link" href="https://travel.state.gov/" target="_blank">🇺🇸 US State Dept. travel</a>
-          </div>
-          <div class="api-strip">
-            <span>🔌</span>
-            <span>Production: <code>Sherpa° API</code> covers 250+ countries with real-time updates — visa type, duration, cost, processing time, required documents, and health requirements per passport/destination pair.</span>
-          </div>
-        </div>
-      </div>
-    </div>`;
+  // Mandatory registration warning
+  if (mandatoryReg && mandatoryReg.name) {
+    html += '<div class="reg-box">' +
+      '<span>⚠️ Mandatory registration required: <strong>' + mandatoryReg.name + '</strong></span>' +
+      (mandatoryReg.link ? '<a href="' + mandatoryReg.link + '" target="_blank" rel="noopener" class="reg-link">Register →</a>' : '') +
+    '</div>';
+  }
 
-  resultsEl.classList.add('show');
-  setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
+  // Embassy link
+  if (destination.embassy_url) {
+    html += '<div class="link-row">' +
+      '<a class="ext-link" href="' + destination.embassy_url + '" target="_blank" rel="noopener">🏛 Embassy information</a>' +
+      '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank" rel="noopener">🔍 Verify on Sherpa°</a>' +
+    '</div>';
+  }
+
+  html += '</div></div>';
+
+  // Disclaimer card
+  html += '<div class="result-card info-card" style="animation-delay:.1s">' +
+    '<div class="result-header">' +
+      '<div class="result-header-left">' +
+        '<div class="status-icon">ℹ️</div>' +
+        '<div><div class="result-title">Always verify before you book</div><div class="result-sub">Entry rules can change with little notice</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="result-body">' +
+      '<p>Visa requirements can change at short notice. Always confirm with the official embassy or consulate before booking non-refundable tickets. This data is provided for reference only.</p>' +
+      '<div class="link-row">' +
+        '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank" rel="noopener">🔍 Sherpa° live requirements</a>' +
+        '<a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank" rel="noopener">✈️ IATA Travel Centre</a>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+  return html;
 }
 
-window.addEventListener('load',()=>setTimeout(runCheck,400));
+function buildErrorCard(title, message) {
+  return '<div class="result-card warn-card">' +
+    '<div class="result-header">' +
+      '<div class="result-header-left">' +
+        '<div class="status-icon">⚠️</div>' +
+        '<div><div class="result-title">' + title + '</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="result-body"><p>' + message + '</p>' +
+      '<div class="link-row">' +
+        '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank">🔍 Check on Sherpa°</a>' +
+        '<a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank">✈️ IATA Travel Centre</a>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
 </script>
 </body>
 </html>
