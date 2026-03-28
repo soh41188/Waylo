@@ -17,6 +17,7 @@
   --accent:#00e5a0;--adim:rgba(0,229,160,0.1);
   --tx:#ecf0f2;--tx2:#7c8892;--tx3:#3d4a56;
   --ok:#00c97a;--warn:#f5a623;--red:#ff5050;--reddim:rgba(255,80,80,0.08);
+  --gold:#ffd700;--golddim:rgba(255,215,0,0.08);
   --r:12px;--rs:8px;
 }
 html{scroll-behavior:smooth;}
@@ -29,7 +30,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .nav-a{font-size:12px;color:var(--tx2);text-decoration:none;padding:6px 13px;border-radius:20px;border:1px solid transparent;transition:all .2s;}
 .nav-a:hover{border-color:var(--b2);color:var(--tx);}
 .nav-a.on{background:var(--adim);border-color:rgba(0,229,160,.2);color:var(--accent);}
-.wrap{max-width:860px;margin:0 auto;padding:40px 24px;}
+.wrap{max-width:900px;margin:0 auto;padding:40px 24px;}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
 h1{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.5px;margin-bottom:6px;}
 h1 em{font-style:normal;color:var(--accent);}
@@ -74,9 +75,29 @@ h1 em{font-style:normal;color:var(--accent);}
 .err{background:var(--reddim);border:1px solid rgba(255,80,80,.2);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;}
 .err strong{color:var(--red);display:block;margin-bottom:4px;font-family:'Syne',sans-serif;}
 .err p{font-size:13px;color:var(--tx2);}
+/* Cost of living */
+.col-section{margin-top:28px;}
+.col-card{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r);padding:22px;animation:fadeUp .4s ease-out both;}
+.col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.col-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+.col-badge{font-size:10px;font-weight:600;padding:3px 10px;border-radius:10px;background:var(--golddim);color:var(--gold);border:1px solid rgba(255,215,0,.15);}
+.col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.col-item{background:var(--s2);border-radius:var(--rs);padding:12px;}
+.col-item-icon{font-size:16px;margin-bottom:6px;}
+.col-item-label{font-size:10px;color:var(--tx3);margin-bottom:4px;}
+.col-item-price{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--tx);}
+.col-item-range{font-size:10px;color:var(--tx3);margin-top:2px;}
+.col-daily{display:flex;align-items:center;justify-content:space-between;background:var(--s2);border-radius:var(--rs);padding:14px 16px;flex-wrap:wrap;gap:12px;}
+.col-daily-label{font-size:13px;color:var(--tx2);}
+.col-budgets{display:flex;gap:20px;}
+.col-bud{text-align:center;}
+.col-bud-amt{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;}
+.col-bud-lbl{font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.col-loading{text-align:center;padding:20px;font-size:13px;color:var(--tx3);}
 @media(max-width:600px){
   .row{grid-template-columns:1fr 1fr;}
   header{padding:14px 18px;}
+  .col-grid{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
@@ -100,9 +121,9 @@ h1 em{font-style:normal;color:var(--accent);}
   <div class="card">
     <div class="row">
       <div class="fg"><label class="fl">From</label><input class="fi" id="origin" value="LHR" placeholder="e.g. LHR, BSB, GRU"></div>
-      <div class="fg"><label class="fl">To</label><input class="fi" id="dest" value="CDG" placeholder="e.g. CDG, LIS, NAP"></div>
-      <div class="fg"><label class="fl">Date</label><input class="fi" id="depart" type="date" value="2026-04-15"></div>
-      <div class="fg"><label class="fl">Pax</label><input class="fi" id="pax" type="number" value="1" min="1" max="9"></div>
+      <div class="fg"><label class="fl">To</label><input class="fi" id="dest" value="LIS" placeholder="e.g. LIS, NAP, RAK"></div>
+      <div class="fg"><label class="fl">Date</label><input class="fi" id="depart" type="date" value="2026-04-20"></div>
+      <div class="fg"><label class="fl">Pax</label><input class="fi" type="number" id="pax" value="1" min="1" max="9"></div>
     </div>
     <button class="btn" id="btn" onclick="go()">Search live flights →</button>
   </div>
@@ -118,30 +139,121 @@ h1 em{font-style:normal;color:var(--accent);}
     <div class="result-count" id="fare-count"></div>
   </div>
   <div id="output"></div>
+  <div id="col-section" style="display:none" class="col-section">
+    <div class="result-title" style="margin-bottom:14px">💰 Cost of living · <span id="col-city-name" style="color:var(--tx2);font-weight:400;font-size:14px"></span></div>
+    <div class="col-card" id="col-card">
+      <div class="col-loading">Loading cost of living data...</div>
+    </div>
+  </div>
 </div>
 
 <script>
-// ── ADD YOUR RAPIDAPI KEY BETWEEN THESE QUOTES ────────────────────────────
-var KEY = '0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4';
+// ── API KEYS — replace both placeholders with your actual keys ─────────────
+0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4
+0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4
 // ─────────────────────────────────────────────────────────────────────────
 
-var HOST = 'kiwi-com-cheap-flights.p.rapidapi.com';
-var BASE = 'https://kiwi-com-cheap-flights.p.rapidapi.com';
+var KIWI_HOST = 'kiwi-com-cheap-flights.p.rapidapi.com';
+var KIWI_BASE = 'https://kiwi-com-cheap-flights.p.rapidapi.com';
+var COL_HOST  = 'cost-of-living-and-prices.p.rapidapi.com';
+var COL_BASE  = 'https://cost-of-living-and-prices.p.rapidapi.com';
+
+// Airport code → {city, country} lookup
+var AIRPORT_CITIES = {
+  'LIS':{ city:'Lisbon', country:'Portugal' },
+  'OPO':{ city:'Porto', country:'Portugal' },
+  'RAK':{ city:'Marrakech', country:'Morocco' },
+  'CMN':{ city:'Casablanca', country:'Morocco' },
+  'NAP':{ city:'Naples', country:'Italy' },
+  'FCO':{ city:'Rome', country:'Italy' },
+  'MXP':{ city:'Milan', country:'Italy' },
+  'VCE':{ city:'Venice', country:'Italy' },
+  'PSA':{ city:'Pisa', country:'Italy' },
+  'PMO':{ city:'Palermo', country:'Italy' },
+  'BRI':{ city:'Bari', country:'Italy' },
+  'TIA':{ city:'Tirana', country:'Albania' },
+  'SKP':{ city:'Skopje', country:'North Macedonia' },
+  'CDG':{ city:'Paris', country:'France' },
+  'LYS':{ city:'Lyon', country:'France' },
+  'NCE':{ city:'Nice', country:'France' },
+  'MAD':{ city:'Madrid', country:'Spain' },
+  'BCN':{ city:'Barcelona', country:'Spain' },
+  'LHR':{ city:'London', country:'United Kingdom' },
+  'LGW':{ city:'London', country:'United Kingdom' },
+  'EDI':{ city:'Edinburgh', country:'United Kingdom' },
+  'AMS':{ city:'Amsterdam', country:'Netherlands' },
+  'FRA':{ city:'Frankfurt', country:'Germany' },
+  'BER':{ city:'Berlin', country:'Germany' },
+  'MUC':{ city:'Munich', country:'Germany' },
+  'VIE':{ city:'Vienna', country:'Austria' },
+  'ZRH':{ city:'Zurich', country:'Switzerland' },
+  'PRG':{ city:'Prague', country:'Czech Republic' },
+  'BUD':{ city:'Budapest', country:'Hungary' },
+  'WAW':{ city:'Warsaw', country:'Poland' },
+  'ATH':{ city:'Athens', country:'Greece' },
+  'SKG':{ city:'Thessaloniki', country:'Greece' },
+  'IST':{ city:'Istanbul', country:'Turkey' },
+  'DXB':{ city:'Dubai', country:'United Arab Emirates' },
+  'DOH':{ city:'Doha', country:'Qatar' },
+  'SIN':{ city:'Singapore', country:'Singapore' },
+  'BKK':{ city:'Bangkok', country:'Thailand' },
+  'HAN':{ city:'Hanoi', country:'Vietnam' },
+  'SGN':{ city:'Ho Chi Minh City', country:'Vietnam' },
+  'NRT':{ city:'Tokyo', country:'Japan' },
+  'GRU':{ city:'Sao Paulo', country:'Brazil' },
+  'BSB':{ city:'Brasilia', country:'Brazil' },
+  'GIG':{ city:'Rio de Janeiro', country:'Brazil' },
+  'EZE':{ city:'Buenos Aires', country:'Argentina' },
+  'BOG':{ city:'Bogota', country:'Colombia' },
+  'LIM':{ city:'Lima', country:'Peru' },
+  'MEX':{ city:'Mexico City', country:'Mexico' },
+  'JFK':{ city:'New York', country:'United States' },
+  'LAX':{ city:'Los Angeles', country:'United States' },
+  'ORD':{ city:'Chicago', country:'United States' },
+  'YYZ':{ city:'Toronto', country:'Canada' },
+  'SYD':{ city:'Sydney', country:'Australia' },
+  'MEL':{ city:'Melbourne', country:'Australia' },
+  'DUB':{ city:'Dublin', country:'Ireland' },
+  'CPH':{ city:'Copenhagen', country:'Denmark' },
+  'ARN':{ city:'Stockholm', country:'Sweden' },
+  'OSL':{ city:'Oslo', country:'Norway' },
+  'HEL':{ city:'Helsinki', country:'Finland' },
+  'LJU':{ city:'Ljubljana', country:'Slovenia' },
+  'ZAG':{ city:'Zagreb', country:'Croatia' },
+  'DBV':{ city:'Dubrovnik', country:'Croatia' },
+  'BEG':{ city:'Belgrade', country:'Serbia' },
+  'SOF':{ city:'Sofia', country:'Bulgaria' },
+  'OHD':{ city:'Ohrid', country:'North Macedonia' },
+  'VLC':{ city:'Valencia', country:'Spain' },
+  'SVQ':{ city:'Seville', country:'Spain' },
+  'AGP':{ city:'Malaga', country:'Spain' },
+  'BRU':{ city:'Brussels', country:'Belgium' },
+  'LUX':{ city:'Luxembourg', country:'Luxembourg' },
+  'GVA':{ city:'Geneva', country:'Switzerland' },
+  'CAI':{ city:'Cairo', country:'Egypt' },
+  'CPT':{ city:'Cape Town', country:'South Africa' },
+  'JNB':{ city:'Johannesburg', country:'South Africa' },
+  'NBO':{ city:'Nairobi', country:'Kenya' },
+  'BOM':{ city:'Mumbai', country:'India' },
+  'DEL':{ city:'Delhi', country:'India' },
+  'PEK':{ city:'Beijing', country:'China' },
+  'CAN':{ city:'Guangzhou', country:'China' },
+  'HKG':{ city:'Hong Kong', country:'Hong Kong' },
+  'ICN':{ city:'Seoul', country:'South Korea' },
+  'KUL':{ city:'Kuala Lumpur', country:'Malaysia' },
+  'CGK':{ city:'Jakarta', country:'Indonesia' },
+  'MNL':{ city:'Manila', country:'Philippines' },
+};
 
 async function fetchFlights(orig, dst, date, pax) {
   var params = new URLSearchParams({
     source: 'Airport:' + orig,
     destination: 'Airport:' + dst,
     outboundDepartmentDateStart: date + 'T00:00:00',
-    currency: 'usd',
-    locale: 'en',
-    adults: pax,
-    children: '0',
-    infants: '0',
-    handbags: '1',
-    holdbags: '0',
-    cabinClass: 'ECONOMY',
-    sortBy: 'QUALITY',
+    currency: 'usd', locale: 'en',
+    adults: pax, children: '0', infants: '0',
+    handbags: '1', holdbags: '0',
+    cabinClass: 'ECONOMY', sortBy: 'QUALITY',
     applyMixedClasses: 'true',
     allowChangeInboundDestination: 'true',
     allowChangeInboundSource: 'true',
@@ -157,16 +269,21 @@ async function fetchFlights(orig, dst, date, pax) {
     contentProviders: 'FLIXBUS_DIRECTS,FRESH,KAYAK,KIWI',
     limit: '8'
   });
-
-  var res = await fetch(BASE + '/one-way?' + params.toString(), {
+  var res = await fetch(KIWI_BASE + '/one-way?' + params.toString(), {
     method: 'GET',
-    headers: {
-      'x-rapidapi-host': HOST,
-      'x-rapidapi-key': KEY
-    }
+    headers: { 'x-rapidapi-host': KIWI_HOST, 'x-rapidapi-key': KIWI_KEY }
   });
+  if (!res.ok) throw new Error('Flight API error ' + res.status);
+  return await res.json();
+}
 
-  if (!res.ok) throw new Error('API error ' + res.status);
+async function fetchCOL(city, country) {
+  var params = new URLSearchParams({ city_name: city, country_name: country });
+  var res = await fetch(COL_BASE + '/prices?' + params.toString(), {
+    method: 'GET',
+    headers: { 'x-rapidapi-host': COL_HOST, 'x-rapidapi-key': COL_KEY }
+  });
+  if (!res.ok) throw new Error('COL API error ' + res.status);
   return await res.json();
 }
 
@@ -175,23 +292,131 @@ function parseItineraries(data) {
   if (data && Array.isArray(data.itineraries)) its = data.itineraries;
   else if (data && data.data && Array.isArray(data.data.itineraries)) its = data.data.itineraries;
   else if (data && data.metadata && Array.isArray(data.metadata.itineraries)) its = data.metadata.itineraries;
-
   var results = [];
   for (var i = 0; i < its.length; i++) {
     var f = its[i];
     var price = f.price && f.price.amount ? Math.round(parseFloat(f.price.amount)) : 0;
     if (price <= 0) continue;
     var durSecs = f.duration || 0;
-    var durStr = durSecs > 0 ? Math.floor(durSecs/3600) + 'h ' + Math.floor((durSecs % 3600) / 60) + 'm' : '--';
+    var dur = durSecs > 0 ? Math.floor(durSecs/3600)+'h '+Math.floor((durSecs%3600)/60)+'m' : '--';
     var airline = (f.provider && f.provider.name) ? f.provider.name : 'Unknown airline';
-    results.push({ price: price, airline: airline, duration: durStr, isBest: results.length === 0 });
+    results.push({ price: price, airline: airline, duration: dur, isBest: results.length === 0 });
   }
   return results;
 }
 
+function getItem(prices, name) {
+  for (var i = 0; i < prices.length; i++) {
+    if (prices[i].item_name === name && prices[i].usd) return prices[i];
+  }
+  return null;
+}
+
+function fmt(item, field) {
+  if (!item || !item.usd) return '--';
+  field = field || 'avg';
+  var v = parseFloat(item.usd[field]);
+  return isNaN(v) ? '--' : '$' + v.toFixed(2);
+}
+
+function fmtRange(item) {
+  if (!item || !item.usd) return '--';
+  var mn = parseFloat(item.usd.min);
+  var mx = parseFloat(item.usd.max);
+  if (isNaN(mn) || isNaN(mx)) return '--';
+  return '$' + mn.toFixed(0) + ' – $' + mx.toFixed(0);
+}
+
+function renderCOL(data, cityName) {
+  var prices = data.prices || [];
+  var currency = data.exchange_rate ? 'USD' : '';
+
+  var meal = getItem(prices, 'Meal in Inexpensive Restaurant');
+  var meal2 = getItem(prices, 'Meal for 2 People, Mid-range Restaurant, Three-course');
+  var beer = getItem(prices, 'Domestic Beer, 0.5 liter Draught');
+  var coffee = getItem(prices, 'Cappuccino');
+  var transit = getItem(prices, 'One-way Ticket, Local Transport');
+  var taxi = getItem(prices, 'Taxi Start, Normal Tariff');
+  var water = getItem(prices, 'Water, 1.5 liter Bottle');
+  var internet = getItem(prices, 'Internet, 60 Mbps or More, Unlimited Data, Cable/ADSL');
+  var rent1 = getItem(prices, 'One bedroom apartment in city centre');
+
+  // Estimate daily budget
+  var budgetLow = 0, budgetMid = 0, budgetHigh = 0;
+  if (meal && meal.usd) {
+    budgetLow += parseFloat(meal.usd.min) * 2;
+    budgetMid += parseFloat(meal.usd.avg) * 2;
+    budgetHigh += parseFloat(meal.usd.max) * 2;
+  }
+  if (transit && transit.usd) {
+    budgetLow += parseFloat(transit.usd.min) * 2;
+    budgetMid += parseFloat(transit.usd.avg) * 2;
+    budgetHigh += parseFloat(transit.usd.max) * 2;
+  }
+  if (beer && beer.usd) {
+    budgetLow += parseFloat(beer.usd.min);
+    budgetMid += parseFloat(beer.usd.avg);
+    budgetHigh += parseFloat(beer.usd.max);
+  }
+
+  var html = '<div class="col-header">' +
+    '<div class="col-title">Daily budget guide · ' + cityName + '</div>' +
+    '<div class="col-badge">Live data</div>' +
+  '</div>' +
+  '<div class="col-grid">';
+
+  var items = [
+    { icon:'🍽', label:'Budget meal', item: meal },
+    { icon:'🍷', label:'Beer (draught)', item: beer },
+    { icon:'☕', label:'Cappuccino', item: coffee },
+    { icon:'🚇', label:'Transit ticket', item: transit },
+    { icon:'🚕', label:'Taxi start', item: taxi },
+    { icon:'💧', label:'Water (1.5L)', item: water },
+  ];
+
+  for (var i = 0; i < items.length; i++) {
+    var it = items[i];
+    html += '<div class="col-item">' +
+      '<div class="col-item-icon">' + it.icon + '</div>' +
+      '<div class="col-item-label">' + it.label + '</div>' +
+      '<div class="col-item-price">' + fmt(it.item) + '</div>' +
+      '<div class="col-item-range">' + fmtRange(it.item) + '</div>' +
+    '</div>';
+  }
+
+  html += '</div>';
+
+  if (budgetMid > 0) {
+    html += '<div class="col-daily">' +
+      '<div class="col-daily-label">Estimated daily total (per person)</div>' +
+      '<div class="col-budgets">' +
+        '<div class="col-bud"><div class="col-bud-amt" style="color:var(--ok)">$' + Math.round(budgetLow) + '</div><div class="col-bud-lbl">Budget</div></div>' +
+        '<div class="col-bud"><div class="col-bud-amt" style="color:var(--warn)">$' + Math.round(budgetMid) + '</div><div class="col-bud-lbl">Mid-range</div></div>' +
+        '<div class="col-bud"><div class="col-bud-amt" style="color:var(--accent)">$' + Math.round(budgetHigh) + '</div><div class="col-bud-lbl">Comfort</div></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  if (rent1 && rent1.usd) {
+    html += '<div style="margin-top:12px;background:var(--s2);border-radius:var(--rs);padding:12px 14px;display:flex;justify-content:space-between;align-items:center">' +
+      '<div style="font-size:12px;color:var(--tx2)">🏠 1-bed apartment (city centre) / month</div>' +
+      '<div style="font-family:\'Syne\',sans-serif;font-size:14px;font-weight:700;color:var(--tx)">' + fmtRange(rent1) + '</div>' +
+    '</div>';
+  }
+
+  if (internet && internet.usd) {
+    html += '<div style="margin-top:8px;background:var(--s2);border-radius:var(--rs);padding:12px 14px;display:flex;justify-content:space-between;align-items:center">' +
+      '<div style="font-size:12px;color:var(--tx2)">📶 Internet (60Mbps, unlimited) / month</div>' +
+      '<div style="font-family:\'Syne\',sans-serif;font-size:14px;font-weight:700;color:var(--tx)">' + fmtRange(internet) + '</div>' +
+    '</div>';
+  }
+
+  document.getElementById('col-card').innerHTML = html;
+}
+
 async function go() {
-  var origin = document.getElementById('origin').value.trim().toUpperCase().replace(/[^A-Z]/g, '');
-  var dest = document.getElementById('dest').value.trim().toUpperCase().replace(/[^A-Z]/g, '');
+  var origin = document.getElementById('origin').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+  var dest = document.getElementById('dest').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
   var date = document.getElementById('depart').value;
   var pax = document.getElementById('pax').value || '1';
 
@@ -202,6 +427,7 @@ async function go() {
   var output = document.getElementById('output');
   var splitSection = document.getElementById('split-section');
   var resultHeader = document.getElementById('result-header');
+  var colSection = document.getElementById('col-section');
 
   btn.disabled = true;
   btn.textContent = 'Searching...';
@@ -209,6 +435,7 @@ async function go() {
   output.innerHTML = '';
   splitSection.style.display = 'none';
   resultHeader.style.display = 'none';
+  colSection.style.display = 'none';
   document.getElementById('ld-msg').textContent = 'Fetching live prices for ' + origin + ' → ' + dest + '...';
 
   try {
@@ -220,7 +447,7 @@ async function go() {
     btn.textContent = 'Search live flights →';
 
     if (fares.length === 0) {
-      output.innerHTML = '<div class="err"><strong>No flights found</strong><p>No results for ' + origin + ' → ' + dest + ' on ' + date + '. Try a busier route like LHR → CDG or a closer date.</p></div>';
+      output.innerHTML = '<div class="err"><strong>No flights found</strong><p>No results for ' + origin + ' → ' + dest + ' on ' + date + '. Try a busier route or a closer date.</p></div>';
       return;
     }
 
@@ -228,44 +455,51 @@ async function go() {
     document.getElementById('fare-count').textContent = fares.length + ' live fares found';
     resultHeader.style.display = 'flex';
 
-    var kiwiUrl = 'https://www.kiwi.com/en/search/results/' + origin + '-' + dest + '/' + date;
-
+    var kiwiUrl = 'https://www.kiwi.com';
     var html = '';
     for (var i = 0; i < fares.length; i++) {
       var f = fares[i];
-      html += '<div class="fc' + (f.isBest ? ' best' : '') + '" style="animation-delay:' + (i * 0.05) + 's">' +
-        (f.isBest ? '<div class="tag-best">BEST PRICE</div>' : '') +
+      html += '<div class="fc' + (f.isBest?' best':'') + '" style="animation-delay:' + (i*0.05) + 's">' +
+        (f.isBest?'<div class="tag-best">BEST PRICE</div>':'') +
         '<div class="fc-top">' +
-          '<div class="fc-left">' +
-            '<div class="fc-meta">' +
-              '<div class="fc-airline">' + f.airline + '</div>' +
-              '<div class="fc-details">' + f.duration + ' · Economy</div>' +
-            '</div>' +
-          '</div>' +
+          '<div class="fc-left"><div class="fc-meta">' +
+            '<div class="fc-airline">' + f.airline + '</div>' +
+            '<div class="fc-details">' + f.duration + ' · Economy</div>' +
+          '</div></div>' +
           '<div class="fc-price-block">' +
-            '<div class="fc-price' + (f.isBest ? ' best-price' : '') + '">$' + f.price + '</div>' +
+            '<div class="fc-price' + (f.isBest?' best-price':'') + '">$' + f.price + '</div>' +
             '<div class="fc-ppax">per person</div>' +
           '</div>' +
         '</div>' +
-        '<div class="fc-book">' +
-          '<a class="book-link" href="' + kiwiUrl + '" target="_blank" rel="noopener">🌐 Search on Kiwi →</a>' +
-        '</div>' +
+        '<div class="fc-book"><a class="book-link" href="' + kiwiUrl + '" target="_blank" rel="noopener">🌐 Search on Kiwi →</a></div>' +
       '</div>';
     }
     output.innerHTML = html;
 
-    // Split ticket detection
+    // Split detection
     var HUBS = {
       'BSB':['GRU'],'GRU':['LIS','MAD'],'LIS':['MAD','CDG'],
       'NAP':['FCO','MXP'],'RAK':['LIS','MAD'],'TIA':['FCO','LHR'],
       'LHR':['CDG','AMS','MAD'],'CDG':['MAD','AMS','FCO']
     };
     var hubs = HUBS[origin] || [];
-    if (hubs.length > 0 && fares.length > 0) {
-      detectSplit(origin, dest, date, pax, hubs[0], fares[0].price);
+    if (hubs.length > 0) detectSplit(origin, dest, date, pax, hubs[0], fares[0].price);
+
+    // Cost of living
+    var cityInfo = AIRPORT_CITIES[dest];
+    if (cityInfo) {
+      colSection.style.display = 'block';
+      document.getElementById('col-city-name').textContent = cityInfo.city + ', ' + cityInfo.country;
+      document.getElementById('col-card').innerHTML = '<div class="col-loading">Loading cost of living data for ' + cityInfo.city + '...</div>';
+      try {
+        var colData = await fetchCOL(cityInfo.city, cityInfo.country);
+        renderCOL(colData, cityInfo.city);
+      } catch(colErr) {
+        document.getElementById('col-card').innerHTML = '<div class="col-loading">Cost of living data unavailable for this city.</div>';
+      }
     }
 
-  } catch (err) {
+  } catch(err) {
     loading.className = 'loading';
     btn.disabled = false;
     btn.textContent = 'Search live flights →';
@@ -275,28 +509,25 @@ async function go() {
 
 async function detectSplit(origin, dest, date, pax, hub, bundledPrice) {
   try {
-    var leg1Data = await fetchFlights(origin, hub, date, pax);
-    var leg2Data = await fetchFlights(hub, dest, date, pax);
-    var leg1 = parseItineraries(leg1Data);
-    var leg2 = parseItineraries(leg2Data);
-    if (leg1.length === 0 || leg2.length === 0) return;
+    var l1 = await fetchFlights(origin, hub, date, pax);
+    var l2 = await fetchFlights(hub, dest, date, pax);
+    var leg1 = parseItineraries(l1);
+    var leg2 = parseItineraries(l2);
+    if (!leg1.length || !leg2.length) return;
     var splitTotal = leg1[0].price + leg2[0].price;
     var saving = bundledPrice - splitTotal;
     if (saving >= 30) {
-      var splitSection = document.getElementById('split-section');
-      splitSection.innerHTML =
-        '<div class="split-box">' +
-          '<div class="split-box-left">' +
-            '<strong>✂️ Split ticket saves $' + Math.round(saving) + '</strong>' +
-            '<span>' + origin + '→' + hub + ' ($' + leg1[0].price + ') + ' + hub + '→' + dest + ' ($' + leg2[0].price + ') = $' + splitTotal + ' vs bundled $' + bundledPrice + '</span>' +
-          '</div>' +
-          '<div class="split-amt">$' + Math.round(saving) + '</div>' +
-        '</div>';
-      splitSection.style.display = 'block';
+      var s = document.getElementById('split-section');
+      s.innerHTML = '<div class="split-box">' +
+        '<div class="split-box-left">' +
+          '<strong>✂️ Split ticket saves $' + Math.round(saving) + '</strong>' +
+          '<span>' + origin + '→' + hub + ' ($' + leg1[0].price + ') + ' + hub + '→' + dest + ' ($' + leg2[0].price + ') = $' + splitTotal + ' vs bundled $' + bundledPrice + '</span>' +
+        '</div>' +
+        '<div class="split-amt">$' + Math.round(saving) + '</div>' +
+      '</div>';
+      s.style.display = 'block';
     }
-  } catch (e) {
-    console.log('Split detection:', e.message);
-  }
+  } catch(e) { console.log('Split:', e.message); }
 }
 </script>
 </body>
