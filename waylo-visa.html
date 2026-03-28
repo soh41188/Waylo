@@ -20,6 +20,7 @@
   --warn:#f5a623;--warndim:rgba(245,166,35,0.1);
   --red:#ff4f4f;--reddim:rgba(255,79,79,0.1);
   --blue:#4aa8ff;--bluedim:rgba(74,168,255,0.1);
+  --purple:#a78bfa;--purpdim:rgba(167,139,250,0.1);
   --r:12px;--rs:8px;
 }
 html{scroll-behavior:smooth;}
@@ -40,13 +41,16 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .checker-wrap{max-width:780px;margin:0 auto 56px;padding:0 24px;}
 .checker-card{background:var(--s1);border:1px solid var(--b2);border-radius:20px;padding:30px;}
 .checker-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:end;margin-bottom:20px;}
+.layover-grid{display:grid;grid-template-columns:1fr 1fr 120px;gap:12px;margin-bottom:20px;}
 .field-group{display:flex;flex-direction:column;gap:7px;}
 .field-label{font-size:11px;font-weight:500;letter-spacing:.9px;text-transform:uppercase;color:var(--tx3);}
-.country-select{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:13px 14px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;cursor:pointer;transition:border-color .2s;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5260' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+.country-select{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:13px 14px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;cursor:pointer;transition:border-color .2s;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5260' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
 .country-select:focus{border-color:rgba(0,229,160,.4);}
+.fi{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:13px 14px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;width:100%;}
+.fi:focus{border-color:rgba(0,229,160,.4);}
+.fi::placeholder{color:var(--tx3);}
 .arrow-div{display:flex;align-items:flex-end;padding-bottom:3px;}
 .arrow-badge{background:var(--s3);border:1px solid var(--b2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:18px;}
-.layover-row{margin-bottom:20px;}
 .check-btn{width:100%;background:var(--accent);color:#041a0d;border:none;border-radius:var(--rs);padding:15px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;}
 .check-btn:hover{background:#00f5ad;transform:translateY(-1px);}
 .check-btn:disabled{background:var(--s3);color:var(--tx3);cursor:not-allowed;transform:none;}
@@ -87,8 +91,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .info-card .status-icon{background:var(--bluedim);}
 .info-card .result-title{color:var(--blue);}
 .info-card .result-sub{color:rgba(74,168,255,.6);}
-.info-card .status-badge{background:var(--bluedim);color:var(--blue);border:1px solid rgba(74,168,255,.2);}
 .info-card{border:1px solid rgba(74,168,255,.18);}
+.benefit-card .result-header{background:rgba(167,139,250,0.07);border-bottom:1px solid rgba(167,139,250,0.12);}
+.benefit-card .status-icon{background:var(--purpdim);}
+.benefit-card .result-title{color:var(--purple);}
+.benefit-card .result-sub{color:rgba(167,139,250,.6);}
+.benefit-card .status-badge{background:var(--purpdim);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
+.benefit-card{border:1px solid rgba(167,139,250,.25);}
 .result-body{background:var(--s1);padding:16px 20px;}
 .result-body p{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:10px;}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
@@ -97,15 +106,25 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .detail-item-val{font-size:13px;font-weight:500;color:var(--tx);}
 .detail-item-val.green{color:var(--ok);}
 .detail-item-val.amber{color:var(--warn);}
+.detail-item-val.purple{color:var(--purple);}
+.benefit-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.benefit-item{display:flex;align-items:center;gap:10px;background:var(--s2);border-radius:var(--rs);padding:10px 14px;font-size:13px;color:var(--tx2);}
+.benefit-item-icon{font-size:16px;flex-shrink:0;}
+.benefit-item strong{color:var(--tx);}
+.how-to{background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.15);border-radius:var(--rs);padding:12px 14px;margin-top:12px;}
+.how-to-title{font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
+.how-to p{font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:0;}
 .link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
 .ext-link{display:inline-flex;align-items:center;gap:5px;background:var(--s2);border:1px solid var(--b2);color:var(--tx2);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .2s;}
 .ext-link:hover{border-color:var(--accent);color:var(--accent);}
 .reg-box{background:var(--warndim);border:1px solid rgba(245,166,35,.2);border-radius:var(--rs);padding:12px 14px;margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .reg-box span{font-size:12px;color:var(--warn);}
 .reg-link{font-size:11px;font-weight:600;color:var(--warn);text-decoration:none;border-bottom:1px dashed rgba(245,166,35,.4);}
+.section-divider{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin:20px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--b1);}
 @media(max-width:600px){
   header{padding:14px 20px;}
   .checker-grid{grid-template-columns:1fr;}
+  .layover-grid{grid-template-columns:1fr;}
   .arrow-div{display:none;}
   .detail-grid{grid-template-columns:1fr;}
 }
@@ -124,9 +143,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 </header>
 
 <div class="hero">
-  <div class="eyebrow">Entry requirements</div>
+  <div class="eyebrow">Entry requirements & hidden benefits</div>
   <h1>Know before<br>you <em>book.</em></h1>
-  <p>Real-time visa requirements for 200 passports and 211 destinations — including layover transit warnings.</p>
+  <p>Real-time visa requirements, layover transit warnings, and hidden airline benefits most travelers never claim.</p>
 </div>
 
 <div class="checker-wrap">
@@ -155,6 +174,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
           <option value="PT">🇵🇹 Portugal</option>
           <option value="NL">🇳🇱 Netherlands</option>
           <option value="TR">🇹🇷 Turkey</option>
+          <option value="VN">🇻🇳 Vietnam</option>
           <option value="AL">🇦🇱 Albania</option>
           <option value="MK">🇲🇰 North Macedonia</option>
         </select>
@@ -186,27 +206,70 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
           <option value="MX">🇲🇽 Mexico</option>
           <option value="HR">🇭🇷 Croatia</option>
           <option value="RS">🇷🇸 Serbia</option>
+          <option value="VN">🇻🇳 Vietnam</option>
+          <option value="CN">🇨🇳 China</option>
         </select>
       </div>
     </div>
 
-    <div class="layover-row">
-      <div class="field-label" style="margin-bottom:10px">Layover country (optional)</div>
-      <select class="country-select" id="layover-select">
-        <option value="">No layover — direct flight</option>
-        <option value="GB">🇬🇧 via United Kingdom</option>
-        <option value="FR">🇫🇷 via France</option>
-        <option value="DE">🇩🇪 via Germany</option>
-        <option value="ES">🇪🇸 via Spain</option>
-        <option value="NL">🇳🇱 via Netherlands</option>
-        <option value="PT">🇵🇹 via Portugal</option>
-        <option value="IT">🇮🇹 via Italy</option>
-        <option value="TR">🇹🇷 via Turkey</option>
-        <option value="AE">🇦🇪 via UAE</option>
-        <option value="QA">🇶🇦 via Qatar</option>
-        <option value="BR">🇧🇷 via Brazil</option>
-        <option value="MA">🇲🇦 via Morocco</option>
-      </select>
+    <div style="margin-bottom:8px">
+      <div class="field-label" style="margin-bottom:10px">Layover details (optional)</div>
+      <div class="layover-grid">
+        <div class="field-group">
+          <label class="field-label" style="font-size:9px">Layover country</label>
+          <select class="country-select" id="layover-select">
+            <option value="">No layover — direct flight</option>
+            <option value="GB">🇬🇧 via United Kingdom</option>
+            <option value="FR">🇫🇷 via France</option>
+            <option value="DE">🇩🇪 via Germany</option>
+            <option value="ES">🇪🇸 via Spain</option>
+            <option value="NL">🇳🇱 via Netherlands</option>
+            <option value="PT">🇵🇹 via Portugal</option>
+            <option value="IT">🇮🇹 via Italy</option>
+            <option value="TR">🇹🇷 via Turkey</option>
+            <option value="AE">🇦🇪 via UAE</option>
+            <option value="QA">🇶🇦 via Qatar</option>
+            <option value="CN">🇨🇳 via China</option>
+            <option value="KR">🇰🇷 via South Korea</option>
+            <option value="SG">🇸🇬 via Singapore</option>
+            <option value="HK">🇭🇰 via Hong Kong</option>
+            <option value="MA">🇲🇦 via Morocco</option>
+            <option value="BR">🇧🇷 via Brazil</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label" style="font-size:9px">Airline</label>
+          <select class="country-select" id="airline-select">
+            <option value="">Select airline</option>
+            <option value="CZ">China Southern</option>
+            <option value="CA">Air China</option>
+            <option value="MU">China Eastern</option>
+            <option value="TK">Turkish Airlines</option>
+            <option value="EK">Emirates</option>
+            <option value="QR">Qatar Airways</option>
+            <option value="KE">Korean Air</option>
+            <option value="OZ">Asiana Airlines</option>
+            <option value="SQ">Singapore Airlines</option>
+            <option value="CX">Cathay Pacific</option>
+            <option value="EY">Etihad Airways</option>
+            <option value="AT">Royal Air Maroc</option>
+            <option value="LA">LATAM Airlines</option>
+            <option value="AD">Azul Airlines</option>
+            <option value="TP">TAP Air Portugal</option>
+            <option value="FR">Ryanair</option>
+            <option value="U2">easyJet</option>
+            <option value="AF">Air France</option>
+            <option value="LH">Lufthansa</option>
+            <option value="BA">British Airways</option>
+            <option value="IB">Iberia</option>
+            <option value="other">Other airline</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label" style="font-size:9px">Layover hours</label>
+          <input class="fi" type="number" id="layover-hours" placeholder="e.g. 23" min="1" max="72">
+        </div>
+      </div>
     </div>
 
     <button class="check-btn" id="check-btn" onclick="runCheck()">Check visa requirements →</button>
@@ -234,8 +297,116 @@ var PASSPORT_NAMES = {
   'CN':'China','NG':'Nigeria','MX':'Mexico','AR':'Argentina','ZA':'South Africa',
   'PH':'Philippines','AU':'Australia','CA':'Canada','DE':'Germany','FR':'France',
   'IT':'Italy','ES':'Spain','PT':'Portugal','NL':'Netherlands','TR':'Turkey',
-  'AL':'Albania','MK':'North Macedonia'
+  'VN':'Vietnam','AL':'Albania','MK':'North Macedonia'
 };
+
+// ── LAYOVER BENEFITS DATABASE ─────────────────────────────────────────────
+// Structure: airline code → array of benefit tiers by minimum hours
+var BENEFITS_DB = {
+  'CZ': { // China Southern
+    name: 'China Southern',
+    hub: 'Guangzhou (CAN)',
+    tiers: [
+      { minHours: 6, maxHours: 11, benefits: ['Complimentary lounge access at CAN'], howTo: 'Request at the China Southern transit desk in Guangzhou airport on arrival. Show your onward boarding pass.' },
+      { minHours: 11, maxHours: 72, benefits: ['Free hotel accommodation (1 night)', 'Complimentary breakfast', 'Free shuttle transport airport ↔ hotel', 'Complimentary lounge access'], howTo: 'At Guangzhou airport, go to the China Southern Transit Hotel Service desk (arrivals hall). Show your passport and onward boarding pass. They will arrange hotel, transport, and meals at no cost.' }
+    ]
+  },
+  'CA': { // Air China
+    name: 'Air China',
+    hub: 'Beijing (PEK)',
+    tiers: [
+      { minHours: 6, maxHours: 11, benefits: ['Complimentary lounge access at PEK'], howTo: 'Go to the Air China transit service counter at Beijing Capital Airport with your onward boarding pass.' },
+      { minHours: 11, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Free airport shuttle', 'Lounge access'], howTo: 'At Beijing Airport arrivals, visit the Air China Transit Service desk. Present passport and onward boarding pass. Hotel and transport arranged free of charge.' }
+    ]
+  },
+  'MU': { // China Eastern
+    name: 'China Eastern',
+    hub: 'Shanghai (PVG)',
+    tiers: [
+      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport shuttle service'], howTo: 'At Shanghai Pudong Airport, go to the China Eastern transit service counter. Show passport and onward boarding pass to arrange free accommodation.' }
+    ]
+  },
+  'TK': { // Turkish Airlines
+    name: 'Turkish Airlines',
+    hub: 'Istanbul (IST)',
+    tiers: [
+      { minHours: 6, maxHours: 10, benefits: ['Complimentary meal voucher', 'CIP Lounge access (business class)', 'City tour available (Economy — select routes)'], howTo: 'Go to the Turkish Airlines transfer desk at Istanbul Airport. Economy passengers on qualifying long-haul routes may request a free city tour of Istanbul.' },
+      { minHours: 10, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport transfer', 'Optional Istanbul city tour'], howTo: 'At Istanbul Airport, visit the Turkish Airlines Transfer Hotel desk. Present passport and onward boarding pass. Hotel, meals, and city tour arranged free of charge for qualifying routes.' }
+    ]
+  },
+  'EK': { // Emirates
+    name: 'Emirates',
+    hub: 'Dubai (DXB)',
+    tiers: [
+      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (Economy class on long-haul routes)', 'Complimentary meals', 'Airport transfer'], howTo: 'Contact Emirates customer service before travel or visit the Emirates desk at Dubai Airport. Free hotel is available on specific long-haul routes — confirm eligibility when booking.' }
+    ]
+  },
+  'QR': { // Qatar Airways
+    name: 'Qatar Airways',
+    hub: 'Doha (DOH)',
+    tiers: [
+      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (select routes)', 'Complimentary meals', 'Airport transfer', 'Al Mourjan lounge access (Business)'], howTo: 'Contact Qatar Airways or visit the transfer desk at Hamad International Airport. Hotel availability depends on route and ticket class.' }
+    ]
+  },
+  'KE': { // Korean Air
+    name: 'Korean Air',
+    hub: 'Seoul (ICN)',
+    tiers: [
+      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport shuttle', 'Seoul city tour available'], howTo: 'At Incheon Airport, go to the Korean Air Transfer Desk. Present passport and onward ticket. Free hotel and optional city tour of Seoul available for qualifying layovers.' }
+    ]
+  },
+  'OZ': { // Asiana
+    name: 'Asiana Airlines',
+    hub: 'Seoul (ICN)',
+    tiers: [
+      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport transfer'], howTo: 'Visit the Asiana Airlines transfer desk at Incheon Airport with your passport and onward boarding pass.' }
+    ]
+  },
+  'SQ': { // Singapore Airlines
+    name: 'Singapore Airlines',
+    hub: 'Singapore (SIN)',
+    tiers: [
+      { minHours: 5, maxHours: 72, benefits: ['Complimentary Singapore city tour (select routes)', 'KrisFlyer lounge access (qualifying passengers)', 'Meal vouchers'], howTo: 'Singapore Airlines offers free city tours for transit passengers on select routes. Check eligibility at the Singapore Airlines transfer desk at Changi Airport.' }
+    ]
+  },
+  'CX': { // Cathay Pacific
+    name: 'Cathay Pacific',
+    hub: 'Hong Kong (HKG)',
+    tiers: [
+      { minHours: 6, maxHours: 72, benefits: ['The Pier lounge access (Business/First)', 'Complimentary meal vouchers (Economy on long-haul)', 'Hong Kong city tour (select routes)'], howTo: 'Visit the Cathay Pacific transfer desk at Hong Kong International Airport. Economy class city tours available on select long-haul connections.' }
+    ]
+  },
+  'EY': { // Etihad
+    name: 'Etihad Airways',
+    hub: 'Abu Dhabi (AUH)',
+    tiers: [
+      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (select routes)', 'Complimentary meals', 'Airport transfer'], howTo: 'Contact Etihad or visit the transfer desk at Abu Dhabi Airport. Hotel eligibility varies by route and class.' }
+    ]
+  },
+  'AT': { // Royal Air Maroc
+    name: 'Royal Air Maroc',
+    hub: 'Casablanca (CMN)',
+    tiers: [
+      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Casablanca city tour available'], howTo: 'Visit the Royal Air Maroc transfer desk at Mohammed V Airport, Casablanca. Present passport and onward boarding pass.' }
+    ]
+  }
+};
+
+function getApplicableBenefits(airlineCode, hours) {
+  if (!airlineCode || !hours || hours <= 0) return null;
+  var airline = BENEFITS_DB[airlineCode];
+  if (!airline) return null;
+
+  var applicable = null;
+  for (var i = 0; i < airline.tiers.length; i++) {
+    var tier = airline.tiers[i];
+    if (hours >= tier.minHours && hours <= tier.maxHours) {
+      applicable = { airline: airline, tier: tier };
+      break;
+    }
+  }
+  return applicable;
+}
 
 async function callVisaAPI(passport, destination) {
   var res = await fetch(BASE + '/v2/visa/check', {
@@ -271,6 +442,8 @@ async function runCheck() {
   var passport = document.getElementById('passport-select').value;
   var dest = document.getElementById('dest-select').value;
   var layover = document.getElementById('layover-select').value;
+  var airline = document.getElementById('airline-select').value;
+  var hours = parseInt(document.getElementById('layover-hours').value) || 0;
 
   var btn = document.getElementById('check-btn');
   var loading = document.getElementById('loading');
@@ -284,7 +457,6 @@ async function runCheck() {
   results.className = '';
 
   try {
-    // Run both checks simultaneously if layover selected
     var calls = [callVisaAPI(passport, dest)];
     if (layover) calls.push(callVisaAPI(passport, layover));
     var responses = await Promise.all(calls);
@@ -295,15 +467,27 @@ async function runCheck() {
 
     var html = '';
 
-    // Layover warning first (most important — shown at top)
+    // 1. Layover transit visa warning (if layover selected)
     if (layover && responses[1]) {
+      html += '<div class="section-divider">🔄 Layover transit check</div>';
       html += buildLayoverCard(responses[1], layover);
     }
 
-    // Main destination result
+    // 2. Hidden benefits (if airline + hours entered)
+    var benefitResult = getApplicableBenefits(airline, hours);
+    if (benefitResult) {
+      html += '<div class="section-divider">🎁 Hidden layover benefits</div>';
+      html += buildBenefitCard(benefitResult, hours);
+    } else if (airline && hours > 0 && airline !== 'other') {
+      html += '<div class="section-divider">🎁 Hidden layover benefits</div>';
+      html += buildNoBenefitCard(airline, hours);
+    }
+
+    // 3. Main visa result
+    html += '<div class="section-divider">📋 Destination visa requirements</div>';
     html += buildMainCard(responses[0], passport, dest);
 
-    // Disclaimer
+    // 4. Disclaimer
     html += buildDisclaimerCard();
 
     results.innerHTML = html;
@@ -319,6 +503,58 @@ async function runCheck() {
   }
 }
 
+function buildBenefitCard(result, hours) {
+  var airline = result.airline;
+  var tier = result.tier;
+
+  var html = '<div class="result-card benefit-card">' +
+    '<div class="result-header">' +
+      '<div class="result-header-left">' +
+        '<div class="status-icon">🎁</div>' +
+        '<div><div class="result-title">Free benefits available — ' + airline.name + '</div>' +
+        '<div class="result-sub">' + hours + 'h layover via ' + airline.hub + ' · Most travelers never claim these</div></div>' +
+      '</div>' +
+      '<div class="status-badge">Claim these</div>' +
+    '</div>' +
+    '<div class="result-body">' +
+      '<p>Your <strong style="color:var(--tx)">' + hours + '-hour layover</strong> on ' + airline.name + ' via ' + airline.hub + ' entitles you to the following at no cost. The majority of passengers on this route are unaware of these benefits and pay out of pocket.</p>' +
+      '<div class="benefit-list">';
+
+  var icons = ['🏨','🍳','🚌','🛋','🌆','🎫'];
+  for (var i = 0; i < tier.benefits.length; i++) {
+    html += '<div class="benefit-item">' +
+      '<div class="benefit-item-icon">' + (icons[i] || '✓') + '</div>' +
+      '<div><strong>' + tier.benefits[i] + '</strong></div>' +
+    '</div>';
+  }
+
+  html += '</div>' +
+    '<div class="how-to">' +
+      '<div class="how-to-title">How to claim</div>' +
+      '<p>' + tier.howTo + '</p>' +
+    '</div>' +
+    '<div class="link-row">' +
+      '<a class="ext-link" href="https://www.google.com/search?q=' + encodeURIComponent(airline.name + ' transit hotel ' + airline.hub) + '" target="_blank" rel="noopener">🔍 Verify on airline website</a>' +
+    '</div>' +
+  '</div></div>';
+  return html;
+}
+
+function buildNoBenefitCard(airline, hours) {
+  return '<div class="result-card info-card">' +
+    '<div class="result-header">' +
+      '<div class="result-header-left">' +
+        '<div class="status-icon">ℹ️</div>' +
+        '<div><div class="result-title">No known benefits for this combination</div>' +
+        '<div class="result-sub">Always worth checking directly with the airline</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="result-body">' +
+      '<p>We don\'t have confirmed benefit data for this airline and layover duration. It\'s always worth contacting the airline directly — many carriers offer unpublished transit benefits that aren\'t widely advertised.</p>' +
+    '</div>' +
+  '</div>';
+}
+
 function buildLayoverCard(data, layover) {
   if (!data || !data.data) return '';
   var rule = data.data.visa_rules && data.data.visa_rules.primary_rule;
@@ -329,7 +565,7 @@ function buildLayoverCard(data, layover) {
   var cardClass = colorToClass(rule.color);
   var icon = colorToIcon(rule.color);
 
-  if (color === 'green') {
+  if (color === 'green' || color === 'blue') {
     return '<div class="result-card ok">' +
       '<div class="result-header">' +
         '<div class="result-header-left">' +
@@ -367,9 +603,7 @@ function buildLayoverCard(data, layover) {
 }
 
 function buildMainCard(data, passport, dest) {
-  if (!data || !data.data) {
-    return buildErrorCard('No data returned', 'Try a different passport and destination combination.');
-  }
+  if (!data || !data.data) return buildErrorCard('No data returned', 'Try a different combination.');
 
   var d = data.data;
   var primaryRule = (d.visa_rules && d.visa_rules.primary_rule) ? d.visa_rules.primary_rule : {};
@@ -435,11 +669,11 @@ function buildDisclaimerCard() {
       '<div class="result-header-left">' +
         '<div class="status-icon">ℹ️</div>' +
         '<div><div class="result-title">Always verify before you book</div>' +
-        '<div class="result-sub">Entry rules can change with little notice</div></div>' +
+        '<div class="result-sub">Entry rules and airline policies can change</div></div>' +
       '</div>' +
     '</div>' +
     '<div class="result-body">' +
-      '<p>Visa requirements can change at short notice. Always confirm with the official embassy or consulate before booking non-refundable tickets.</p>' +
+      '<p>Visa requirements and airline benefit policies can change at short notice. Always confirm with the official embassy and airline before booking non-refundable tickets. Layover benefit eligibility depends on ticket type, route, and availability.</p>' +
       '<div class="link-row">' +
         '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank" rel="noopener">🔍 Sherpa° live requirements</a>' +
         '<a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank" rel="noopener">✈️ IATA Travel Centre</a>' +
@@ -459,7 +693,6 @@ function buildErrorCard(title, message) {
     '<div class="result-body"><p>' + message + '</p>' +
       '<div class="link-row">' +
         '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank">🔍 Check on Sherpa°</a>' +
-        '<a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank">✈️ IATA Travel Centre</a>' +
       '</div>' +
     '</div>' +
   '</div>';
