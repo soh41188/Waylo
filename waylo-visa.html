@@ -253,7 +253,7 @@ async function runCheck() {
   results.className = '';
 
   try {
-    var res = await fetch(BASE + '/VisaRequirements', {
+    var res = await fetch(BASE + '/v2/visa/check', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
