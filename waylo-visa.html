@@ -27,7 +27,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 header{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid var(--b1);position:sticky;top:0;background:rgba(8,11,13,.95);backdrop-filter:blur(12px);z-index:50;}
 .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--tx);}
 .logo-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.75);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
 .nav{display:flex;gap:6px;}
 .nav-link{background:none;border:1px solid var(--b2);color:var(--tx2);font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 14px;border-radius:20px;cursor:pointer;text-decoration:none;transition:all .2s;}
 .nav-link:hover{border-color:var(--b3);color:var(--tx);}
@@ -39,13 +39,14 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .hero p{font-size:16px;color:var(--tx2);font-weight:300;line-height:1.65;max-width:480px;margin:0 auto;}
 .checker-wrap{max-width:780px;margin:0 auto 56px;padding:0 24px;}
 .checker-card{background:var(--s1);border:1px solid var(--b2);border-radius:20px;padding:30px;}
-.checker-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:end;margin-bottom:24px;}
+.checker-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:end;margin-bottom:20px;}
 .field-group{display:flex;flex-direction:column;gap:7px;}
 .field-label{font-size:11px;font-weight:500;letter-spacing:.9px;text-transform:uppercase;color:var(--tx3);}
 .country-select{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:13px 14px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;cursor:pointer;transition:border-color .2s;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5260' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
 .country-select:focus{border-color:rgba(0,229,160,.4);}
 .arrow-div{display:flex;align-items:flex-end;padding-bottom:3px;}
 .arrow-badge{background:var(--s3);border:1px solid var(--b2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:18px;}
+.layover-row{margin-bottom:20px;}
 .check-btn{width:100%;background:var(--accent);color:#041a0d;border:none;border-radius:var(--rs);padding:15px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;}
 .check-btn:hover{background:#00f5ad;transform:translateY(-1px);}
 .check-btn:disabled{background:var(--s3);color:var(--tx3);cursor:not-allowed;transform:none;}
@@ -96,7 +97,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .detail-item-val{font-size:13px;font-weight:500;color:var(--tx);}
 .detail-item-val.green{color:var(--ok);}
 .detail-item-val.amber{color:var(--warn);}
-.detail-item-val.red{color:var(--red);}
 .link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
 .ext-link{display:inline-flex;align-items:center;gap:5px;background:var(--s2);border:1px solid var(--b2);color:var(--tx2);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .2s;}
 .ext-link:hover{border-color:var(--accent);color:var(--accent);}
@@ -126,11 +126,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 <div class="hero">
   <div class="eyebrow">Entry requirements</div>
   <h1>Know before<br>you <em>book.</em></h1>
-  <p>Real-time visa requirements for 200 passports and 211 destinations — including transit rules and registration requirements.</p>
+  <p>Real-time visa requirements for 200 passports and 211 destinations — including layover transit warnings.</p>
 </div>
 
 <div class="checker-wrap">
   <div class="checker-card">
+
     <div class="checker-grid">
       <div class="field-group">
         <label class="field-label">Your passport</label>
@@ -188,11 +189,32 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
         </select>
       </div>
     </div>
+
+    <div class="layover-row">
+      <div class="field-label" style="margin-bottom:10px">Layover country (optional)</div>
+      <select class="country-select" id="layover-select">
+        <option value="">No layover — direct flight</option>
+        <option value="GB">🇬🇧 via United Kingdom</option>
+        <option value="FR">🇫🇷 via France</option>
+        <option value="DE">🇩🇪 via Germany</option>
+        <option value="ES">🇪🇸 via Spain</option>
+        <option value="NL">🇳🇱 via Netherlands</option>
+        <option value="PT">🇵🇹 via Portugal</option>
+        <option value="IT">🇮🇹 via Italy</option>
+        <option value="TR">🇹🇷 via Turkey</option>
+        <option value="AE">🇦🇪 via UAE</option>
+        <option value="QA">🇶🇦 via Qatar</option>
+        <option value="BR">🇧🇷 via Brazil</option>
+        <option value="MA">🇲🇦 via Morocco</option>
+      </select>
+    </div>
+
     <button class="check-btn" id="check-btn" onclick="runCheck()">Check visa requirements →</button>
+
   </div>
 
   <div class="loading" id="loading">
-    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--tx2)">Checking real-time visa requirements...</div>
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--tx2)" id="ld-msg">Checking real-time visa requirements...</div>
     <div class="ld-bar"><div class="ld-fill"></div></div>
   </div>
 
@@ -207,40 +229,48 @@ var KEY = '0a6383f290msh1ac5b7a3a8e7eb1p181d5fjsnc2a5c9547ba4';
 var HOST = 'visa-requirement.p.rapidapi.com';
 var BASE = 'https://visa-requirement.p.rapidapi.com';
 
-function getColorClass(color) {
-  if (!color) return '';
+var PASSPORT_NAMES = {
+  'BR':'Brazil','US':'United States','GB':'United Kingdom','IN':'India',
+  'CN':'China','NG':'Nigeria','MX':'Mexico','AR':'Argentina','ZA':'South Africa',
+  'PH':'Philippines','AU':'Australia','CA':'Canada','DE':'Germany','FR':'France',
+  'IT':'Italy','ES':'Spain','PT':'Portugal','NL':'Netherlands','TR':'Turkey',
+  'AL':'Albania','MK':'North Macedonia'
+};
+
+async function callVisaAPI(passport, destination) {
+  var res = await fetch(BASE + '/v2/visa/check', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-rapidapi-host': HOST,
+      'x-rapidapi-key': KEY
+    },
+    body: JSON.stringify({ passport: passport, destination: destination })
+  });
+  if (!res.ok) throw new Error('API error ' + res.status);
+  return await res.json();
+}
+
+function colorToClass(color) {
+  if (!color) return 'warn-card';
   var c = color.toLowerCase();
-  if (c === 'green') return 'ok';
-  if (c === 'blue') return 'ok';
-  if (c === 'yellow') return 'warn-card';
+  if (c === 'green' || c === 'blue') return 'ok';
   if (c === 'red') return 'bad';
   return 'warn-card';
 }
 
-function getStatusIcon(color) {
+function colorToIcon(color) {
   if (!color) return '🔍';
   var c = color.toLowerCase();
-  if (c === 'green') return '✅';
-  if (c === 'blue') return '✅';
-  if (c === 'yellow') return '⚠️';
+  if (c === 'green' || c === 'blue') return '✅';
   if (c === 'red') return '🚫';
-  return '🔍';
-}
-
-function getPassportName(code) {
-  var names = {
-    'BR':'Brazil','US':'United States','GB':'United Kingdom','IN':'India',
-    'CN':'China','NG':'Nigeria','MX':'Mexico','AR':'Argentina','ZA':'South Africa',
-    'PH':'Philippines','AU':'Australia','CA':'Canada','DE':'Germany','FR':'France',
-    'IT':'Italy','ES':'Spain','PT':'Portugal','NL':'Netherlands','TR':'Turkey',
-    'AL':'Albania','MK':'North Macedonia'
-  };
-  return names[code] || code;
+  return '⚠️';
 }
 
 async function runCheck() {
   var passport = document.getElementById('passport-select').value;
   var dest = document.getElementById('dest-select').value;
+  var layover = document.getElementById('layover-select').value;
 
   var btn = document.getElementById('check-btn');
   var loading = document.getElementById('loading');
@@ -249,35 +279,34 @@ async function runCheck() {
   btn.disabled = true;
   btn.textContent = 'Checking...';
   loading.className = 'loading show';
+  document.getElementById('ld-msg').textContent = 'Checking visa requirements...';
   results.innerHTML = '';
   results.className = '';
 
   try {
-    var res = await fetch(BASE + '/v2/visa/check', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-rapidapi-host': HOST,
-        'x-rapidapi-key': KEY
-      },
-      body: JSON.stringify({
-        passport: passport,
-        destination: dest
-      })
-    });
+    // Run both checks simultaneously if layover selected
+    var calls = [callVisaAPI(passport, dest)];
+    if (layover) calls.push(callVisaAPI(passport, layover));
+    var responses = await Promise.all(calls);
 
     loading.className = 'loading';
     btn.disabled = false;
     btn.textContent = 'Check visa requirements →';
 
-    if (!res.ok) {
-      results.innerHTML = buildErrorCard('API error ' + res.status, 'Could not fetch visa data. Please try again.');
-      results.className = 'show';
-      return;
+    var html = '';
+
+    // Layover warning first (most important — shown at top)
+    if (layover && responses[1]) {
+      html += buildLayoverCard(responses[1], layover);
     }
 
-    var data = await res.json();
-    results.innerHTML = buildResults(data, passport, dest);
+    // Main destination result
+    html += buildMainCard(responses[0], passport, dest);
+
+    // Disclaimer
+    html += buildDisclaimerCard();
+
+    results.innerHTML = html;
     results.className = 'show';
     setTimeout(function(){ results.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 
@@ -290,69 +319,105 @@ async function runCheck() {
   }
 }
 
-function buildResults(data, passport, dest) {
+function buildLayoverCard(data, layover) {
+  if (!data || !data.data) return '';
+  var rule = data.data.visa_rules && data.data.visa_rules.primary_rule;
+  if (!rule) return '';
+
+  var color = (rule.color || '').toLowerCase();
+  var destName = (data.data.destination && data.data.destination.name) ? data.data.destination.name : layover;
+  var cardClass = colorToClass(rule.color);
+  var icon = colorToIcon(rule.color);
+
+  if (color === 'green') {
+    return '<div class="result-card ok">' +
+      '<div class="result-header">' +
+        '<div class="result-header-left">' +
+          '<div class="status-icon">✅</div>' +
+          '<div><div class="result-title">No transit requirement for ' + destName + '</div>' +
+          '<div class="result-sub">Your passport can transit freely through ' + destName + '</div></div>' +
+        '</div>' +
+        '<div class="status-badge">Transit clear</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  var html = '<div class="result-card ' + cardClass + '">' +
+    '<div class="result-header">' +
+      '<div class="result-header-left">' +
+        '<div class="status-icon">' + icon + '</div>' +
+        '<div><div class="result-title">Transit requirement — layover in ' + destName + '</div>' +
+        '<div class="result-sub">Required even if you stay airside and never leave the airport</div></div>' +
+      '</div>' +
+      '<div class="status-badge">' + rule.name + '</div>' +
+    '</div>' +
+    '<div class="result-body">' +
+      '<p>Your passport requires <strong style="color:var(--tx)">' + rule.name + '</strong> to transit through ' + destName + ' — even if you are only changing planes and never pass through immigration. Many travelers discover this only at check-in.</p>' +
+      '<div class="detail-grid">' +
+        '<div class="detail-item"><div class="detail-item-label">Requirement</div><div class="detail-item-val amber">' + rule.name + '</div></div>' +
+        '<div class="detail-item"><div class="detail-item-label">Duration allowed</div><div class="detail-item-val">' + (rule.duration || 'See official source') + '</div></div>' +
+      '</div>';
+
+  if (rule.link) {
+    html += '<div class="link-row"><a class="ext-link" href="' + rule.link + '" target="_blank" rel="noopener">🔗 Apply / more information</a></div>';
+  }
+
+  html += '</div></div>';
+  return html;
+}
+
+function buildMainCard(data, passport, dest) {
   if (!data || !data.data) {
     return buildErrorCard('No data returned', 'Try a different passport and destination combination.');
   }
 
   var d = data.data;
-  var visaRules = d.visa_rules || {};
-  var primaryRule = visaRules.primary_rule || {};
-  var secondaryRule = visaRules.secondary_rule || null;
+  var primaryRule = (d.visa_rules && d.visa_rules.primary_rule) ? d.visa_rules.primary_rule : {};
+  var secondaryRule = (d.visa_rules && d.visa_rules.secondary_rule) ? d.visa_rules.secondary_rule : null;
   var mandatoryReg = d.mandatory_registration || null;
   var destination = d.destination || {};
-  var passportName = getPassportName(passport);
+  var passportName = PASSPORT_NAMES[passport] || passport;
 
-  var cardClass = getColorClass(primaryRule.color);
-  var icon = getStatusIcon(primaryRule.color);
+  var cardClass = colorToClass(primaryRule.color);
+  var icon = colorToIcon(primaryRule.color);
   var ruleName = primaryRule.name || 'Check required';
   var duration = primaryRule.duration || 'See official source';
 
-  var html = '';
-
-  // Main visa card
-  html += '<div class="result-card ' + cardClass + '">' +
+  var html = '<div class="result-card ' + cardClass + '">' +
     '<div class="result-header">' +
       '<div class="result-header-left">' +
         '<div class="status-icon">' + icon + '</div>' +
-        '<div>' +
-          '<div class="result-title">' + ruleName + '</div>' +
-          '<div class="result-sub">' + passportName + ' → ' + (destination.name || dest) + '</div>' +
-        '</div>' +
+        '<div><div class="result-title">' + ruleName + '</div>' +
+        '<div class="result-sub">' + passportName + ' → ' + (destination.name || dest) + '</div></div>' +
       '</div>' +
       '<div class="status-badge">' + ruleName + '</div>' +
     '</div>' +
-    '<div class="result-body">';
+    '<div class="result-body">' +
+      '<div class="detail-grid">' +
+        '<div class="detail-item"><div class="detail-item-label">Stay allowed</div><div class="detail-item-val green">' + duration + '</div></div>' +
+        '<div class="detail-item"><div class="detail-item-label">Passport validity</div><div class="detail-item-val amber">' + (destination.passport_validity || 'Check requirements') + '</div></div>' +
+        '<div class="detail-item"><div class="detail-item-label">Capital</div><div class="detail-item-val">' + (destination.capital || '--') + '</div></div>' +
+        '<div class="detail-item"><div class="detail-item-label">Currency</div><div class="detail-item-val">' + (destination.currency || '--') + '</div></div>' +
+        '<div class="detail-item"><div class="detail-item-label">Timezone</div><div class="detail-item-val">' + (destination.timezone || '--') + '</div></div>' +
+        '<div class="detail-item"><div class="detail-item-label">Phone code</div><div class="detail-item-val">' + (destination.phone_code || '--') + '</div></div>' +
+      '</div>';
 
-  // Details grid
-  html += '<div class="detail-grid">' +
-    '<div class="detail-item"><div class="detail-item-label">Stay allowed</div><div class="detail-item-val green">' + duration + '</div></div>' +
-    '<div class="detail-item"><div class="detail-item-label">Passport validity</div><div class="detail-item-val amber">' + (destination.passport_validity || 'Check requirements') + '</div></div>' +
-    '<div class="detail-item"><div class="detail-item-label">Capital</div><div class="detail-item-val">' + (destination.capital || '--') + '</div></div>' +
-    '<div class="detail-item"><div class="detail-item-label">Currency</div><div class="detail-item-val">' + (destination.currency || '--') + '</div></div>' +
-    '<div class="detail-item"><div class="detail-item-label">Timezone</div><div class="detail-item-val">' + (destination.timezone || '--') + '</div></div>' +
-    '<div class="detail-item"><div class="detail-item-label">Phone code</div><div class="detail-item-val">' + (destination.phone_code || '--') + '</div></div>' +
-  '</div>';
-
-  // Secondary rule (eVisa option etc)
   if (secondaryRule && secondaryRule.name) {
     html += '<div style="margin-top:14px;background:var(--s2);border-radius:var(--rs);padding:12px 14px;">' +
       '<div style="font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--tx3);margin-bottom:6px">Alternative option</div>' +
       '<div style="font-size:13px;font-weight:500;color:var(--tx);margin-bottom:3px">' + secondaryRule.name + '</div>' +
       '<div style="font-size:12px;color:var(--tx2)">' + (secondaryRule.duration || '') + '</div>' +
-      (secondaryRule.link ? '<a href="' + secondaryRule.link + '" target="_blank" rel="noopener" class="ext-link" style="margin-top:8px">🔗 Apply here</a>' : '') +
+      (secondaryRule.link ? '<a href="' + secondaryRule.link + '" target="_blank" rel="noopener" class="ext-link" style="margin-top:8px;display:inline-flex">🔗 Apply here</a>' : '') +
     '</div>';
   }
 
-  // Mandatory registration warning
   if (mandatoryReg && mandatoryReg.name) {
     html += '<div class="reg-box">' +
-      '<span>⚠️ Mandatory registration required: <strong>' + mandatoryReg.name + '</strong></span>' +
+      '<span>⚠️ Mandatory registration: <strong>' + mandatoryReg.name + '</strong></span>' +
       (mandatoryReg.link ? '<a href="' + mandatoryReg.link + '" target="_blank" rel="noopener" class="reg-link">Register →</a>' : '') +
     '</div>';
   }
 
-  // Embassy link
   if (destination.embassy_url) {
     html += '<div class="link-row">' +
       '<a class="ext-link" href="' + destination.embassy_url + '" target="_blank" rel="noopener">🏛 Embassy information</a>' +
@@ -361,25 +426,26 @@ function buildResults(data, passport, dest) {
   }
 
   html += '</div></div>';
+  return html;
+}
 
-  // Disclaimer card
-  html += '<div class="result-card info-card" style="animation-delay:.1s">' +
+function buildDisclaimerCard() {
+  return '<div class="result-card info-card">' +
     '<div class="result-header">' +
       '<div class="result-header-left">' +
         '<div class="status-icon">ℹ️</div>' +
-        '<div><div class="result-title">Always verify before you book</div><div class="result-sub">Entry rules can change with little notice</div></div>' +
+        '<div><div class="result-title">Always verify before you book</div>' +
+        '<div class="result-sub">Entry rules can change with little notice</div></div>' +
       '</div>' +
     '</div>' +
     '<div class="result-body">' +
-      '<p>Visa requirements can change at short notice. Always confirm with the official embassy or consulate before booking non-refundable tickets. This data is provided for reference only.</p>' +
+      '<p>Visa requirements can change at short notice. Always confirm with the official embassy or consulate before booking non-refundable tickets.</p>' +
       '<div class="link-row">' +
         '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank" rel="noopener">🔍 Sherpa° live requirements</a>' +
         '<a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank" rel="noopener">✈️ IATA Travel Centre</a>' +
       '</div>' +
     '</div>' +
   '</div>';
-
-  return html;
 }
 
 function buildErrorCard(title, message) {
