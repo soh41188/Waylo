@@ -25,19 +25,18 @@
 }
 html,body{height:100%;overflow:hidden;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);z-index:50;flex-shrink:0;background:var(--bg);}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;letter-spacing:-0.5px;display:flex;align-items:center;gap:7px;}
+
+/* ── NAV HEADER (matches other pages) ── */
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(10,13,15,.95);backdrop-filter:blur(12px);z-index:50;flex-shrink:0;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--text);}
 .logo-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
-.header-context{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:8px 14px;font-size:13px;color:var(--text2);}
-.header-context strong{color:var(--text);font-weight:500;}
-.header-context .divider{color:var(--text3);margin:0 4px;}
-.flight-tag{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(0,229,160,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;}
-.header-actions{display:flex;gap:8px;}
-.hdr-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;padding:7px 14px;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;}
-.hdr-btn:hover{border-color:var(--border2);color:var(--text);}
-.hdr-btn.accent{background:var(--accent);color:#051a0f;font-weight:600;border-color:var(--accent);}
-.hdr-btn.accent:hover{background:#00f5ad;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+.nav{display:flex;gap:6px;}
+.nav-link{background:none;border:1px solid var(--border2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 14px;border-radius:20px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.nav-link:hover{border-color:rgba(255,255,255,0.17);color:var(--text);}
+.nav-link.active{background:var(--accent-dim);border-color:rgba(0,229,160,.25);color:var(--accent);}
+/* ── end nav ── */
+
 .main{display:flex;flex:1;overflow:hidden;}
 .panel{width:var(--panel);flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
 .panel-top{padding:16px;border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -83,7 +82,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .safety-track{flex:1;height:3px;background:var(--surface4);border-radius:2px;overflow:hidden;}
 .safety-fill{height:100%;border-radius:2px;transition:width .6s ease;}
 .safety-score{font-size:10px;font-weight:600;min-width:24px;text-align:right;}
-/* Cost of living panel */
 .col-panel{border-top:1px solid var(--border);padding:14px;flex-shrink:0;background:var(--surface);}
 .col-panel-title{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
 .col-badge{font-size:9px;font-weight:600;padding:2px 7px;border-radius:8px;background:var(--golddim);color:var(--gold);border:1px solid rgba(255,215,0,.15);}
@@ -98,7 +96,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .col-bud-amt{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;}
 .col-bud-lbl{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;}
 .col-loading{font-size:11px;color:var(--text3);text-align:center;padding:10px;}
-/* Map */
 .map-area{flex:1;position:relative;overflow:hidden;background:#0d1117;}
 .map-canvas{width:100%;height:100%;position:relative;background:#0d1117;}
 .map-canvas::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
@@ -166,7 +163,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .drawer-btn.primary:hover{background:#00f5ad;}
 .drawer-btn.secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border2);}
 .drawer-btn.secondary:hover{border-color:var(--accent);color:var(--accent);}
-/* Working holiday visa card */
 .whv-card{background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);border-radius:var(--radius-sm);padding:14px;margin-top:14px;}
 .whv-title{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
 .whv-list{display:flex;flex-direction:column;gap:8px;}
@@ -182,24 +178,19 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .legend-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);}
 .api-note{position:absolute;bottom:16px;left:16px;background:var(--surface);border:1px dashed var(--border2);border-radius:var(--radius-sm);padding:8px 12px;font-size:10px;color:var(--text3);max-width:260px;z-index:20;line-height:1.5;}
 .api-note code{font-size:9px;background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--blue);}
-@media(max-width:768px){.panel{display:none;}.map-controls{top:10px;right:10px;}}
+@media(max-width:768px){.panel{display:none;}.map-controls{top:10px;right:10px;}header{padding:14px 20px;}.nav{display:none;}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo"><span class="logo-dot"></span>Waylo</div>
-  <div class="header-context">
-    <strong>Lisbon, Portugal</strong>
-    <span class="divider">·</span>
-    <span>Apr 15 – Apr 22</span>
-    <span class="divider">·</span>
-    <span>1 guest</span>
-    <span class="flight-tag">✈ LATAM split · $500</span>
-  </div>
-  <div class="header-actions">
-    <button class="hdr-btn accent" id="save-btn" onclick="saveTrip()">Save trip</button>
-  </div>
+  <a class="logo" href="index.html"><span class="logo-dot"></span>Waylo</a>
+  <nav class="nav">
+    <a class="nav-link" href="index.html">Flights</a>
+    <a class="nav-link active" href="#">Stays</a>
+    <a class="nav-link" href="waylo-visa.html">Visa check</a>
+    <a class="nav-link" href="waylo-split-explainer.html">How splits work</a>
+  </nav>
 </header>
 
 <div class="main">
@@ -207,7 +198,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="panel-top">
       <div class="panel-search">
         <input class="panel-input" type="text" placeholder="Search area, neighborhood..." value="Lisbon">
-        <button class="hdr-btn" style="padding:9px 12px;flex-shrink:0" onclick="filterListings()">↺</button>
+        <button style="background:var(--surface);border:1px solid var(--border);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;padding:9px 12px;border-radius:var(--radius-sm);cursor:pointer;flex-shrink:0" onclick="filterListings()">↺</button>
       </div>
       <div class="filter-row">
         <button class="filter-chip active" onclick="toggleFilter(this,'all')">All</button>
@@ -228,7 +219,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     </div>
     <div class="listings" id="listings-container"></div>
 
-    <!-- COST OF LIVING PANEL -->
     <div class="col-panel">
       <div class="col-panel-title">
         💰 Daily costs · Lisbon
@@ -321,18 +311,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 </div>
 
 <script>
-// ── YOUR API KEY ───────────────────────────────────────────────────────────
 var COL_KEY = 'b87f54055amsh4b004013f3fa7a6p1a72b9jsn950f333de5c4';
-// ─────────────────────────────────────────────────────────────────────────
-
 var COL_HOST = 'cost-of-living-and-prices.p.rapidapi.com';
 var COL_BASE = 'https://cost-of-living-and-prices.p.rapidapi.com';
-
-// Destination info for this page
 var CITY = 'Lisbon';
 var COUNTRY = 'Portugal';
 
-// Working holiday visa database for Portugal
 var WHV_DATA = {
   'Portugal': [
     { flag:'🇦🇺', country:'Australia', type:'Working Holiday Visa', age:'18–35', duration:'1 year', url:'https://immi.homeaffairs.gov.au/' },
@@ -362,112 +346,56 @@ const STAYS = [
 var activeStay=null,activeFilter='all',currentSort='price';
 var layerStates={airbnb:true,hotel:true,metro:true,bus:true,rings:true};
 
-// ── COST OF LIVING ────────────────────────────────────────────────────────
-function getItem(prices, name) {
-  for (var i=0;i<prices.length;i++) { if(prices[i].item_name===name && prices[i].usd) return prices[i]; }
-  return null;
-}
-function fmtAvg(item) {
-  if(!item||!item.usd) return '--';
-  return '$'+parseFloat(item.usd.avg).toFixed(2);
-}
+function getItem(prices,name){for(var i=0;i<prices.length;i++){if(prices[i].item_name===name&&prices[i].usd)return prices[i];}return null;}
+function fmtAvg(item){if(!item||!item.usd)return '--';return '$'+parseFloat(item.usd.avg).toFixed(2);}
 
-async function loadCOL() {
-  try {
-    var params = new URLSearchParams({ city_name: CITY, country_name: COUNTRY });
-    var res = await fetch(COL_BASE+'/prices?'+params.toString(), {
-      method:'GET',
-      headers:{ 'x-rapidapi-host':COL_HOST, 'x-rapidapi-key':COL_KEY }
-    });
-    if(!res.ok) throw new Error('API error '+res.status);
-    var data = await res.json();
-    var prices = data.prices || [];
-
-    var meal = getItem(prices,'Meal in Inexpensive Restaurant');
-    var coffee = getItem(prices,'Cappuccino');
-    var beer = getItem(prices,'Domestic Beer, 0.5 liter Draught');
-    var transit = getItem(prices,'One-way Ticket, Local Transport');
-    var taxi = getItem(prices,'Taxi Start, Normal Tariff');
-    var water = getItem(prices,'Water, 1.5 liter Bottle');
-
-    // Daily budget estimate
+async function loadCOL(){
+  try{
+    var params=new URLSearchParams({city_name:CITY,country_name:COUNTRY});
+    var res=await fetch(COL_BASE+'/prices?'+params.toString(),{method:'GET',headers:{'x-rapidapi-host':COL_HOST,'x-rapidapi-key':COL_KEY}});
+    if(!res.ok)throw new Error('API error '+res.status);
+    var data=await res.json();
+    var prices=data.prices||[];
+    var meal=getItem(prices,'Meal in Inexpensive Restaurant');
+    var coffee=getItem(prices,'Cappuccino');
+    var beer=getItem(prices,'Domestic Beer, 0.5 liter Draught');
+    var transit=getItem(prices,'One-way Ticket, Local Transport');
+    var taxi=getItem(prices,'Taxi Start, Normal Tariff');
+    var water=getItem(prices,'Water, 1.5 liter Bottle');
     var low=0,mid=0,high=0;
     if(meal&&meal.usd){low+=parseFloat(meal.usd.min)*2;mid+=parseFloat(meal.usd.avg)*2;high+=parseFloat(meal.usd.max)*2;}
     if(transit&&transit.usd){low+=parseFloat(transit.usd.min)*2;mid+=parseFloat(transit.usd.avg)*2;high+=parseFloat(transit.usd.max)*2;}
     if(beer&&beer.usd){low+=parseFloat(beer.usd.min);mid+=parseFloat(beer.usd.avg);high+=parseFloat(beer.usd.max);}
-
-    var html = '<div class="col-items">' +
-      '<div class="col-item"><div class="col-item-label">🍽 Budget meal</div><div class="col-item-price">'+fmtAvg(meal)+'</div></div>' +
-      '<div class="col-item"><div class="col-item-label">☕ Cappuccino</div><div class="col-item-price">'+fmtAvg(coffee)+'</div></div>' +
-      '<div class="col-item"><div class="col-item-label">🍺 Beer (draught)</div><div class="col-item-price">'+fmtAvg(beer)+'</div></div>' +
-      '<div class="col-item"><div class="col-item-label">🚇 Transit ticket</div><div class="col-item-price">'+fmtAvg(transit)+'</div></div>' +
-      '<div class="col-item"><div class="col-item-label">🚕 Taxi start</div><div class="col-item-price">'+fmtAvg(taxi)+'</div></div>' +
-      '<div class="col-item"><div class="col-item-label">💧 Water 1.5L</div><div class="col-item-price">'+fmtAvg(water)+'</div></div>' +
+    var html='<div class="col-items">'+
+      '<div class="col-item"><div class="col-item-label">🍽 Budget meal</div><div class="col-item-price">'+fmtAvg(meal)+'</div></div>'+
+      '<div class="col-item"><div class="col-item-label">☕ Cappuccino</div><div class="col-item-price">'+fmtAvg(coffee)+'</div></div>'+
+      '<div class="col-item"><div class="col-item-label">🍺 Beer (draught)</div><div class="col-item-price">'+fmtAvg(beer)+'</div></div>'+
+      '<div class="col-item"><div class="col-item-label">🚇 Transit ticket</div><div class="col-item-price">'+fmtAvg(transit)+'</div></div>'+
+      '<div class="col-item"><div class="col-item-label">🚕 Taxi start</div><div class="col-item-price">'+fmtAvg(taxi)+'</div></div>'+
+      '<div class="col-item"><div class="col-item-label">💧 Water 1.5L</div><div class="col-item-price">'+fmtAvg(water)+'</div></div>'+
     '</div>';
-
-    if(mid>0){
-      html += '<div class="col-daily-row">' +
-        '<div class="col-daily-label">Est. daily total</div>' +
-        '<div class="col-daily-budgets">' +
-          '<div class="col-bud"><div class="col-bud-amt" style="color:var(--accent)">$'+Math.round(low)+'</div><div class="col-bud-lbl">Budget</div></div>' +
-          '<div class="col-bud"><div class="col-bud-amt" style="color:var(--warn)">$'+Math.round(mid)+'</div><div class="col-bud-lbl">Mid</div></div>' +
-          '<div class="col-bud"><div class="col-bud-amt" style="color:var(--blue)">$'+Math.round(high)+'</div><div class="col-bud-lbl">Comfort</div></div>' +
-        '</div>' +
-      '</div>';
-    }
-
-    document.getElementById('col-content').innerHTML = html;
-  } catch(e) {
-    document.getElementById('col-content').innerHTML = '<div class="col-loading">Data unavailable</div>';
-    document.getElementById('col-badge').textContent = 'Unavailable';
+    if(mid>0){html+='<div class="col-daily-row"><div class="col-daily-label">Est. daily total</div><div class="col-daily-budgets"><div class="col-bud"><div class="col-bud-amt" style="color:var(--accent)">$'+Math.round(low)+'</div><div class="col-bud-lbl">Budget</div></div><div class="col-bud"><div class="col-bud-amt" style="color:var(--warn)">$'+Math.round(mid)+'</div><div class="col-bud-lbl">Mid</div></div><div class="col-bud"><div class="col-bud-amt" style="color:var(--blue)">$'+Math.round(high)+'</div><div class="col-bud-lbl">Comfort</div></div></div></div>';}
+    document.getElementById('col-content').innerHTML=html;
+  }catch(e){
+    document.getElementById('col-content').innerHTML='<div class="col-loading">Data unavailable</div>';
+    document.getElementById('col-badge').textContent='Unavailable';
   }
 }
 
-// ── WORKING HOLIDAY VISAS ─────────────────────────────────────────────────
-function buildWHVSection() {
-  var visas = WHV_DATA[COUNTRY] || [];
-  if(visas.length === 0) return '';
-
-  var html = '<div class="whv-card">' +
-    '<div class="whv-title">🌍 Working holiday visas for ' + COUNTRY + '</div>' +
-    '<div class="whv-list">';
-
-  for(var i=0;i<visas.length;i++){
-    var v=visas[i];
-    html += '<div class="whv-item">' +
-      '<div class="whv-left">' +
-        '<div class="whv-flag">'+v.flag+'</div>' +
-        '<div><div class="whv-country">'+v.country+' passport</div><div class="whv-type">'+v.type+' · '+v.duration+'</div></div>' +
-      '</div>' +
-      '<div class="whv-right">' +
-        '<div class="whv-age">Age '+v.age+'</div>' +
-        '<a href="'+v.url+'" target="_blank" rel="noopener" class="whv-link">Apply →</a>' +
-      '</div>' +
-    '</div>';
-  }
-
-  html += '</div>' +
-    '<div style="margin-top:10px;font-size:10px;color:var(--text3);line-height:1.5">Working holiday visas allow you to live and work in ' + COUNTRY + ' for an extended period. Eligibility depends on your passport nationality and age. Always verify current requirements with the official embassy.</div>' +
-  '</div>';
-  return html;
-}
-
-// ── LISTINGS ──────────────────────────────────────────────────────────────
 window.addEventListener('load',function(){renderListings();renderPins();loadCOL();});
 
 function renderListings(){
   var data=[...STAYS];
-  if(activeFilter==='airbnb') data=data.filter(function(s){return s.type==='airbnb';});
-  else if(activeFilter==='hotel') data=data.filter(function(s){return s.type==='hotel';});
-  else if(activeFilter==='budget') data=data.filter(function(s){return s.price<80;});
-  else if(activeFilter==='transit') data=data.filter(function(s){return s.walkTransit<=5;});
-  if(currentSort==='price') data.sort(function(a,b){return a.price-b.price;});
-  else if(currentSort==='transit') data.sort(function(a,b){return a.walkTransit-b.walkTransit;});
-  else if(currentSort==='safety') data.sort(function(a,b){return b.safetyScore-a.safetyScore;});
-  else if(currentSort==='airport') data.sort(function(a,b){return parseFloat(a.distAirport)-parseFloat(b.distAirport);});
+  if(activeFilter==='airbnb')data=data.filter(function(s){return s.type==='airbnb';});
+  else if(activeFilter==='hotel')data=data.filter(function(s){return s.type==='hotel';});
+  else if(activeFilter==='budget')data=data.filter(function(s){return s.price<80;});
+  else if(activeFilter==='transit')data=data.filter(function(s){return s.walkTransit<=5;});
+  if(currentSort==='price')data.sort(function(a,b){return a.price-b.price;});
+  else if(currentSort==='transit')data.sort(function(a,b){return a.walkTransit-b.walkTransit;});
+  else if(currentSort==='safety')data.sort(function(a,b){return b.safetyScore-a.safetyScore;});
+  else if(currentSort==='airport')data.sort(function(a,b){return parseFloat(a.distAirport)-parseFloat(b.distAirport);});
   document.getElementById('listing-count').textContent=data.length+' stay'+(data.length!==1?'s':'')+' found';
-  var c=document.getElementById('listings-container');
-  c.innerHTML='';
+  var c=document.getElementById('listings-container');c.innerHTML='';
   data.forEach(function(s){c.appendChild(buildListingCard(s));});
 }
 
@@ -477,8 +405,7 @@ function buildListingCard(s){
   div.onclick=function(){selectStay(s.id);};
   var sc=s.safetyScore>=85?'var(--accent)':s.safetyScore>=70?'var(--warn)':'#ff5c5c';
   var tb=s.walkTransit<=4?'stat-good':'';
-  div.innerHTML=
-    '<div class="listing-card-top"><div class="listing-name">'+s.name+'</div><div class="listing-price">$'+s.price+'<span>/ night</span></div></div>'+
+  div.innerHTML='<div class="listing-card-top"><div class="listing-name">'+s.name+'</div><div class="listing-price">$'+s.price+'<span>/ night</span></div></div>'+
     '<div class="listing-type-badge '+(s.type==='airbnb'?'badge-airbnb':'badge-hotel')+'">'+(s.type==='airbnb'?'● Airbnb':'▪ Hotel')+'</div>'+
     '<div class="listing-stats">'+
       '<div class="stat-item"><span class="stat-icon">✈</span><span>'+s.distAirport+' from airport</span></div>'+
@@ -494,13 +421,11 @@ function buildListingCard(s){
 }
 
 function renderPins(){
-  var c=document.getElementById('stay-pins');
-  c.innerHTML='';
+  var c=document.getElementById('stay-pins');c.innerHTML='';
   STAYS.forEach(function(s){
     var div=document.createElement('div');
-    div.className='stay-pin '+(activeStay===s.id?'active-pin':'');
-    div.id='pin-'+s.id;
-    div.style.left=s.mapX;div.style.top=s.mapY;
+    div.className='stay-pin'+(activeStay===s.id?' active-pin':'');
+    div.id='pin-'+s.id;div.style.left=s.mapX;div.style.top=s.mapY;
     div.onclick=function(){selectStay(s.id);};
     div.innerHTML='<div class="pin-bubble '+(s.type==='airbnb'?'airbnb-pin':'hotel-pin')+'">$'+s.price+'</div>';
     c.appendChild(div);
@@ -510,11 +435,8 @@ function renderPins(){
 function selectStay(id){
   activeStay=activeStay===id?null:id;
   renderListings();renderPins();
-  if(activeStay){
-    var s=STAYS.find(function(x){return x.id===id;});
-    openDrawer(s);
-    setTimeout(function(){var card=document.querySelector('.listing-card.active');if(card)card.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
-  } else closeDrawer();
+  if(activeStay){var s=STAYS.find(function(x){return x.id===id;});openDrawer(s);setTimeout(function(){var card=document.querySelector('.listing-card.active');if(card)card.scrollIntoView({behavior:'smooth',block:'nearest'});},50);}
+  else closeDrawer();
 }
 
 function openDrawer(s){
@@ -524,49 +446,15 @@ function openDrawer(s){
   var gmD='https://www.google.com/maps/dir/?api=1&origin='+s.stayCoords+'&destination='+AIRPORT_COORDS+'&travelmode=driving';
   var r2r='https://www.rome2rio.com/map/'+encodeURIComponent(s.neighborhood+' Lisbon')+'/'+encodeURIComponent('Lisbon Airport');
   var cm='https://citymapper.com/directions?endcoord='+AIRPORT_COORDS+'&endname='+AIRPORT_NAME+'&startcoord='+s.stayCoords+'&startname='+encodeURIComponent(s.name);
-
   document.getElementById('drawer-content').innerHTML=
-    '<div class="drawer-header">'+
-      '<div><div class="drawer-title">'+s.name+'</div><div style="font-size:12px;color:var(--text2);margin-top:3px">'+s.neighborhood+' · '+(s.type==='airbnb'?'Airbnb':'Hotel')+'</div></div>'+
-      '<div class="drawer-price"><div class="big">$'+s.price+'</div><div class="small">per night</div></div>'+
-    '</div>'+
-    '<div class="drawer-stats">'+
-      '<div class="d-stat"><div class="d-stat-val" style="color:var(--blue)">'+s.distAirport+'</div><div class="d-stat-label">From airport</div></div>'+
-      '<div class="d-stat"><div class="d-stat-val" style="color:var(--accent)">'+s.walkTransit+' min</div><div class="d-stat-label">To nearest stop</div></div>'+
-      '<div class="d-stat"><div class="d-stat-val" style="color:'+r.best.color+'">'+r.best.duration+'</div><div class="d-stat-label">Best transit</div></div>'+
-      '<div class="d-stat"><div class="d-stat-val" style="color:'+sc+'">'+s.safetyScore+'/100</div><div class="d-stat-label">Safety</div></div>'+
-    '</div>'+
-    '<div class="drawer-transit" style="margin-bottom:14px">'+
-      '<div class="drawer-transit-title">Nearby transit stops</div>'+
-      '<div class="transit-stop-list">'+
-        s.nearStops.map(function(t){var i=t.type==='metro'?'🚇':t.type==='tram'?'🚃':'🚌';var c=t.type==='metro'?'t-metro':t.type==='tram'?'t-tram':'t-bus';return'<div class="transit-stop-row"><div class="transit-stop-row-left">'+i+'<span class="transit-chip '+c+'">'+t.name+'</span></div><span class="transit-walk">'+t.walk+' walk</span></div>';}).join('')+
-      '</div>'+
-    '</div>'+
-    '<div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px">'+
-      '<div class="drawer-transit-title" style="margin-bottom:10px">✈ Getting to LIS Airport</div>'+
-      '<div style="background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.18);border-radius:10px;padding:12px 14px;margin-bottom:10px">'+
-        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
-          '<div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent)">Recommended</div>'+
-          '<div style="display:flex;gap:6px;align-items:center"><span style="font-family:\'Syne\',sans-serif;font-size:15px;font-weight:800;color:var(--accent)">'+r.best.cost+'</span><span style="font-size:11px;color:var(--text3)">· '+r.best.duration+'</span></div>'+
-        '</div>'+
-        '<div style="font-size:12px;color:var(--text2);line-height:1.6">'+r.best.icon+' '+r.best.steps+'</div>'+
-      '</div>'+
-      '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">'+
-        r.options.map(function(o,i){return'<div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--surface2);border-radius:8px;padding:10px 12px;border:1px solid '+(i===0?'rgba(0,229,160,0.15)':'var(--border)')+'"><span style="font-size:14px">'+o.icon+'</span><div><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px">'+o.mode+'</div><div style="font-size:11px;color:var(--text3)">'+o.note+'</div></div><div style="text-align:right;white-space:nowrap"><div style="font-family:\'Syne\',sans-serif;font-size:13px;font-weight:700;color:'+(i===0?'var(--accent)':'var(--text)')+'">'+o.cost+'</div><div style="font-size:10px;color:var(--text3)">'+o.duration+'</div></div></div>';}).join('')+
-      '</div>'+
-      '<div style="display:flex;gap:6px;flex-wrap:wrap">'+
-        '<a href="'+gmT+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🗺 Google Maps (transit)</a>'+
-        '<a href="'+gmD+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🚕 Google Maps (taxi)</a>'+
-        '<a href="'+cm+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🏙 Citymapper</a>'+
-        '<a href="'+r2r+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🌐 Rome2rio</a>'+
-      '</div>'+
-    '</div>'+
-    
-    '<div class="drawer-actions">'+
-      '<button class="drawer-btn secondary" onclick="closeDrawer()">✕ Close</button>'+
-      '<button class="drawer-btn primary" onclick="bookStay(\''+s.id+'\')">Book on '+(s.type==='airbnb'?'Airbnb':'Booking.com')+' →</button>'+
-    '</div>';
-
+    '<div class="drawer-header"><div><div class="drawer-title">'+s.name+'</div><div style="font-size:12px;color:var(--text2);margin-top:3px">'+s.neighborhood+' · '+(s.type==='airbnb'?'Airbnb':'Hotel')+'</div></div><div class="drawer-price"><div class="big">$'+s.price+'</div><div class="small">per night</div></div></div>'+
+    '<div class="drawer-stats"><div class="d-stat"><div class="d-stat-val" style="color:var(--blue)">'+s.distAirport+'</div><div class="d-stat-label">From airport</div></div><div class="d-stat"><div class="d-stat-val" style="color:var(--accent)">'+s.walkTransit+' min</div><div class="d-stat-label">To nearest stop</div></div><div class="d-stat"><div class="d-stat-val" style="color:'+r.best.color+'">'+r.best.duration+'</div><div class="d-stat-label">Best transit</div></div><div class="d-stat"><div class="d-stat-val" style="color:'+sc+'">'+s.safetyScore+'/100</div><div class="d-stat-label">Safety</div></div></div>'+
+    '<div class="drawer-transit" style="margin-bottom:14px"><div class="drawer-transit-title">Nearby transit stops</div><div class="transit-stop-list">'+s.nearStops.map(function(t){var i=t.type==='metro'?'🚇':t.type==='tram'?'🚃':'🚌';var c=t.type==='metro'?'t-metro':t.type==='tram'?'t-tram':'t-bus';return'<div class="transit-stop-row"><div class="transit-stop-row-left">'+i+'<span class="transit-chip '+c+'">'+t.name+'</span></div><span class="transit-walk">'+t.walk+' walk</span></div>';}).join('')+'</div></div>'+
+    '<div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px"><div class="drawer-transit-title" style="margin-bottom:10px">✈ Getting to LIS Airport</div>'+
+    '<div style="background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.18);border-radius:10px;padding:12px 14px;margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent)">Recommended</div><div style="display:flex;gap:6px;align-items:center"><span style="font-family:\'Syne\',sans-serif;font-size:15px;font-weight:800;color:var(--accent)">'+r.best.cost+'</span><span style="font-size:11px;color:var(--text3)">· '+r.best.duration+'</span></div></div><div style="font-size:12px;color:var(--text2);line-height:1.6">'+r.best.icon+' '+r.best.steps+'</div></div>'+
+    '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">'+r.options.map(function(o,i){return'<div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--surface2);border-radius:8px;padding:10px 12px;border:1px solid '+(i===0?'rgba(0,229,160,0.15)':'var(--border)')+'"><span style="font-size:14px">'+o.icon+'</span><div><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px">'+o.mode+'</div><div style="font-size:11px;color:var(--text3)">'+o.note+'</div></div><div style="text-align:right;white-space:nowrap"><div style="font-family:\'Syne\',sans-serif;font-size:13px;font-weight:700;color:'+(i===0?'var(--accent)':'var(--text)')+'">'+o.cost+'</div><div style="font-size:10px;color:var(--text3)">'+o.duration+'</div></div></div>';}).join('')+'</div>'+
+    '<div style="display:flex;gap:6px;flex-wrap:wrap"><a href="'+gmT+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🗺 Google Maps (transit)</a><a href="'+gmD+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🚕 Google Maps (taxi)</a><a href="'+cm+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🏙 Citymapper</a><a href="'+r2r+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:6px 12px;border-radius:6px;text-decoration:none">🌐 Rome2rio</a></div></div>'+
+    '<div class="drawer-actions"><button class="drawer-btn secondary" onclick="closeDrawer()">✕ Close</button><button class="drawer-btn primary" onclick="bookStay(\''+s.id+'\')">Book on '+(s.type==='airbnb'?'Airbnb':'Booking.com')+' →</button></div>';
   document.getElementById('detail-drawer').classList.add('open');
 }
 
@@ -589,17 +477,16 @@ function toggleLayer(layer){
   layerStates[layer]=!layerStates[layer];
   var tog=document.getElementById('layer-'+layer);
   layerStates[layer]?tog.classList.add('on'):tog.classList.remove('on');
-  if(layer==='metro') document.querySelectorAll('.metro-pin').forEach(function(el){el.closest('.transit-stop').style.display=layerStates.metro?'':'none';});
-  else if(layer==='bus') document.querySelectorAll('.bus-pin').forEach(function(el){el.closest('.transit-stop').style.display=layerStates.bus?'':'none';});
-  else if(layer==='airbnb') document.querySelectorAll('.airbnb-pin').forEach(function(el){el.closest('.stay-pin').style.display=layerStates.airbnb?'':'none';});
-  else if(layer==='hotel') document.querySelectorAll('.hotel-pin').forEach(function(el){el.closest('.stay-pin').style.display=layerStates.hotel?'':'none';});
-  else if(layer==='rings') ['ring-3km','ring-7km','ring-15km'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=layerStates.rings?'flex':'none';});
+  if(layer==='metro')document.querySelectorAll('.metro-pin').forEach(function(el){el.closest('.transit-stop').style.display=layerStates.metro?'':'none';});
+  else if(layer==='bus')document.querySelectorAll('.bus-pin').forEach(function(el){el.closest('.transit-stop').style.display=layerStates.bus?'':'none';});
+  else if(layer==='airbnb')document.querySelectorAll('.airbnb-pin').forEach(function(el){el.closest('.stay-pin').style.display=layerStates.airbnb?'':'none';});
+  else if(layer==='hotel')document.querySelectorAll('.hotel-pin').forEach(function(el){el.closest('.stay-pin').style.display=layerStates.hotel?'':'none';});
+  else if(layer==='rings')['ring-3km','ring-7km','ring-15km'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=layerStates.rings?'flex':'none';});
 }
 
 function toggleFilter(btn,filter){document.querySelectorAll('.filter-chip').forEach(function(c){c.classList.remove('active');});btn.classList.add('active');activeFilter=filter;renderListings();}
 function sortListings(val){currentSort=val;renderListings();}
 function filterListings(){renderListings();}
-function saveTrip(){var btn=document.getElementById('save-btn');btn.textContent='✓ Saved!';setTimeout(function(){btn.textContent='Save trip';},2000);}
 </script>
 </body>
 </html>
