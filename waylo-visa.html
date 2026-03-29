@@ -21,6 +21,7 @@
   --red:#ff4f4f;--reddim:rgba(255,79,79,0.1);
   --blue:#4aa8ff;--bluedim:rgba(74,168,255,0.1);
   --purple:#a78bfa;--purpdim:rgba(167,139,250,0.1);
+  --teal:#00d4c8;--tealdim:rgba(0,212,200,0.1);
   --r:12px;--rs:8px;
 }
 html{scroll-behavior:smooth;}
@@ -98,6 +99,25 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .benefit-card .result-sub{color:rgba(167,139,250,.6);}
 .benefit-card .status-badge{background:var(--purpdim);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
 .benefit-card{border:1px solid rgba(167,139,250,.25);}
+/* ── DID YOU KNOW card — teal ── */
+.dyk-card .result-header{background:rgba(0,212,200,0.07);border-bottom:1px solid rgba(0,212,200,0.12);}
+.dyk-card .status-icon{background:var(--tealdim);}
+.dyk-card .result-title{color:var(--teal);}
+.dyk-card .result-sub{color:rgba(0,212,200,.6);}
+.dyk-card .status-badge{background:var(--tealdim);color:var(--teal);border:1px solid rgba(0,212,200,.2);}
+.dyk-card{border:1px solid rgba(0,212,200,.22);}
+.dyk-tip{display:flex;gap:14px;background:var(--s2);border-radius:var(--rs);padding:14px;margin-bottom:10px;}
+.dyk-tip:last-child{margin-bottom:0;}
+.dyk-tip-num{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--teal);opacity:.5;flex-shrink:0;line-height:1;margin-top:1px;}
+.dyk-tip-body{}
+.dyk-tip-title{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:4px;}
+.dyk-tip-desc{font-size:12px;color:var(--tx2);line-height:1.6;}
+.dyk-tip-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-top:6px;}
+.tag-nomad{background:rgba(167,139,250,.12);color:var(--purple);}
+.tag-extend{background:rgba(0,201,122,.1);color:var(--ok);}
+.tag-longstay{background:rgba(0,212,200,.1);color:var(--teal);}
+.tag-caution{background:rgba(245,166,35,.1);color:var(--warn);}
+/* ── end DYK ── */
 .result-body{background:var(--s1);padding:16px 20px;}
 .result-body p{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:10px;}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
@@ -635,103 +655,250 @@ var PASSPORT_NAMES = {
   'VN':'Vietnam','AL':'Albania','MK':'North Macedonia'
 };
 
-// ── LAYOVER BENEFITS DATABASE ─────────────────────────────────────────────
-// Structure: airline code → array of benefit tiers by minimum hours
-var BENEFITS_DB = {
-  'CZ': { // China Southern
-    name: 'China Southern',
-    hub: 'Guangzhou (CAN)',
-    tiers: [
-      { minHours: 6, maxHours: 11, benefits: ['Complimentary lounge access at CAN'], howTo: 'Request at the China Southern transit desk in Guangzhou airport on arrival. Show your onward boarding pass.' },
-      { minHours: 11, maxHours: 72, benefits: ['Free hotel accommodation (1 night)', 'Complimentary breakfast', 'Free shuttle transport airport ↔ hotel', 'Complimentary lounge access'], howTo: 'At Guangzhou airport, go to the China Southern Transit Hotel Service desk (arrivals hall). Show your passport and onward boarding pass. They will arrange hotel, transport, and meals at no cost.' }
+// ── DID YOU KNOW — LONG STAY DATABASE ────────────────────────────────────
+// Each entry: { name, flag, tips: [{ title, desc, tag }] }
+// Tags: 'extend' | 'nomad' | 'longstay' | 'caution'
+var LONGSTAY_DB = {
+  'TH': {
+    name: 'Thailand', flag: '🇹🇭',
+    tips: [
+      { title: 'Tourist visa + extension = up to 90 days', desc: 'A Thai Tourist Visa (TR) gives 60 days. You can extend it once at any immigration office for 30 more days (฿1,900), totalling 90 days without leaving the country.', tag: 'extend' },
+      { title: 'Long-Term Resident (LTR) Visa — up to 10 years', desc: 'Thailand\'s LTR visa offers 5–10 year stays for retirees, remote workers, and high-net-worth individuals. Remote workers need proof of $80k/year income and a current employer outside Thailand.', tag: 'nomad' },
+      { title: 'Border run reality check', desc: 'Many long-termers use border runs (crossing to Malaysia, Laos, or Cambodia and re-entering) to reset their permitted days. Thai immigration now monitors frequent re-entries — use official visa pathways for stays over 90 days.', tag: 'caution' }
     ]
   },
-  'CA': { // Air China
-    name: 'Air China',
-    hub: 'Beijing (PEK)',
-    tiers: [
-      { minHours: 6, maxHours: 11, benefits: ['Complimentary lounge access at PEK'], howTo: 'Go to the Air China transit service counter at Beijing Capital Airport with your onward boarding pass.' },
-      { minHours: 11, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Free airport shuttle', 'Lounge access'], howTo: 'At Beijing Airport arrivals, visit the Air China Transit Service desk. Present passport and onward boarding pass. Hotel and transport arranged free of charge.' }
+  'ID': {
+    name: 'Indonesia', flag: '🇮🇩',
+    tips: [
+      { title: 'Social/Cultural Visa — up to 180 days', desc: 'The B211A Social Visa allows stays of 60 days, extendable 4 times (30 days each) at local immigration offices. Total potential stay: 180 days. Requires a local sponsor — many guesthouses and Bali-based agencies provide this for a small fee.', tag: 'longstay' },
+      { title: 'Digital Nomad Visa (Second Home)', desc: 'Indonesia\'s Second Home Visa allows a 5-year stay with proof of funds (~$130,000 in a bank account or equivalent assets). A shorter B211A is preferred by most digital nomads for flexibility.', tag: 'nomad' },
+      { title: 'Visa on Arrival is 30 days only', desc: 'The standard VoA gives 30 days, extendable once for 30 more days online (total 60 days). Don\'t confuse this with longer-stay options — you cannot chain VoA extensions.', tag: 'caution' }
     ]
   },
-  'MU': { // China Eastern
-    name: 'China Eastern',
-    hub: 'Shanghai (PVG)',
-    tiers: [
-      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport shuttle service'], howTo: 'At Shanghai Pudong Airport, go to the China Eastern transit service counter. Show passport and onward boarding pass to arrange free accommodation.' }
+  'MA': {
+    name: 'Morocco', flag: '🇲🇦',
+    tips: [
+      { title: '90 days — and the reset is simple', desc: 'Most Western passport holders get 90 days visa-free. The clock resets after leaving — a short trip to Spain (Algeciras–Tarifa ferry) or across to Ceuta is enough. Many long-termers rotate every 90 days with no issues.', tag: 'extend' },
+      { title: 'No formal digital nomad visa (yet)', desc: 'Morocco doesn\'t have an official digital nomad visa as of 2025, but the government has announced plans. For now, the 90-day tourist entry renewed by brief exit is the standard approach for remote workers.', tag: 'nomad' },
+      { title: 'Carte de séjour for longer stays', desc: 'If you\'re staying longer term (e.g. renting an apartment, running a business), you can apply for a Carte de Séjour (residency card) at the local prefecture. Requires proof of accommodation, income, and intent.', tag: 'longstay' }
     ]
   },
-  'TK': { // Turkish Airlines
-    name: 'Turkish Airlines',
-    hub: 'Istanbul (IST)',
-    tiers: [
-      { minHours: 6, maxHours: 10, benefits: ['Complimentary meal voucher', 'CIP Lounge access (business class)', 'City tour available (Economy — select routes)'], howTo: 'Go to the Turkish Airlines transfer desk at Istanbul Airport. Economy passengers on qualifying long-haul routes may request a free city tour of Istanbul.' },
-      { minHours: 10, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport transfer', 'Optional Istanbul city tour'], howTo: 'At Istanbul Airport, visit the Turkish Airlines Transfer Hotel desk. Present passport and onward boarding pass. Hotel, meals, and city tour arranged free of charge for qualifying routes.' }
+  'PT': {
+    name: 'Portugal', flag: '🇵🇹',
+    tips: [
+      { title: 'D8 Digital Nomad Visa — legal remote work residency', desc: 'Portugal\'s D8 visa is designed for remote workers. Requires proof of income (~€3,280/month) and a non-Portuguese employer or clients. Gives a 1-year renewable residency permit. Path to permanent residency after 5 years.', tag: 'nomad' },
+      { title: 'D7 Passive Income Visa — popular with retirees', desc: 'The D7 is for those with consistent passive income (pensions, rental income, dividends). Lower income threshold than D8 (~€760/month). Very popular with retirees and semi-retired nomads.', tag: 'longstay' },
+      { title: 'NHR tax regime (ending — check current rules)', desc: 'Portugal\'s Non-Habitual Resident tax status offered flat 20% income tax for 10 years. The classic NHR ended in 2024 but a replacement scheme (IFICI) for specific professions launched. Verify current status with a tax adviser.', tag: 'caution' }
     ]
   },
-  'EK': { // Emirates
-    name: 'Emirates',
-    hub: 'Dubai (DXB)',
-    tiers: [
-      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (Economy class on long-haul routes)', 'Complimentary meals', 'Airport transfer'], howTo: 'Contact Emirates customer service before travel or visit the Emirates desk at Dubai Airport. Free hotel is available on specific long-haul routes — confirm eligibility when booking.' }
+  'ES': {
+    name: 'Spain', flag: '🇪🇸',
+    tips: [
+      { title: 'Digital Nomad Visa — launched 2023', desc: 'Spain\'s Digital Nomad Visa allows remote workers to live legally in Spain for up to 5 years. Requires a minimum income of ~€2,646/month and proof you work for a company outside Spain (or have international clients).', tag: 'nomad' },
+      { title: 'Non-Lucrative Visa — popular for slow travel', desc: 'If you don\'t need to work in Spain, the Non-Lucrative Visa is simpler to obtain. It requires proof of sufficient funds (~€28,800/year) and is renewable annually. You cannot work while on this visa.', tag: 'longstay' },
+      { title: 'Schengen 90/180 rule still applies for non-EU', desc: 'Without a visa, non-EU citizens are limited to 90 days in any 180-day period across the entire Schengen Area — not just Spain. The digital nomad visa or non-lucrative visa sidesteps this completely.', tag: 'caution' }
     ]
   },
-  'QR': { // Qatar Airways
-    name: 'Qatar Airways',
-    hub: 'Doha (DOH)',
-    tiers: [
-      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (select routes)', 'Complimentary meals', 'Airport transfer', 'Al Mourjan lounge access (Business)'], howTo: 'Contact Qatar Airways or visit the transfer desk at Hamad International Airport. Hotel availability depends on route and ticket class.' }
+  'MX': {
+    name: 'Mexico', flag: '🇲🇽',
+    tips: [
+      { title: 'Tourist card (FMM) — 180 days, negotiable at entry', desc: 'Mexico\'s FMM tourist card can grant up to 180 days at the border officer\'s discretion. Confidently state how long you plan to stay — many travelers are given only 30 days without asking. Always request the full 180.', tag: 'extend' },
+      { title: 'Temporary Resident Visa — 1–4 years', desc: 'Mexico\'s Temporary Resident Visa is ideal for longer stays. Requires proof of income (~$1,620/month via bank statements or pension). Renewable annually, and after 4 years you can apply for permanent residency.', tag: 'longstay' },
+      { title: 'No border run needed — just re-enter', desc: 'Unlike some countries, leaving and re-entering Mexico legitimately resets your tourist stay. Many remote workers cross briefly into the US or Guatemala and return. Note: do not abuse this — immigration officers can deny entry.', tag: 'caution' }
     ]
   },
-  'KE': { // Korean Air
-    name: 'Korean Air',
-    hub: 'Seoul (ICN)',
-    tiers: [
-      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport shuttle', 'Seoul city tour available'], howTo: 'At Incheon Airport, go to the Korean Air Transfer Desk. Present passport and onward ticket. Free hotel and optional city tour of Seoul available for qualifying layovers.' }
+  'VN': {
+    name: 'Vietnam', flag: '🇻🇳',
+    tips: [
+      { title: 'E-visa now grants 90 days, extendable', desc: 'Vietnam\'s e-visa was upgraded in 2023 to 90 days (single or multiple entry). You can apply for extensions at local immigration offices without leaving the country — a major improvement over the old 30-day limit.', tag: 'extend' },
+      { title: 'No official digital nomad visa — yet', desc: 'Vietnam doesn\'t have a dedicated remote worker visa, but the 90-day e-visa covers most stays. Some long-termers use a 1-year business visa (DN) which requires a Vietnamese sponsor company.', tag: 'nomad' },
+      { title: 'Temporary residence card (TRC) for 1–2 years', desc: 'If you have a local sponsor (employer, property lease, or family), you can apply for a TRC at local immigration, granting 1–2 year stays without leaving. Cost and process vary by province.', tag: 'longstay' }
     ]
   },
-  'OZ': { // Asiana
-    name: 'Asiana Airlines',
-    hub: 'Seoul (ICN)',
-    tiers: [
-      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport transfer'], howTo: 'Visit the Asiana Airlines transfer desk at Incheon Airport with your passport and onward boarding pass.' }
+  'GE': {
+    name: 'Georgia', flag: '🇬🇪',
+    tips: [
+      { title: '365 days visa-free for most Western passports', desc: 'Georgia allows citizens of 95+ countries — including the US, UK, EU, Australia, and Canada — to stay for up to 1 full year without any visa. No registration, no paperwork, just arrive.', tag: 'longstay' },
+      { title: 'Flat 1% income tax for individual entrepreneurs', desc: 'Georgia\'s Small Business Status (Virtual Zone or IE status) allows eligible remote workers to pay as little as 1% income tax on foreign-sourced income. Very popular with digital nomads.', tag: 'nomad' },
+      { title: 'Renewal by brief exit is common', desc: 'After your 365-day stay, a quick trip across the border (e.g. to Armenia or Turkey) and re-entry resets the clock for another year. This has worked reliably for years, though always check current policy.', tag: 'extend' }
     ]
   },
-  'SQ': { // Singapore Airlines
-    name: 'Singapore Airlines',
-    hub: 'Singapore (SIN)',
-    tiers: [
-      { minHours: 5, maxHours: 72, benefits: ['Complimentary Singapore city tour (select routes)', 'KrisFlyer lounge access (qualifying passengers)', 'Meal vouchers'], howTo: 'Singapore Airlines offers free city tours for transit passengers on select routes. Check eligibility at the Singapore Airlines transfer desk at Changi Airport.' }
+  'CO': {
+    name: 'Colombia', flag: '🇨🇴',
+    tips: [
+      { title: '90 days visa-free, extendable to 180', desc: 'Most nationalities receive 90 days on arrival. You can extend for another 90 days (total 180) at a Migración Colombia office before your first period expires. Fee is roughly $50–100 USD.', tag: 'extend' },
+      { title: 'Digital Nomad / Remote Worker Visa (M)', desc: 'Colombia\'s Migrant (M) visa category includes options for freelancers and remote workers. Requirements include proof of income (~$750/month) and a contract or client letters showing income from outside Colombia.', tag: 'nomad' },
+      { title: 'Pensionado Visa for retirees', desc: 'Colombia\'s pensionado visa requires just ~$750/month in pension or passive income. One of Latin America\'s most affordable and accessible retirement visa programmes.', tag: 'longstay' }
     ]
   },
-  'CX': { // Cathay Pacific
-    name: 'Cathay Pacific',
-    hub: 'Hong Kong (HKG)',
-    tiers: [
-      { minHours: 6, maxHours: 72, benefits: ['The Pier lounge access (Business/First)', 'Complimentary meal vouchers (Economy on long-haul)', 'Hong Kong city tour (select routes)'], howTo: 'Visit the Cathay Pacific transfer desk at Hong Kong International Airport. Economy class city tours available on select long-haul connections.' }
+  'TR': {
+    name: 'Turkey', flag: '🇹🇷',
+    tips: [
+      { title: '90 days visa-free (most Western passports)', desc: 'Many nationalities can stay 90 days within a 180-day period without a visa. The period resets after spending 90+ days outside Turkey. This is genuinely generous — Istanbul is a popular nomad base for this reason.', tag: 'extend' },
+      { title: 'Ikamet (residence permit) — apply after arrival', desc: 'You can apply for a short-term residence permit (ikamet) from inside Turkey via the e-ikamet system. Requires proof of accommodation (rental contract) and sufficient funds. Duration 1–2 years, renewable.', tag: 'longstay' },
+      { title: 'No dedicated digital nomad visa — yet', desc: 'Turkey has no dedicated remote work visa as of 2025, but the 90-day tourist entry plus ikamet path covers most needs. The tourism residence permit is the standard route for long-stay remote workers.', tag: 'nomad' }
     ]
   },
-  'EY': { // Etihad
-    name: 'Etihad Airways',
-    hub: 'Abu Dhabi (AUH)',
-    tiers: [
-      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (select routes)', 'Complimentary meals', 'Airport transfer'], howTo: 'Contact Etihad or visit the transfer desk at Abu Dhabi Airport. Hotel eligibility varies by route and class.' }
+  'ID': {
+    name: 'Indonesia', flag: '🇮🇩',
+    tips: [
+      { title: 'Social/Cultural Visa — up to 180 days', desc: 'The B211A Social Visa allows stays of 60 days, extendable 4 times (30 days each) at local immigration offices. Total potential stay: 180 days. Requires a local sponsor — many guesthouses and Bali agencies provide this for a small fee.', tag: 'longstay' },
+      { title: 'Digital Nomad Visa (Second Home)', desc: 'Indonesia\'s Second Home Visa allows a 5-year stay with proof of funds (~$130,000 in a bank account or equivalent assets). A shorter B211A is preferred by most digital nomads for flexibility.', tag: 'nomad' },
+      { title: 'Visa on Arrival is 30 days only', desc: 'The standard VoA gives 30 days, extendable once for 30 more days online (total 60 days). Don\'t confuse this with longer-stay options — you cannot chain VoA extensions.', tag: 'caution' }
     ]
   },
-  'AT': { // Royal Air Maroc
-    name: 'Royal Air Maroc',
-    hub: 'Casablanca (CMN)',
-    tiers: [
-      { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Casablanca city tour available'], howTo: 'Visit the Royal Air Maroc transfer desk at Mohammed V Airport, Casablanca. Present passport and onward boarding pass.' }
+  'KH': {
+    name: 'Cambodia', flag: '🇰🇭',
+    tips: [
+      { title: 'Ordinary Visa (E) — renewable indefinitely', desc: 'Cambodia\'s E-class Ordinary Visa can be extended for 1, 3, 6, or 12 months at immigration offices or via agents. Many long-termers renew annually with no issues, making Cambodia one of the easiest long-stay destinations in Southeast Asia.', tag: 'longstay' },
+      { title: 'No income proof required for tourist extension', desc: 'Unlike most countries, Cambodia\'s tourist visa extension process doesn\'t require proof of income or employment — just payment and a valid passport. Very accessible for remote workers.', tag: 'nomad' },
+      { title: 'E-visa is tourist only — switch to E-Ordinary on arrival', desc: 'The online e-visa is for tourism (30 days, T-class). For longer stays, enter on an Ordinary (E) visa — apply at a Cambodian embassy before you travel, or at land borders. This gives you the multi-extension pathway.', tag: 'caution' }
+    ]
+  },
+  'IN': {
+    name: 'India', flag: '🇮🇳',
+    tips: [
+      { title: 'e-Tourist Visa: 30 or 90 days, but limited entries', desc: 'India\'s e-Tourist Visa comes in 30-day (double entry) and 90-day (triple entry) versions. Importantly, you can only get 2 e-Tourist Visas per calendar year — plan ahead if you\'re doing multiple trips.', tag: 'extend' },
+      { title: '180-day tourist visa available via embassy', desc: 'A 6-month multiple entry tourist visa is available by applying directly at an Indian embassy or consulate. Requires more documentation than e-visa but gives much more flexibility for longer stays.', tag: 'longstay' },
+      { title: 'No digital nomad visa — remote work is a grey area', desc: 'India has no remote worker visa. Working on a tourist visa is technically not permitted. Some nomads use a Business Visa with an invitation letter, but this varies significantly in practice.', tag: 'caution' }
+    ]
+  },
+  'JP': {
+    name: 'Japan', flag: '🇯🇵',
+    tips: [
+      { title: 'Digital Nomad Visa — launched 2024', desc: 'Japan introduced a Digital Nomad Visa in 2024 allowing up to 6 months. Requirements: income of ~$68,000/year (approx.), private health insurance, and work for a company or clients outside Japan.', tag: 'nomad' },
+      { title: '90 days visa-free for most passports', desc: 'Citizens of 70+ countries enter Japan visa-free for 90 days. This is non-extendable without changing status — you must leave at the end of your 90 days.', tag: 'extend' },
+      { title: 'Working Holiday Visas for under-30s', desc: 'Japan has Working Holiday agreements with 30+ countries. If you\'re under 30 (or 35 for some nationalities), this gives 6–12 months to live and work legally. One of the most accessible long-stay options.', tag: 'longstay' }
+    ]
+  },
+  'AE': {
+    name: 'UAE', flag: '🇦🇪',
+    tips: [
+      { title: 'Remote Work Visa — 1 year, renewable', desc: 'The UAE\'s Virtual Working Programme (Dubai) and the UAE Freelance Visa allow remote workers to live in the UAE for 1 year, renewable. Requires proof of employment abroad and a minimum salary (~$5,000/month for Dubai).', tag: 'nomad' },
+      { title: '0% personal income tax', desc: 'The UAE has no personal income tax. Combined with world-class infrastructure and a central location for travel, it\'s a major draw for high-income remote workers and entrepreneurs.', tag: 'longstay' },
+      { title: 'Cost of living is significantly higher than nearby countries', desc: 'While tax-free, Dubai and Abu Dhabi are expensive — rent, dining, and transport costs are comparable to London or New York. Factor this into the financial calculation vs lower-cost nomad hubs.', tag: 'caution' }
+    ]
+  },
+  'SN': {
+    name: 'Senegal', flag: '🇸🇳',
+    tips: [
+      { title: '90 days visa-free for many Western passports', desc: 'Senegal allows visitors from 60+ countries to enter without a visa for up to 90 days. Dakar is an increasingly popular base for digital nomads in West Africa with good infrastructure and fast internet.', tag: 'extend' },
+      { title: 'Extension possible at DGSE in Dakar', desc: 'You can apply for a residence permit extension at the Direction Générale de la Sûreté des Établissements (DGSE) in Dakar. The process is bureaucratic but doable with patience and a local fixer.', tag: 'longstay' },
+      { title: 'ECOWAS passport holders get automatic 90 days', desc: 'Citizens of West African ECOWAS nations can stay in Senegal indefinitely with right of residency. For non-ECOWAS visitors, the 90-day rule applies.', tag: 'caution' }
+    ]
+  },
+  'AR': {
+    name: 'Argentina', flag: '🇦🇷',
+    tips: [
+      { title: '90 days on arrival — extendable for another 90', desc: 'Most nationalities get 90 days on arrival. You can extend for another 90 days at the Dirección Nacional de Migraciones in Buenos Aires for a small fee (~$200 USD). Total 180 days without leaving.', tag: 'extend' },
+      { title: 'Rentista Visa for passive income holders', desc: 'Argentina\'s Rentista Visa is designed for those with proven passive income (rental income, investments, pensions). No minimum income set in law — applications are assessed case by case, but $1,000–1,500/month is a common benchmark.', tag: 'longstay' },
+      { title: 'Blue dollar rate makes Argentina extremely affordable', desc: 'Argentina\'s parallel "blue" exchange rate for USD/EUR can be significantly more favourable than the official rate. Exchanging cash informally (at "cuevas" or via Wise) dramatically increases your buying power — research current rates carefully.', tag: 'caution' }
+    ]
+  },
+  'KE': {
+    name: 'Kenya', flag: '🇰🇪',
+    tips: [
+      { title: 'ETA (Electronic Travel Authorisation) — 90 days', desc: 'Kenya replaced the visa-on-arrival system in 2023 with an ETA, now available to all nationalities (including those previously visa-exempt). Apply online before travel at etakenya.go.ke. Costs $30 USD, valid for 90 days.', tag: 'extend' },
+      { title: 'Special Pass for extended stays', desc: 'For stays beyond 90 days, you can apply for a Special Pass at the Department of Immigration in Nairobi. This is typically granted for 3–6 months and can be renewed. Proof of income or a local sponsor helps.', tag: 'longstay' },
+      { title: 'Nairobi is a growing nomad hub', desc: 'Nairobi has fast fibre internet, a large co-working scene, and direct flights to Europe, the Middle East, and Asia. It\'s considered the most accessible long-stay base in East Africa for remote workers.', tag: 'nomad' }
     ]
   }
+};
+
+var TAG_LABELS = {
+  'extend':   { cls: 'tag-extend',   label: 'Extend stay' },
+  'nomad':    { cls: 'tag-nomad',    label: 'Digital nomad' },
+  'longstay': { cls: 'tag-longstay', label: 'Long stay' },
+  'caution':  { cls: 'tag-caution',  label: 'Know before you go' }
+};
+
+function buildDidYouKnowCard(destCode, destNameFromAPI) {
+  var entry = LONGSTAY_DB[destCode];
+  if (!entry) return ''; // No data for this country — silently omit
+
+  var name = destNameFromAPI || entry.name;
+  var html = '<div class="result-card dyk-card">' +
+    '<div class="result-header">' +
+      '<div class="result-header-left">' +
+        '<div class="status-icon">💡</div>' +
+        '<div>' +
+          '<div class="result-title">Did you know? — Staying longer in ' + entry.flag + ' ' + name + '</div>' +
+          '<div class="result-sub">Long stay options, digital nomad visas & insider tips</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="status-badge">Long stay tips</div>' +
+    '</div>' +
+    '<div class="result-body">';
+
+  for (var i = 0; i < entry.tips.length; i++) {
+    var tip = entry.tips[i];
+    var tagInfo = TAG_LABELS[tip.tag] || TAG_LABELS['longstay'];
+    html += '<div class="dyk-tip">' +
+      '<div class="dyk-tip-num">0' + (i + 1) + '</div>' +
+      '<div class="dyk-tip-body">' +
+        '<div class="dyk-tip-title">' + tip.title + '</div>' +
+        '<div class="dyk-tip-desc">' + tip.desc + '</div>' +
+        '<span class="dyk-tip-tag ' + tagInfo.cls + '">' + tagInfo.label + '</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  html += '<div class="link-row">' +
+    '<a class="ext-link" href="https://www.google.com/search?q=' + encodeURIComponent(name + ' long stay visa digital nomad 2025') + '" target="_blank" rel="noopener">🔍 Research current rules</a>' +
+    '<a class="ext-link" href="https://nomadlist.com/' + encodeURIComponent(name.toLowerCase().replace(/\s+/g,'-')) + '" target="_blank" rel="noopener">🌐 Nomad List — ' + name + '</a>' +
+  '</div>' +
+  '</div></div>';
+
+  return html;
+}
+
+// ── LAYOVER BENEFITS DATABASE ─────────────────────────────────────────────
+var BENEFITS_DB = {
+  'CZ': { name: 'China Southern', hub: 'Guangzhou (CAN)', tiers: [
+    { minHours: 6, maxHours: 11, benefits: ['Complimentary lounge access at CAN'], howTo: 'Request at the China Southern transit desk in Guangzhou airport on arrival. Show your onward boarding pass.' },
+    { minHours: 11, maxHours: 72, benefits: ['Free hotel accommodation (1 night)', 'Complimentary breakfast', 'Free shuttle transport airport ↔ hotel', 'Complimentary lounge access'], howTo: 'At Guangzhou airport, go to the China Southern Transit Hotel Service desk (arrivals hall). Show your passport and onward boarding pass. They will arrange hotel, transport, and meals at no cost.' }
+  ]},
+  'CA': { name: 'Air China', hub: 'Beijing (PEK)', tiers: [
+    { minHours: 6, maxHours: 11, benefits: ['Complimentary lounge access at PEK'], howTo: 'Go to the Air China transit service counter at Beijing Capital Airport with your onward boarding pass.' },
+    { minHours: 11, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Free airport shuttle', 'Lounge access'], howTo: 'At Beijing Airport arrivals, visit the Air China Transit Service desk. Present passport and onward boarding pass. Hotel and transport arranged free of charge.' }
+  ]},
+  'MU': { name: 'China Eastern', hub: 'Shanghai (PVG)', tiers: [
+    { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport shuttle service'], howTo: 'At Shanghai Pudong Airport, go to the China Eastern transit service counter. Show passport and onward boarding pass to arrange free accommodation.' }
+  ]},
+  'TK': { name: 'Turkish Airlines', hub: 'Istanbul (IST)', tiers: [
+    { minHours: 6, maxHours: 10, benefits: ['Complimentary meal voucher', 'CIP Lounge access (business class)', 'City tour available (Economy — select routes)'], howTo: 'Go to the Turkish Airlines transfer desk at Istanbul Airport. Economy passengers on qualifying long-haul routes may request a free city tour of Istanbul.' },
+    { minHours: 10, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport transfer', 'Optional Istanbul city tour'], howTo: 'At Istanbul Airport, visit the Turkish Airlines Transfer Hotel desk. Present passport and onward boarding pass. Hotel, meals, and city tour arranged free of charge for qualifying routes.' }
+  ]},
+  'EK': { name: 'Emirates', hub: 'Dubai (DXB)', tiers: [
+    { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (Economy class on long-haul routes)', 'Complimentary meals', 'Airport transfer'], howTo: 'Contact Emirates customer service before travel or visit the Emirates desk at Dubai Airport. Free hotel is available on specific long-haul routes — confirm eligibility when booking.' }
+  ]},
+  'QR': { name: 'Qatar Airways', hub: 'Doha (DOH)', tiers: [
+    { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (select routes)', 'Complimentary meals', 'Airport transfer', 'Al Mourjan lounge access (Business)'], howTo: 'Contact Qatar Airways or visit the transfer desk at Hamad International Airport. Hotel availability depends on route and ticket class.' }
+  ]},
+  'KE': { name: 'Korean Air', hub: 'Seoul (ICN)', tiers: [
+    { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport shuttle', 'Seoul city tour available'], howTo: 'At Incheon Airport, go to the Korean Air Transfer Desk. Present passport and onward ticket. Free hotel and optional city tour of Seoul available for qualifying layovers.' }
+  ]},
+  'OZ': { name: 'Asiana Airlines', hub: 'Seoul (ICN)', tiers: [
+    { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Airport transfer'], howTo: 'Visit the Asiana Airlines transfer desk at Incheon Airport with your passport and onward boarding pass.' }
+  ]},
+  'SQ': { name: 'Singapore Airlines', hub: 'Singapore (SIN)', tiers: [
+    { minHours: 5, maxHours: 72, benefits: ['Complimentary Singapore city tour (select routes)', 'KrisFlyer lounge access (qualifying passengers)', 'Meal vouchers'], howTo: 'Singapore Airlines offers free city tours for transit passengers on select routes. Check eligibility at the Singapore Airlines transfer desk at Changi Airport.' }
+  ]},
+  'CX': { name: 'Cathay Pacific', hub: 'Hong Kong (HKG)', tiers: [
+    { minHours: 6, maxHours: 72, benefits: ['The Pier lounge access (Business/First)', 'Complimentary meal vouchers (Economy on long-haul)', 'Hong Kong city tour (select routes)'], howTo: 'Visit the Cathay Pacific transfer desk at Hong Kong International Airport. Economy class city tours available on select long-haul connections.' }
+  ]},
+  'EY': { name: 'Etihad Airways', hub: 'Abu Dhabi (AUH)', tiers: [
+    { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation (select routes)', 'Complimentary meals', 'Airport transfer'], howTo: 'Contact Etihad or visit the transfer desk at Abu Dhabi Airport. Hotel eligibility varies by route and class.' }
+  ]},
+  'AT': { name: 'Royal Air Maroc', hub: 'Casablanca (CMN)', tiers: [
+    { minHours: 8, maxHours: 72, benefits: ['Free hotel accommodation', 'Complimentary meals', 'Casablanca city tour available'], howTo: 'Visit the Royal Air Maroc transfer desk at Mohammed V Airport, Casablanca. Present passport and onward boarding pass.' }
+  ]}
 };
 
 function getApplicableBenefits(airlineCode, hours) {
   if (!airlineCode || !hours || hours <= 0) return null;
   var airline = BENEFITS_DB[airlineCode];
   if (!airline) return null;
-
   var applicable = null;
   for (var i = 0; i < airline.tiers.length; i++) {
     var tier = airline.tiers[i];
@@ -802,13 +969,13 @@ async function runCheck() {
 
     var html = '';
 
-    // 1. Layover transit visa warning (if layover selected)
+    // 1. Layover transit visa warning
     if (layover && responses[1]) {
       html += '<div class="section-divider">🔄 Layover transit check</div>';
       html += buildLayoverCard(responses[1], layover);
     }
 
-    // 2. Hidden benefits (if airline + hours entered)
+    // 2. Hidden airline benefits
     var benefitResult = getApplicableBenefits(airline, hours);
     if (benefitResult) {
       html += '<div class="section-divider">🎁 Hidden layover benefits</div>';
@@ -820,9 +987,19 @@ async function runCheck() {
 
     // 3. Main visa result
     html += '<div class="section-divider">📋 Destination visa requirements</div>';
-    html += buildMainCard(responses[0], passport, dest);
+    var mainCard = buildMainCard(responses[0], passport, dest);
+    html += mainCard;
 
-    // 4. Disclaimer
+    // 4. Did you know — long stay tips (destination-specific)
+    var destNameFromAPI = '';
+    try { destNameFromAPI = responses[0].data.destination.name || ''; } catch(e) {}
+    var dykHtml = buildDidYouKnowCard(dest, destNameFromAPI);
+    if (dykHtml) {
+      html += '<div class="section-divider">💡 Did you know? — long stay options</div>';
+      html += dykHtml;
+    }
+
+    // 5. Disclaimer
     html += buildDisclaimerCard();
 
     results.innerHTML = html;
@@ -841,7 +1018,6 @@ async function runCheck() {
 function buildBenefitCard(result, hours) {
   var airline = result.airline;
   var tier = result.tier;
-
   var html = '<div class="result-card benefit-card">' +
     '<div class="result-header">' +
       '<div class="result-header-left">' +
@@ -854,39 +1030,23 @@ function buildBenefitCard(result, hours) {
     '<div class="result-body">' +
       '<p>Your <strong style="color:var(--tx)">' + hours + '-hour layover</strong> on ' + airline.name + ' via ' + airline.hub + ' entitles you to the following at no cost. The majority of passengers on this route are unaware of these benefits and pay out of pocket.</p>' +
       '<div class="benefit-list">';
-
   var icons = ['🏨','🍳','🚌','🛋','🌆','🎫'];
   for (var i = 0; i < tier.benefits.length; i++) {
-    html += '<div class="benefit-item">' +
-      '<div class="benefit-item-icon">' + (icons[i] || '✓') + '</div>' +
-      '<div><strong>' + tier.benefits[i] + '</strong></div>' +
-    '</div>';
+    html += '<div class="benefit-item"><div class="benefit-item-icon">' + (icons[i] || '✓') + '</div><div><strong>' + tier.benefits[i] + '</strong></div></div>';
   }
-
   html += '</div>' +
-    '<div class="how-to">' +
-      '<div class="how-to-title">How to claim</div>' +
-      '<p>' + tier.howTo + '</p>' +
-    '</div>' +
-    '<div class="link-row">' +
-      '<a class="ext-link" href="https://www.google.com/search?q=' + encodeURIComponent(airline.name + ' transit hotel ' + airline.hub) + '" target="_blank" rel="noopener">🔍 Verify on airline website</a>' +
-    '</div>' +
+    '<div class="how-to"><div class="how-to-title">How to claim</div><p>' + tier.howTo + '</p></div>' +
+    '<div class="link-row"><a class="ext-link" href="https://www.google.com/search?q=' + encodeURIComponent(airline.name + ' transit hotel ' + airline.hub) + '" target="_blank" rel="noopener">🔍 Verify on airline website</a></div>' +
   '</div></div>';
   return html;
 }
 
 function buildNoBenefitCard(airline, hours) {
   return '<div class="result-card info-card">' +
-    '<div class="result-header">' +
-      '<div class="result-header-left">' +
-        '<div class="status-icon">ℹ️</div>' +
-        '<div><div class="result-title">No known benefits for this combination</div>' +
-        '<div class="result-sub">Always worth checking directly with the airline</div></div>' +
-      '</div>' +
-    '</div>' +
-    '<div class="result-body">' +
-      '<p>We don\'t have confirmed benefit data for this airline and layover duration. It\'s always worth contacting the airline directly — many carriers offer unpublished transit benefits that aren\'t widely advertised.</p>' +
-    '</div>' +
+    '<div class="result-header"><div class="result-header-left"><div class="status-icon">ℹ️</div>' +
+    '<div><div class="result-title">No known benefits for this combination</div>' +
+    '<div class="result-sub">Always worth checking directly with the airline</div></div></div></div>' +
+    '<div class="result-body"><p>We don\'t have confirmed benefit data for this airline and layover duration. It\'s always worth contacting the airline directly — many carriers offer unpublished transit benefits that aren\'t widely advertised.</p></div>' +
   '</div>';
 }
 
@@ -894,83 +1054,58 @@ function buildLayoverCard(data, layover) {
   if (!data || !data.data) return '';
   var rule = data.data.visa_rules && data.data.visa_rules.primary_rule;
   if (!rule) return '';
-
   var color = (rule.color || '').toLowerCase();
   var destName = (data.data.destination && data.data.destination.name) ? data.data.destination.name : layover;
   var cardClass = colorToClass(rule.color);
   var icon = colorToIcon(rule.color);
-
   if (color === 'green' || color === 'blue') {
-    return '<div class="result-card ok">' +
-      '<div class="result-header">' +
-        '<div class="result-header-left">' +
-          '<div class="status-icon">✅</div>' +
-          '<div><div class="result-title">No transit requirement for ' + destName + '</div>' +
-          '<div class="result-sub">Your passport can transit freely through ' + destName + '</div></div>' +
-        '</div>' +
-        '<div class="status-badge">Transit clear</div>' +
-      '</div>' +
-    '</div>';
+    return '<div class="result-card ok"><div class="result-header"><div class="result-header-left"><div class="status-icon">✅</div>' +
+      '<div><div class="result-title">No transit requirement for ' + destName + '</div>' +
+      '<div class="result-sub">Your passport can transit freely through ' + destName + '</div></div></div>' +
+      '<div class="status-badge">Transit clear</div></div></div>';
   }
-
   var html = '<div class="result-card ' + cardClass + '">' +
-    '<div class="result-header">' +
-      '<div class="result-header-left">' +
-        '<div class="status-icon">' + icon + '</div>' +
-        '<div><div class="result-title">Transit requirement — layover in ' + destName + '</div>' +
-        '<div class="result-sub">Required even if you stay airside and never leave the airport</div></div>' +
-      '</div>' +
-      '<div class="status-badge">' + rule.name + '</div>' +
-    '</div>' +
+    '<div class="result-header"><div class="result-header-left"><div class="status-icon">' + icon + '</div>' +
+    '<div><div class="result-title">Transit requirement — layover in ' + destName + '</div>' +
+    '<div class="result-sub">Required even if you stay airside and never leave the airport</div></div></div>' +
+    '<div class="status-badge">' + rule.name + '</div></div>' +
     '<div class="result-body">' +
-      '<p>Your passport requires <strong style="color:var(--tx)">' + rule.name + '</strong> to transit through ' + destName + ' — even if you are only changing planes and never pass through immigration. Many travelers discover this only at check-in.</p>' +
-      '<div class="detail-grid">' +
-        '<div class="detail-item"><div class="detail-item-label">Requirement</div><div class="detail-item-val amber">' + rule.name + '</div></div>' +
-        '<div class="detail-item"><div class="detail-item-label">Duration allowed</div><div class="detail-item-val">' + (rule.duration || 'See official source') + '</div></div>' +
-      '</div>';
-
-  if (rule.link) {
-    html += '<div class="link-row"><a class="ext-link" href="' + rule.link + '" target="_blank" rel="noopener">🔗 Apply / more information</a></div>';
-  }
-
+    '<p>Your passport requires <strong style="color:var(--tx)">' + rule.name + '</strong> to transit through ' + destName + ' — even if you are only changing planes and never pass through immigration. Many travelers discover this only at check-in.</p>' +
+    '<div class="detail-grid">' +
+      '<div class="detail-item"><div class="detail-item-label">Requirement</div><div class="detail-item-val amber">' + rule.name + '</div></div>' +
+      '<div class="detail-item"><div class="detail-item-label">Duration allowed</div><div class="detail-item-val">' + (rule.duration || 'See official source') + '</div></div>' +
+    '</div>';
+  if (rule.link) html += '<div class="link-row"><a class="ext-link" href="' + rule.link + '" target="_blank" rel="noopener">🔗 Apply / more information</a></div>';
   html += '</div></div>';
   return html;
 }
 
 function buildMainCard(data, passport, dest) {
   if (!data || !data.data) return buildErrorCard('No data returned', 'Try a different combination.');
-
   var d = data.data;
   var primaryRule = (d.visa_rules && d.visa_rules.primary_rule) ? d.visa_rules.primary_rule : {};
   var secondaryRule = (d.visa_rules && d.visa_rules.secondary_rule) ? d.visa_rules.secondary_rule : null;
   var mandatoryReg = d.mandatory_registration || null;
   var destination = d.destination || {};
   var passportName = PASSPORT_NAMES[passport] || passport;
-
   var cardClass = colorToClass(primaryRule.color);
   var icon = colorToIcon(primaryRule.color);
   var ruleName = primaryRule.name || 'Check required';
   var duration = primaryRule.duration || 'See official source';
-
   var html = '<div class="result-card ' + cardClass + '">' +
-    '<div class="result-header">' +
-      '<div class="result-header-left">' +
-        '<div class="status-icon">' + icon + '</div>' +
-        '<div><div class="result-title">' + ruleName + '</div>' +
-        '<div class="result-sub">' + passportName + ' → ' + (destination.name || dest) + '</div></div>' +
-      '</div>' +
-      '<div class="status-badge">' + ruleName + '</div>' +
-    '</div>' +
+    '<div class="result-header"><div class="result-header-left"><div class="status-icon">' + icon + '</div>' +
+    '<div><div class="result-title">' + ruleName + '</div>' +
+    '<div class="result-sub">' + passportName + ' → ' + (destination.name || dest) + '</div></div></div>' +
+    '<div class="status-badge">' + ruleName + '</div></div>' +
     '<div class="result-body">' +
-      '<div class="detail-grid">' +
-        '<div class="detail-item"><div class="detail-item-label">Stay allowed</div><div class="detail-item-val green">' + duration + '</div></div>' +
-        '<div class="detail-item"><div class="detail-item-label">Passport validity</div><div class="detail-item-val amber">' + (destination.passport_validity || 'Check requirements') + '</div></div>' +
-        '<div class="detail-item"><div class="detail-item-label">Capital</div><div class="detail-item-val">' + (destination.capital || '--') + '</div></div>' +
-        '<div class="detail-item"><div class="detail-item-label">Currency</div><div class="detail-item-val">' + (destination.currency || '--') + '</div></div>' +
-        '<div class="detail-item"><div class="detail-item-label">Timezone</div><div class="detail-item-val">' + (destination.timezone || '--') + '</div></div>' +
-        '<div class="detail-item"><div class="detail-item-label">Phone code</div><div class="detail-item-val">' + (destination.phone_code || '--') + '</div></div>' +
-      '</div>';
-
+    '<div class="detail-grid">' +
+      '<div class="detail-item"><div class="detail-item-label">Stay allowed</div><div class="detail-item-val green">' + duration + '</div></div>' +
+      '<div class="detail-item"><div class="detail-item-label">Passport validity</div><div class="detail-item-val amber">' + (destination.passport_validity || 'Check requirements') + '</div></div>' +
+      '<div class="detail-item"><div class="detail-item-label">Capital</div><div class="detail-item-val">' + (destination.capital || '--') + '</div></div>' +
+      '<div class="detail-item"><div class="detail-item-label">Currency</div><div class="detail-item-val">' + (destination.currency || '--') + '</div></div>' +
+      '<div class="detail-item"><div class="detail-item-label">Timezone</div><div class="detail-item-val">' + (destination.timezone || '--') + '</div></div>' +
+      '<div class="detail-item"><div class="detail-item-label">Phone code</div><div class="detail-item-val">' + (destination.phone_code || '--') + '</div></div>' +
+    '</div>';
   if (secondaryRule && secondaryRule.name) {
     html += '<div style="margin-top:14px;background:var(--s2);border-radius:var(--rs);padding:12px 14px;">' +
       '<div style="font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--tx3);margin-bottom:6px">Alternative option</div>' +
@@ -979,58 +1114,41 @@ function buildMainCard(data, passport, dest) {
       (secondaryRule.link ? '<a href="' + secondaryRule.link + '" target="_blank" rel="noopener" class="ext-link" style="margin-top:8px;display:inline-flex">🔗 Apply here</a>' : '') +
     '</div>';
   }
-
   if (mandatoryReg && mandatoryReg.name) {
-    html += '<div class="reg-box">' +
-      '<span>⚠️ Mandatory registration: <strong>' + mandatoryReg.name + '</strong></span>' +
+    html += '<div class="reg-box"><span>⚠️ Mandatory registration: <strong>' + mandatoryReg.name + '</strong></span>' +
       (mandatoryReg.link ? '<a href="' + mandatoryReg.link + '" target="_blank" rel="noopener" class="reg-link">Register →</a>' : '') +
     '</div>';
   }
-
   if (destination.embassy_url) {
     html += '<div class="link-row">' +
       '<a class="ext-link" href="' + destination.embassy_url + '" target="_blank" rel="noopener">🏛 Embassy information</a>' +
       '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank" rel="noopener">🔍 Verify on Sherpa°</a>' +
     '</div>';
   }
-
   html += '</div></div>';
   return html;
 }
 
 function buildDisclaimerCard() {
   return '<div class="result-card info-card">' +
-    '<div class="result-header">' +
-      '<div class="result-header-left">' +
-        '<div class="status-icon">ℹ️</div>' +
-        '<div><div class="result-title">Always verify before you book</div>' +
-        '<div class="result-sub">Entry rules and airline policies can change</div></div>' +
-      '</div>' +
-    '</div>' +
+    '<div class="result-header"><div class="result-header-left"><div class="status-icon">ℹ️</div>' +
+    '<div><div class="result-title">Always verify before you book</div>' +
+    '<div class="result-sub">Entry rules and airline policies can change</div></div></div></div>' +
     '<div class="result-body">' +
-      '<p>Visa requirements and airline benefit policies can change at short notice. Always confirm with the official embassy and airline before booking non-refundable tickets. Layover benefit eligibility depends on ticket type, route, and availability.</p>' +
-      '<div class="link-row">' +
-        '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank" rel="noopener">🔍 Sherpa° live requirements</a>' +
-        '<a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank" rel="noopener">✈️ IATA Travel Centre</a>' +
-      '</div>' +
-    '</div>' +
-  '</div>';
+    '<p>Visa requirements, long-stay options, and airline benefit policies can change at short notice. Always confirm with the official embassy and airline before booking non-refundable tickets. Layover benefit eligibility depends on ticket type, route, and availability.</p>' +
+    '<div class="link-row">' +
+      '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank" rel="noopener">🔍 Sherpa° live requirements</a>' +
+      '<a class="ext-link" href="https://www.iatatravelcentre.com/" target="_blank" rel="noopener">✈️ IATA Travel Centre</a>' +
+    '</div></div></div>';
 }
 
 function buildErrorCard(title, message) {
   return '<div class="result-card warn-card">' +
-    '<div class="result-header">' +
-      '<div class="result-header-left">' +
-        '<div class="status-icon">⚠️</div>' +
-        '<div><div class="result-title">' + title + '</div></div>' +
-      '</div>' +
-    '</div>' +
+    '<div class="result-header"><div class="result-header-left"><div class="status-icon">⚠️</div>' +
+    '<div><div class="result-title">' + title + '</div></div></div></div>' +
     '<div class="result-body"><p>' + message + '</p>' +
-      '<div class="link-row">' +
-        '<a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank">🔍 Check on Sherpa°</a>' +
-      '</div>' +
-    '</div>' +
-  '</div>';
+    '<div class="link-row"><a class="ext-link" href="https://apply.joinsherpa.com/" target="_blank">🔍 Check on Sherpa°</a></div>' +
+    '</div></div>';
 }
 </script>
 </body>
