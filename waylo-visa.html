@@ -795,6 +795,22 @@ var LONGSTAY_DB = {
       { title: 'Blue dollar rate makes Argentina extremely affordable', desc: 'Argentina\'s parallel "blue" exchange rate for USD/EUR can be significantly more favourable than the official rate. Exchanging cash informally (at "cuevas" or via Wise) dramatically increases your buying power — research current rates carefully.', tag: 'caution' }
     ]
   },
+  'AU': {
+    name: 'Australia', flag: '🇦🇺',
+    tips: [
+      { title: 'Working Holiday Visa (subclass 417/462) — up to 3 years', desc: 'If you\'re 18–35 (from eligible countries), Australia\'s Working Holiday Visa gives 12 months to live and work freely. Complete 88 days of regional work and you can extend for a second year — and a third year with another 88 days. One of the world\'s most generous working holiday programmes.', tag: 'longstay' },
+      { title: 'eTA is 90 days per visit, but multi-entry for 12 months', desc: 'The Australian ETA (subclass 601) allows multiple visits of up to 3 months each, valid for 12 months from issue. If you want to stay longer than 3 months continuously, you\'ll need a different visa — the ETA cannot be extended from inside Australia.', tag: 'extend' },
+      { title: 'Digital Nomad options are limited — plan ahead', desc: 'Australia has no dedicated digital nomad or remote worker visa. The most practical long-stay options are the Working Holiday Visa (if under 35), a sponsored work visa, or a student visa. Working on a tourist ETA is not permitted.', tag: 'caution' }
+    ]
+  },
+  'NZ': {
+    name: 'New Zealand', flag: '🇳🇿',
+    tips: [
+      { title: 'Working Holiday Visa — 12 months, easy to get', desc: 'New Zealand\'s Working Holiday Visa is available to citizens of 45+ countries aged 18–30 (or 35 for some nationalities). Gives 12 months to live and work with no restrictions on employer or job type. Apply online — most nationalities are approved instantly.', tag: 'longstay' },
+      { title: 'Visitor visa is 9 months for many nationalities', desc: 'Citizens of visa-waiver countries (UK, US, EU, Canada, etc.) can stay up to 3 months on arrival. UK citizens uniquely get up to 6 months. Extensions to 9 months total are possible by applying before your initial period expires.', tag: 'extend' },
+      { title: 'No digital nomad visa — but remote work enforcement is low-key', desc: 'New Zealand has no formal remote worker visa. Most digital nomads use the standard visitor visa for shorter stays. For longer stays, the Working Holiday Visa is the most practical legal option if you qualify by age.', tag: 'nomad' }
+    ]
+  },
   'KE': {
     name: 'Kenya', flag: '🇰🇪',
     tips: [
@@ -803,6 +819,355 @@ var LONGSTAY_DB = {
       { title: 'Nairobi is a growing nomad hub', desc: 'Nairobi has fast fibre internet, a large co-working scene, and direct flights to Europe, the Middle East, and Asia. It\'s considered the most accessible long-stay base in East Africa for remote workers.', tag: 'nomad' }
     ]
   }
+};
+
+// ── DUPLICATE ID REMOVED, full expanded database ─────────────────────────
+var LONGSTAY_DB = {
+  'TH': { name:'Thailand', flag:'🇹🇭', tips:[
+    { title:'Tourist visa + extension = up to 90 days', desc:'A Thai Tourist Visa (TR) gives 60 days. Extend once at any immigration office for 30 more days (฿1,900) — 90 days total without leaving.', tag:'extend' },
+    { title:'Long-Term Resident (LTR) Visa — up to 10 years', desc:'Thailand\'s LTR visa offers 5–10 year stays for retirees, remote workers, and high-net-worth individuals. Remote workers need proof of $80k/year income and a current employer outside Thailand.', tag:'nomad' },
+    { title:'Border run reality check', desc:'Many long-termers cross to Malaysia, Laos, or Cambodia to reset their days. Thai immigration now monitors frequent re-entries — use official visa pathways for stays over 90 days.', tag:'caution' }
+  ]},
+  'ID': { name:'Indonesia', flag:'🇮🇩', tips:[
+    { title:'Social/Cultural Visa — up to 180 days', desc:'The B211A Social Visa allows 60 days, extendable 4 times (30 days each) at local immigration. Total: 180 days. Requires a local sponsor — many Bali guesthouses provide this for a small fee.', tag:'longstay' },
+    { title:'Second Home Visa — 5 years', desc:'Requires proof of funds (~$130,000 in a bank account). A shorter B211A is preferred by most digital nomads for flexibility.', tag:'nomad' },
+    { title:'Visa on Arrival is 30 days only', desc:'The standard VoA gives 30 days, extendable once online for 30 more (60 days total). You cannot chain VoA extensions.', tag:'caution' }
+  ]},
+  'MA': { name:'Morocco', flag:'🇲🇦', tips:[
+    { title:'90 days — reset by brief exit', desc:'Most Western passports get 90 days visa-free. A short trip to Spain (Algeciras–Tarifa ferry) or Ceuta resets the clock. Many long-termers rotate every 90 days.', tag:'extend' },
+    { title:'No formal digital nomad visa yet', desc:'Morocco has announced plans for a digital nomad visa but hasn\'t launched it as of 2025. The 90-day tourist entry renewed by brief exit is the standard approach.', tag:'nomad' },
+    { title:'Carte de séjour for longer stays', desc:'For stays beyond tourism, apply for a Carte de Séjour (residency card) at the local prefecture. Requires proof of accommodation, income, and intent.', tag:'longstay' }
+  ]},
+  'PT': { name:'Portugal', flag:'🇵🇹', tips:[
+    { title:'D8 Digital Nomad Visa — legal remote work residency', desc:'Requires proof of income (~€3,280/month) and a non-Portuguese employer or clients. Gives a 1-year renewable residency permit — path to permanent residency after 5 years.', tag:'nomad' },
+    { title:'D7 Passive Income Visa', desc:'For those with consistent passive income (pensions, rental income, dividends). Lower income threshold (~€760/month). Very popular with retirees and semi-retired nomads.', tag:'longstay' },
+    { title:'NHR/IFICI tax regime — verify current status', desc:'The classic NHR tax status ended in 2024 but a replacement (IFICI) for specific professions launched. Verify the current rules with a tax adviser before relying on this.', tag:'caution' }
+  ]},
+  'ES': { name:'Spain', flag:'🇪🇸', tips:[
+    { title:'Digital Nomad Visa — launched 2023', desc:'Allows remote workers to live legally in Spain for up to 5 years. Requires ~€2,646/month income and proof you work for a company outside Spain or have international clients.', tag:'nomad' },
+    { title:'Non-Lucrative Visa', desc:'If you don\'t need to work in Spain, the Non-Lucrative Visa requires proof of sufficient funds (~€28,800/year). Renewable annually. You cannot work on this visa.', tag:'longstay' },
+    { title:'Schengen 90/180 rule still applies without a visa', desc:'Non-EU citizens are limited to 90 days in any 180-day period across the entire Schengen Area. The digital nomad or non-lucrative visa sidesteps this completely.', tag:'caution' }
+  ]},
+  'MX': { name:'Mexico', flag:'🇲🇽', tips:[
+    { title:'Tourist card (FMM) — request the full 180 days', desc:'Mexico\'s FMM can grant up to 180 days at the border officer\'s discretion. Always state how long you plan to stay — many travelers are given only 30 days without asking.', tag:'extend' },
+    { title:'Temporary Resident Visa — 1–4 years', desc:'Requires proof of income (~$1,620/month). Renewable annually — after 4 years you can apply for permanent residency.', tag:'longstay' },
+    { title:'Re-entry resets your tourist stay', desc:'Leaving and re-entering Mexico legitimately resets your tourist stay. Many remote workers cross briefly into the US or Guatemala. Do not abuse this — officers can deny re-entry.', tag:'caution' }
+  ]},
+  'VN': { name:'Vietnam', flag:'🇻🇳', tips:[
+    { title:'E-visa: 90 days, extendable in-country', desc:'Vietnam\'s e-visa was upgraded in 2023 to 90 days (single or multiple entry). Extensions are possible at local immigration without leaving.', tag:'extend' },
+    { title:'No official digital nomad visa yet', desc:'Vietnam has no dedicated remote worker visa. The 90-day e-visa covers most stays. Some long-termers use a 1-year business visa (DN) which requires a Vietnamese sponsor company.', tag:'nomad' },
+    { title:'Temporary Residence Card (TRC) — 1–2 years', desc:'With a local sponsor (employer, property lease, or family), apply for a TRC at local immigration. Cost and process vary by province.', tag:'longstay' }
+  ]},
+  'GE': { name:'Georgia', flag:'🇬🇪', tips:[
+    { title:'365 days visa-free for 95+ nationalities', desc:'Citizens of the US, UK, EU, Australia, Canada and many more can stay for up to 1 full year without any visa. No registration, no paperwork.', tag:'longstay' },
+    { title:'Flat 1% income tax for individual entrepreneurs', desc:'Georgia\'s Small Business Status allows eligible remote workers to pay as little as 1% income tax on foreign-sourced income. Very popular with digital nomads.', tag:'nomad' },
+    { title:'Brief exit resets the 365-day clock', desc:'After your year is up, a quick trip to Armenia or Turkey and re-entry has worked reliably for years. Always check current policy before relying on this.', tag:'extend' }
+  ]},
+  'CO': { name:'Colombia', flag:'🇨🇴', tips:[
+    { title:'90 days visa-free, extendable to 180', desc:'Extend for another 90 days at a Migración Colombia office before your first period expires. Fee is roughly $50–100 USD.', tag:'extend' },
+    { title:'Digital Nomad / Remote Worker Visa (M)', desc:'Requires proof of income (~$750/month) and a contract or client letters showing income from outside Colombia.', tag:'nomad' },
+    { title:'Pensionado Visa for retirees', desc:'Requires just ~$750/month in pension or passive income. One of Latin America\'s most affordable and accessible retirement visa programmes.', tag:'longstay' }
+  ]},
+  'TR': { name:'Turkey', flag:'🇹🇷', tips:[
+    { title:'90 days visa-free (most Western passports)', desc:'90 days within a 180-day period without a visa. The period resets after spending 90+ days outside Turkey.', tag:'extend' },
+    { title:'Ikamet (residence permit) — apply after arrival', desc:'Apply via the e-ikamet system from inside Turkey. Requires a rental contract and sufficient funds. Duration 1–2 years, renewable.', tag:'longstay' },
+    { title:'No dedicated digital nomad visa yet', desc:'Turkey has no remote work visa as of 2025. The ikamet (tourism residence permit) is the standard route for long-stay remote workers.', tag:'nomad' }
+  ]},
+  'KH': { name:'Cambodia', flag:'🇰🇭', tips:[
+    { title:'Ordinary Visa (E) — renewable indefinitely', desc:'Cambodia\'s E-class Ordinary Visa can be extended for 1, 3, 6, or 12 months at immigration or via agents. One of the easiest long-stay destinations in Southeast Asia.', tag:'longstay' },
+    { title:'No income proof required for tourist extension', desc:'Cambodia\'s tourist visa extension doesn\'t require proof of income or employment — just payment and a valid passport.', tag:'nomad' },
+    { title:'Apply for E-Ordinary visa before arrival for long stays', desc:'The online e-visa is tourist class (30 days). For longer stays, enter on an Ordinary (E) visa — apply at a Cambodian embassy or at land borders.', tag:'caution' }
+  ]},
+  'IN': { name:'India', flag:'🇮🇳', tips:[
+    { title:'e-Tourist Visa: 30 or 90 days with entry limits', desc:'India\'s e-Tourist Visa comes in 30-day (double entry) and 90-day (triple entry) versions. You can only get 2 e-Tourist Visas per calendar year — plan ahead for multiple trips.', tag:'extend' },
+    { title:'180-day tourist visa via embassy', desc:'A 6-month multiple entry tourist visa is available directly at an Indian embassy. More documentation required but much more flexibility for longer stays.', tag:'longstay' },
+    { title:'No digital nomad visa — remote work is a grey area', desc:'India has no remote worker visa. Working on a tourist visa is technically not permitted.', tag:'caution' }
+  ]},
+  'JP': { name:'Japan', flag:'🇯🇵', tips:[
+    { title:'Digital Nomad Visa — launched 2024', desc:'Up to 6 months. Requirements: income of ~$68,000/year, private health insurance, and work for a company or clients outside Japan.', tag:'nomad' },
+    { title:'90 days visa-free for 70+ nationalities', desc:'Non-extendable — you must leave at the end of your 90 days without changing status.', tag:'extend' },
+    { title:'Working Holiday Visa for under-30s (some under-35)', desc:'Japan has Working Holiday agreements with 30+ countries. Gives 6–12 months to live and work legally. One of the most accessible long-stay options if you qualify.', tag:'longstay' }
+  ]},
+  'AE': { name:'UAE', flag:'🇦🇪', tips:[
+    { title:'Remote Work Visa — 1 year, renewable', desc:'Dubai\'s Virtual Working Programme allows remote workers to live in the UAE for 1 year, renewable. Requires proof of employment abroad and a minimum salary (~$5,000/month).', tag:'nomad' },
+    { title:'0% personal income tax', desc:'The UAE has no personal income tax. Combined with world-class infrastructure and a central location, it\'s a major draw for high-income remote workers.', tag:'longstay' },
+    { title:'Cost of living is significantly higher than nearby countries', desc:'Dubai and Abu Dhabi are expensive — rent and living costs are comparable to London or New York. Factor this into the financial calculation.', tag:'caution' }
+  ]},
+  'SN': { name:'Senegal', flag:'🇸🇳', tips:[
+    { title:'90 days visa-free for 60+ nationalities', desc:'Dakar is a growing digital nomad base in West Africa with good infrastructure and fast internet.', tag:'extend' },
+    { title:'Residence permit extension at DGSE in Dakar', desc:'Apply at the Direction Générale de la Sûreté des Établissements. The process is bureaucratic but manageable with patience or a local fixer.', tag:'longstay' },
+    { title:'ECOWAS citizens have automatic residency rights', desc:'West African ECOWAS passport holders can stay indefinitely. For non-ECOWAS visitors the 90-day rule applies.', tag:'caution' }
+  ]},
+  'AR': { name:'Argentina', flag:'🇦🇷', tips:[
+    { title:'90 days on arrival, extendable to 180', desc:'Extend at the Dirección Nacional de Migraciones in Buenos Aires for ~$200 USD. Total 180 days without leaving.', tag:'extend' },
+    { title:'Rentista Visa for passive income holders', desc:'Designed for those with rental income, investments, or pensions. No minimum income set in law — $1,000–1,500/month is a common benchmark.', tag:'longstay' },
+    { title:'Blue dollar rate makes Argentina extremely affordable', desc:'Argentina\'s parallel exchange rate for USD/EUR can be significantly more favourable than the official rate. Research current rates carefully.', tag:'caution' }
+  ]},
+  'AU': { name:'Australia', flag:'🇦🇺', tips:[
+    { title:'Working Holiday Visa (417/462) — up to 3 years', desc:'For ages 18–35 from eligible countries. 12 months to live and work freely. Complete 88 days of regional work to extend for a second year, and another 88 days for a third year.', tag:'longstay' },
+    { title:'eTA: 90 days per visit, multi-entry for 12 months', desc:'The Australian ETA (subclass 601) allows multiple 3-month visits within 12 months of issue. It cannot be extended from inside Australia.', tag:'extend' },
+    { title:'No dedicated digital nomad visa', desc:'The most practical long-stay options are Working Holiday (if under 35), sponsored work visa, or student visa. Working on a tourist ETA is not permitted.', tag:'caution' }
+  ]},
+  'NZ': { name:'New Zealand', flag:'🇳🇿', tips:[
+    { title:'Working Holiday Visa — 12 months', desc:'Available to 45+ nationalities aged 18–30 (or 35 for some). Live and work with no restrictions on employer or job type. Most nationalities approved instantly online.', tag:'longstay' },
+    { title:'Visitor visa up to 9 months for many nationalities', desc:'UK citizens can stay up to 6 months on arrival. Extensions to 9 months are possible by applying before your initial period expires.', tag:'extend' },
+    { title:'No digital nomad visa', desc:'For longer legal stays, the Working Holiday Visa is the most practical option if you qualify by age.', tag:'nomad' }
+  ]},
+  'DE': { name:'Germany', flag:'🇩🇪', tips:[
+    { title:'Freelancer Visa (Freiberufler) — for self-employed professionals', desc:'Germany\'s freelance visa is available to non-EU citizens in creative, technical, or professional fields. Requires proof of clients, income, and qualifications. Usually issued for 1–3 years.', tag:'nomad' },
+    { title:'Job Seeker Visa — 6 months to find work', desc:'Allows non-EU citizens with a recognised degree to live in Germany for 6 months while searching for employment. If you find a job, you can convert to a work visa without leaving.', tag:'longstay' },
+    { title:'90 days visa-free for Schengen visitors', desc:'Non-EU visitors can stay up to 90 days in 180 across the entire Schengen Area. A freelance or job seeker visa is needed for anything longer.', tag:'caution' }
+  ]},
+  'FR': { name:'France', flag:'🇫🇷', tips:[
+    { title:'Talent Passport (Passeport Talent) — 4 years', desc:'France\'s multi-category long-stay visa covers remote workers, entrepreneurs, artists, researchers, and investors. Gives up to 4 years with a single permit.', tag:'nomad' },
+    { title:'Visitor Visa (Visa de Long Séjour Visiteur)', desc:'For those who can support themselves without working in France. Requires proof of accommodation and sufficient funds (~€615/month). Valid 1 year, renewable.', tag:'longstay' },
+    { title:'Schengen 90/180 rule without a visa', desc:'Without a long-stay visa, non-EU visitors are capped at 90 days across all Schengen countries. The Talent Passport or visitor visa unlocks longer legal stays.', tag:'caution' }
+  ]},
+  'IT': { name:'Italy', flag:'🇮🇹', tips:[
+    { title:'Digital Nomad / Remote Worker Visa — launched 2024', desc:'Italy\'s new remote worker visa allows stays of up to 1 year (renewable). Requires proof of self-employment or employment outside Italy and an annual income of at least €28,000.', tag:'nomad' },
+    { title:'Elective Residency Visa — for financially independent individuals', desc:'Requires proof of passive income (~€31,000/year) and accommodation in Italy. Does not allow you to work but can be renewed annually. Popular with retirees.', tag:'longstay' },
+    { title:'Flat tax regime for new residents', desc:'Italy offers a flat €100,000/year tax on foreign-sourced income for new residents — attractive for high earners relocating from abroad. Consult a tax adviser.', tag:'caution' }
+  ]},
+  'GR': { name:'Greece', flag:'🇬🇷', tips:[
+    { title:'Digital Nomad Visa — 1 year, renewable', desc:'Greece\'s digital nomad visa allows remote workers from non-EU countries to live legally for 1 year, renewable for another year. Requires €3,500/month income and private health insurance.', tag:'nomad' },
+    { title:'Golden Visa — residency through property investment', desc:'Invest €250,000+ in Greek real estate (threshold raised in some areas) and receive a 5-year renewable residency permit. Gives access to the Schengen Area.', tag:'longstay' },
+    { title:'Schengen limit applies without a visa', desc:'Non-EU visitors without a long-stay visa are capped at 90 days in the Schengen Area. The digital nomad visa removes this restriction.', tag:'caution' }
+  ]},
+  'HR': { name:'Croatia', flag:'🇭🇷', tips:[
+    { title:'Digital Nomad Visa — up to 1 year', desc:'Croatia was one of the first EU countries to launch a digital nomad visa. Requires proof of income (~€2,300/month) and employment or self-employment outside Croatia.', tag:'nomad' },
+    { title:'Tax exempt on foreign income', desc:'Digital nomad visa holders in Croatia are exempt from Croatian income tax on income earned from abroad — a significant financial benefit.', tag:'longstay' },
+    { title:'Cannot be renewed — must leave after 1 year', desc:'The Croatian digital nomad visa cannot be extended or converted to a residence permit. After 12 months you must leave the Schengen Area before re-applying.', tag:'caution' }
+  ]},
+  'CZ': { name:'Czech Republic', flag:'🇨🇿', tips:[
+    { title:'Freelancer / trade licence (Živnostenský list)', desc:'Non-EU citizens can obtain a Czech trade licence and then apply for a long-stay visa for self-employed persons. Gives a legal basis to live and work in the Czech Republic.', tag:'nomad' },
+    { title:'Long-stay visa for the purpose of business', desc:'Allows stays of up to 1 year, renewable. Prague has a growing expat and nomad community with affordable living costs relative to Western Europe.', tag:'longstay' },
+    { title:'Schengen limit applies without a business visa', desc:'Non-EU visitors are capped at 90 days in 180 across the Schengen Area without a long-stay permit.', tag:'caution' }
+  ]},
+  'HU': { name:'Hungary', flag:'🇭🇺', tips:[
+    { title:'White Card — Digital Nomad Visa', desc:'Hungary\'s White Card allows remote workers to live in Hungary for up to 1 year (renewable once). Requires €2,000/month income and employment outside Hungary.', tag:'nomad' },
+    { title:'Guest Investor Visa', desc:'Hungary offers residency through investment in real estate investment funds (€250,000 minimum). Gives a 10-year renewable residency permit.', tag:'longstay' },
+    { title:'EU residency rights for EU citizens — non-EU need a permit', desc:'Non-EU nationals must have a long-stay visa or residency permit to stay beyond 90 days.', tag:'caution' }
+  ]},
+  'EE': { name:'Estonia', flag:'🇪🇪', tips:[
+    { title:'Digital Nomad Visa — 1 year', desc:'Estonia was the world\'s first country to launch a digital nomad visa (2020). Requires €3,504/month income. Gives legal residency to work remotely from Estonia for up to 12 months.', tag:'nomad' },
+    { title:'e-Residency — run a business without living there', desc:'Estonia\'s e-Residency lets you register and run an EU-based company remotely. It\'s not a visa or residency permit, but pairs well with the digital nomad visa for business setup.', tag:'longstay' },
+    { title:'Cannot be combined with other Schengen stays freely', desc:'Holding an Estonian digital nomad visa means Estonia is your legal base — you cannot simply use the visa to travel all of Schengen without restriction.', tag:'caution' }
+  ]},
+  'AL': { name:'Albania', flag:'🇦🇱', tips:[
+    { title:'1 year visa-free for most Western passports', desc:'Citizens of the US, UK, EU, and many others can stay in Albania for up to 1 year without any visa. One of the most generous visa-free allowances in Europe.', tag:'longstay' },
+    { title:'Very low cost of living', desc:'Albania is one of Europe\'s most affordable countries. Tirana has a growing digital nomad scene with cafés, co-working spaces, and fast internet at a fraction of Western European costs.', tag:'nomad' },
+    { title:'Not in the Schengen Area', desc:'Albania is not part of Schengen — time spent in Albania does not count against your 90/180 Schengen days. It\'s a useful base for nomads managing their Schengen time.', tag:'caution' }
+  ]},
+  'RS': { name:'Serbia', flag:'🇷🇸', tips:[
+    { title:'30 days visa-free, extendable to 90 days', desc:'Most Western passports get 30 days on arrival, extendable at local police stations to 90 days. Serbia is outside Schengen so time here doesn\'t count against your Schengen allowance.', tag:'extend' },
+    { title:'Temporary Residence Permit for longer stays', desc:'Apply at a police station with proof of accommodation and funds. Valid for 1 year, renewable. Belgrade has become a major digital nomad hub in Eastern Europe.', tag:'longstay' },
+    { title:'Low cost of living — major nomad hub', desc:'Belgrade offers fast internet, a lively café culture, and living costs roughly 60–70% lower than Western Europe. Very popular with long-term remote workers.', tag:'nomad' }
+  ]},
+  'ME': { name:'Montenegro', flag:'🇲🇪', tips:[
+    { title:'30 days visa-free, extendable by border hop', desc:'Most passports get 30 days. Many nomads cross briefly into Albania or Bosnia to reset the clock. Montenegro is not in Schengen.', tag:'extend' },
+    { title:'Temporary Residence Permit via property rental', desc:'Register your rental contract at the local police station to obtain temporary residence. Montenegro is a popular base for Schengen management.', tag:'longstay' },
+    { title:'EU candidate country — rules may change', desc:'Montenegro is in EU accession talks. Visa and residency rules could change in coming years as integration progresses.', tag:'caution' }
+  ]},
+  'BA': { name:'Bosnia and Herzegovina', flag:'🇧🇦', tips:[
+    { title:'90 days visa-free for most Western passports', desc:'Bosnia is outside the Schengen Area — your 90 days here don\'t count against your Schengen allowance. Very useful for nomads balancing EU time.', tag:'extend' },
+    { title:'Temporary Residence Permit for longer stays', desc:'Apply at the Service for Foreigners\' Affairs with a rental contract and financial proof. Mostar and Sarajevo have growing remote work communities.', tag:'longstay' },
+    { title:'Extremely low cost of living', desc:'Bosnia is one of Europe\'s most affordable destinations with fast internet in cities and a relaxed pace of life.', tag:'nomad' }
+  ]},
+  'UA': { name:'Ukraine', flag:'🇺🇦', tips:[
+    { title:'90 days visa-free for many nationalities', desc:'Pre-war, Ukraine offered 90-day visa-free entry for most Western passports. Entry conditions are significantly restricted due to the ongoing conflict — check current FCO/State Department advisories.', tag:'caution' },
+    { title:'Digital Nomad Visa — on hold due to conflict', desc:'Ukraine had announced a digital nomad visa programme before the 2022 invasion. The programme is effectively suspended. Do not travel to Ukraine without checking official government travel warnings.', tag:'caution' },
+    { title:'Do not travel without checking official warnings', desc:'Most Western governments advise against all travel to Ukraine. This entry is included for completeness — verify all current advice from your government before making any plans.', tag:'caution' }
+  ]},
+  'MK': { name:'North Macedonia', flag:'🇲🇰', tips:[
+    { title:'90 days visa-free, outside Schengen', desc:'Most Western passports get 90 days without a visa. North Macedonia is not in Schengen — time here doesn\'t count against your Schengen days.', tag:'extend' },
+    { title:'Low cost of living — underrated nomad base', desc:'Skopje has fast internet, affordable accommodation, and a relaxed lifestyle at a fraction of Western European costs.', tag:'nomad' },
+    { title:'Temporary Residence Permit for longer stays', desc:'Apply at the Ministry of Interior with a rental contract. Straightforward process for most nationalities.', tag:'longstay' }
+  ]},
+  'BR': { name:'Brazil', flag:'🇧🇷', tips:[
+    { title:'90 days visa-free for most Western passports', desc:'Extendable to 180 days total at the Federal Police website (SINCRE system) before your initial period expires.', tag:'extend' },
+    { title:'Digital Nomad Visa — launched 2022', desc:'Brazil\'s VITEM XIV visa is for remote workers. Requires $1,500/month income (or $18,000 in savings). Valid for 1 year, renewable for another year from inside Brazil.', tag:'nomad' },
+    { title:'Retirement / Passive Income Visa', desc:'Requires $2,000/month in pension or passive income. Brazil is popular with retirees for its climate, culture, and relatively low cost of living outside major cities.', tag:'longstay' }
+  ]},
+  'CL': { name:'Chile', flag:'🇨🇱', tips:[
+    { title:'90 days visa-free, extendable to 180', desc:'Extend at the PDI (Policía de Investigaciones) before your initial period expires. Straightforward process.', tag:'extend' },
+    { title:'Digital Nomad Visa — Rentista/Independiente', desc:'Chile\'s remote work visa (Visa Sujeta a Contrato or Rentista) covers freelancers and remote workers. Requires proof of income from abroad. Santiago is the most tech-forward nomad hub in South America.', tag:'nomad' },
+    { title:'Temporary Residency — 1 year renewable', desc:'After 90 days on a tourist visa, you can apply for a temporary residency permit. After 1 year, eligible for permanent residency.', tag:'longstay' }
+  ]},
+  'UY': { name:'Uruguay', flag:'🇺🇾', tips:[
+    { title:'90 days visa-free, extendable', desc:'Most nationalities get 90 days on arrival. Extensions are possible at the Dirección Nacional de Migración in Montevideo.', tag:'extend' },
+    { title:'Residency is straightforward and fast', desc:'Uruguay is considered one of the easiest countries in Latin America to obtain legal residency. Process typically takes 3–6 months and requires proof of income (~$1,500/month) or property ownership.', tag:'longstay' },
+    { title:'No dedicated digital nomad visa — but residency is easy', desc:'Uruguay has no specific remote work visa, but the standard temporary residency is accessible and gives full legal status to live and work there.', tag:'nomad' }
+  ]},
+  'PA': { name:'Panama', flag:'🇵🇦', tips:[
+    { title:'180 days visa-free for many nationalities', desc:'Panama offers one of the longest visa-free stays in Latin America — 180 days for citizens of many countries including the US, UK, EU, and Canada.', tag:'extend' },
+    { title:'Friendly Nations Visa — fast residency pathway', desc:'Citizens of 50 "friendly nations" (including most Western countries) can obtain Panama residency relatively quickly by opening a bank account and showing ties to Panama (e.g. company registration or property).', tag:'longstay' },
+    { title:'Digital Nomad Visa — Nómada Digital', desc:'Launched 2021. Requires $3,000/month income from abroad. Valid for 9 months, renewable for another 9 months. No Panamanian income tax on foreign earnings.', tag:'nomad' }
+  ]},
+  'CR': { name:'Costa Rica', flag:'🇨🇷', tips:[
+    { title:'90 days visa-free for most Western passports', desc:'Extendable for another 90 days (up to 180 total) at the DGME immigration office. A brief exit to Nicaragua or Panama also resets the clock.', tag:'extend' },
+    { title:'Rentista Visa — $2,500/month', desc:'Costa Rica\'s Rentista category is for those with $2,500/month from abroad (e.g. investments, rental income). Popular with semi-retirees wanting legal long-term residency.', tag:'longstay' },
+    { title:'Digital Nomad Visa — launched 2022', desc:'Requires $3,000/month income from abroad ($5,000/month for families). Valid for 1 year, renewable. No Costa Rican taxes on foreign-sourced income.', tag:'nomad' }
+  ]},
+  'EC': { name:'Ecuador', flag:'🇪🇨', tips:[
+    { title:'90 days visa-free, extendable to 180', desc:'Most nationalities can extend their tourist stay to 180 days per year at the Ministerio de Relaciones Exteriores.', tag:'extend' },
+    { title:'Digital Nomad Visa — 2 years', desc:'Ecuador\'s remote worker visa requires proof of $1,350/month income from abroad. Valid for 2 years. Ecuador also uses the US dollar — no currency conversion hassle.', tag:'nomad' },
+    { title:'Retiree Visa (Pensionado) — very accessible', desc:'Requires just $800/month in pension income. One of the lowest income thresholds for retiree residency in Latin America.', tag:'longstay' }
+  ]},
+  'MY': { name:'Malaysia', flag:'🇲🇾', tips:[
+    { title:'90 days visa-free for many nationalities', desc:'Most Western passports get 90 days on arrival. Kuala Lumpur is consistently ranked among the world\'s top digital nomad cities for cost, connectivity, and infrastructure.', tag:'extend' },
+    { title:'DE Rantau Digital Nomad Pass — launched 2022', desc:'Malaysia\'s DE Rantau pass gives remote workers a legal stay of 3–12 months (renewable). Requires $24,000/year income and proof of employment or freelance contracts from outside Malaysia.', tag:'nomad' },
+    { title:'Malaysia My Second Home (MM2H) — long-term residency', desc:'The MM2H programme was revamped in 2021 with significantly higher income and deposit requirements (~$357,000 fixed deposit). Still valid for those meeting the threshold.', tag:'longstay' }
+  ]},
+  'SG': { name:'Singapore', flag:'🇸🇬', tips:[
+    { title:'ONE Pass — Overseas Networks & Expertise Pass', desc:'Singapore\'s ONE Pass targets high earners ($22,500/month+) or individuals with extraordinary achievements in business, arts, or sport. Gives 5-year renewable work residency.', tag:'nomad' },
+    { title:'Tech.Pass for tech professionals', desc:'Designed for established tech entrepreneurs, leaders, or technical experts. Salary threshold ~$22,500/month. Gives 2-year renewable residency to work across multiple companies or projects.', tag:'longstay' },
+    { title:'Tourist entry is 30–90 days — extensions are not simple', desc:'Singapore\'s tourist entry cannot be easily extended. Legal long-stay options require a sponsored work pass or one of the specialist passes above. Singapore is expensive — plan finances carefully.', tag:'caution' }
+  ]},
+  'KR': { name:'South Korea', flag:'🇰🇷', tips:[
+    { title:'Digital Nomad Visa (Workcation) — launched 2023', desc:'South Korea\'s F-1-D Workcation visa gives remote workers up to 1 year (renewable once). Requires $54,000/year income and employment outside Korea.', tag:'nomad' },
+    { title:'Working Holiday Visa for under-30s', desc:'South Korea has Working Holiday agreements with 25+ countries for those aged 18–30. Gives 1 year to live and work legally.', tag:'longstay' },
+    { title:'90 days visa-free for most Western passports', desc:'Non-extendable beyond 90 days without switching to another visa category.', tag:'extend' }
+  ]},
+  'TW': { name:'Taiwan', flag:'🇹🇼', tips:[
+    { title:'90 days visa-free for many nationalities', desc:'Most Western passports receive 90 days visa-free. Taiwan is consistently praised for safety, food, fast internet, and low cost of living relative to Japan or South Korea.', tag:'extend' },
+    { title:'Gold Card — combined work/residency permit', desc:'Taiwan\'s Employment Gold Card combines a work permit, residency permit, and re-entry permit in one. For professionals in technology, finance, culture, arts, and other qualifying fields. Income threshold varies by category (~$5,550/month for most fields).', tag:'nomad' },
+    { title:'Visa extensions are possible for some categories', desc:'Tourist extensions can sometimes be obtained at the National Immigration Agency. Gold Card is the cleanest long-stay option for remote workers.', tag:'longstay' }
+  ]},
+  'PH': { name:'Philippines', flag:'🇵🇭', tips:[
+    { title:'30 days visa-free, extendable to 36 months', desc:'The Philippines allows tourists to extend their stay repeatedly at the Bureau of Immigration. Each extension adds 1–2 months, up to a maximum of 36 months. Very flexible system.', tag:'extend' },
+    { title:'SRRV (Special Resident Retiree\'s Visa) — from age 35', desc:'The SRRV gives permanent residency to retirees who deposit $10,000–$50,000 in a Philippine bank (amount depends on age and pension status). No need to renew annually.', tag:'longstay' },
+    { title:'No dedicated digital nomad visa', desc:'Remote workers currently use the tourist extension pathway. The Philippines has discussed a digital nomad visa but hasn\'t launched one as of 2025.', tag:'nomad' }
+  ]},
+  'LK': { name:'Sri Lanka', flag:'🇱🇰', tips:[
+    { title:'30 days on arrival (ETA), extendable to 90 days', desc:'Sri Lanka\'s ETA gives 30 days, extendable twice for 30 days each (90 days total) at the Department of Immigration in Colombo or Kandy.', tag:'extend' },
+    { title:'Residence Visa for longer stays', desc:'A Residence Visa can be issued for 1 or 2 years for those with legitimate reasons — rental contracts, business ties, or family connections. Requires approval from the immigration controller.', tag:'longstay' },
+    { title:'Digital Nomad scene growing — no formal visa yet', desc:'Sri Lanka has no official digital nomad visa as of 2025 but is actively discussed as a future option. Colombo and Weligama are popular nomad bases.', tag:'nomad' }
+  ]},
+  'NP': { name:'Nepal', flag:'🇳🇵', tips:[
+    { title:'Tourist visa: 15, 30, or 90 days on arrival', desc:'Nepal offers multiple duration tourist visas on arrival. The 90-day visa is the most useful — can be extended at the Department of Immigration in Kathmandu.', tag:'extend' },
+    { title:'Maximum stay is 150 days per calendar year', desc:'Nepal allows a maximum of 150 days on a tourist visa per calendar year. This resets on January 1st each year.', tag:'longstay' },
+    { title:'No digital nomad visa — but costs are extremely low', desc:'Nepal has no remote work visa. However, the cost of living (especially outside Kathmandu) is among the lowest in Asia, making it a very affordable base on tourist stays.', tag:'nomad' }
+  ]},
+  'QA': { name:'Qatar', flag:'🇶🇦', tips:[
+    { title:'90 days visa-free for 90+ nationalities', desc:'Qatar offers generous visa-free access. Doha is increasingly popular as a business hub and transit base with world-class infrastructure.', tag:'extend' },
+    { title:'Residence permit via employment or sponsorship', desc:'Long-term stays in Qatar are primarily tied to employment or sponsorship. The kafala sponsorship system has been reformed but employers still typically hold residency permit responsibility.', tag:'longstay' },
+    { title:'No digital nomad visa currently', desc:'Qatar has no remote work visa as of 2025. Long-term options are mainly tied to employment-based residency.', tag:'caution' }
+  ]},
+  'OM': { name:'Oman', flag:'🇴🇲', tips:[
+    { title:'Visa on arrival for 70+ nationalities — 10 to 30 days', desc:'Oman offers visa-on-arrival for many nationalities. Duration varies by passport. Multi-entry visas for longer tourism are available online.', tag:'extend' },
+    { title:'Freelancer / Independent Contractor Residency', desc:'Oman has introduced pathways for self-employed foreign nationals to obtain residency without a local sponsor — a significant reform from the traditional kafala system.', tag:'nomad' },
+    { title:'No standard digital nomad visa yet', desc:'Oman is reforming its residency system but has no dedicated remote worker visa as of 2025. Worth monitoring — it\'s seen as a likely next Gulf state to launch one.', tag:'caution' }
+  ]},
+  'ZA': { name:'South Africa', flag:'🇿🇦', tips:[
+    { title:'90 days visa-free for most Western passports', desc:'South Africa offers generous visa-free access. Cape Town is frequently ranked in the world\'s top 10 digital nomad cities for lifestyle, scenery, and affordability.', tag:'extend' },
+    { title:'Digital Nomad Visa — launched 2024', desc:'South Africa\'s remote worker visa allows stays of up to 3 years. Requires $54,000/year income from a source outside South Africa and proof of remote employment.', tag:'nomad' },
+    { title:'Critical Skills Visa for in-demand professionals', desc:'South Africa has a Critical Skills list covering IT, engineering, finance, and other professions. Holders can get a 3-year visa and a pathway to permanent residency.', tag:'longstay' }
+  ]},
+  'KE': { name:'Kenya', flag:'🇰🇪', tips:[
+    { title:'ETA (Electronic Travel Authorisation) — 90 days', desc:'Kenya replaced visa-on-arrival with an ETA in 2023, now available to all nationalities. Apply online at etakenya.go.ke. Costs $30 USD.', tag:'extend' },
+    { title:'Special Pass for stays beyond 90 days', desc:'Apply at the Department of Immigration in Nairobi with proof of income or a local sponsor. Typically granted for 3–6 months, renewable.', tag:'longstay' },
+    { title:'Nairobi is a growing nomad hub', desc:'Nairobi has fast fibre internet, a large co-working scene, and direct flights to Europe, the Middle East, and Asia — the most accessible long-stay base in East Africa.', tag:'nomad' }
+  ]},
+  'RW': { name:'Rwanda', flag:'🇷🇼', tips:[
+    { title:'30 days visa-free for all nationalities on arrival', desc:'Rwanda offers free visa-on-arrival for all passport holders — one of the most open entry policies in Africa. Kigali is one of Africa\'s cleanest and safest cities.', tag:'extend' },
+    { title:'Residency permit for longer stays', desc:'Apply at the Directorate General of Immigration for a 1 or 2-year residence permit. Rwanda has a reputation for fast, efficient government processes.', tag:'longstay' },
+    { title:'Growing tech and nomad hub in East Africa', desc:'Rwanda actively courts digital nomads and remote workers with fast internet, modern co-working spaces, and English as an official language.', tag:'nomad' }
+  ]},
+  'ET': { name:'Ethiopia', flag:'🇪🇹', tips:[
+    { title:'Visa on arrival for most nationalities — 30 days', desc:'Ethiopia offers visa-on-arrival for many nationalities at Addis Ababa Bole International Airport. Extendable at the immigration office.', tag:'extend' },
+    { title:'Residence permit for longer stays', desc:'Ethiopia issues 1-year residence permits for foreigners with legitimate ties — employment, investment, or family. Addis Ababa has a growing expat community.', tag:'longstay' },
+    { title:'No digital nomad visa', desc:'Ethiopia has no remote work visa. Internet infrastructure is improving but remains less reliable than East African neighbours like Kenya or Rwanda.', tag:'caution' }
+  ]},
+  'MU': { name:'Mauritius', flag:'🇲🇺', tips:[
+    { title:'60 days visa-free for most nationalities, extendable to 180', desc:'Most passports get 60 days on arrival, extendable at the Passport and Immigration Office up to 180 days total.', tag:'extend' },
+    { title:'Premium Travel Visa — up to 1 year', desc:'Mauritius\'s Premium Travel Visa (PTV) allows remote workers and retirees to stay for up to 1 year. Requires $1,500/month income and proof of accommodation.', tag:'nomad' },
+    { title:'Occupation Permit for investors and professionals', desc:'Mauritius offers a combined work and residency permit for professionals, entrepreneurs, and self-employed individuals. One of Africa\'s most business-friendly jurisdictions.', tag:'longstay' }
+  ]},
+  'CV': { name:'Cabo Verde', flag:'🇨🇻', tips:[
+    { title:'Visa on arrival or e-visa — 90 days', desc:'Most nationalities can enter Cabo Verde for 90 days via e-visa or on arrival. The islands (especially Sal and São Vicente) have a growing nomad community.', tag:'extend' },
+    { title:'Remote Working Cabo Verde programme', desc:'Cabo Verde launched a dedicated remote work programme offering stays of 6 months to 1 year. One of the first African nations to actively target digital nomads with a specific scheme.', tag:'nomad' },
+    { title:'Residency permit available via investment or employment', desc:'Longer-term residency is available through investment, employment with a local entity, or through the remote work programme pathway.', tag:'longstay' }
+  ]},
+  'IS': { name:'Iceland', flag:'🇮🇸', tips:[
+    { title:'90 days visa-free within Schengen', desc:'Iceland is part of Schengen — the standard 90/180-day rule applies for non-EU visitors.', tag:'extend' },
+    { title:'Long-Term Visa for Remote Workers — 6 months', desc:'Iceland offers a long-stay visa specifically for remote workers and freelancers. Requires $88,000/year income. Gives legal residency for 6 months.', tag:'nomad' },
+    { title:'High cost of living — plan finances carefully', desc:'Iceland is one of the world\'s most expensive countries. The remote work visa is ideal for those on high incomes who want the experience — budget carefully.', tag:'caution' }
+  ]},
+  'NO': { name:'Norway', flag:'🇳🇴', tips:[
+    { title:'Svalbard — visa-free indefinite stay', desc:'Svalbard (Norwegian Arctic archipelago) is visa-free for all nationalities with no residency permit required — a unique loophole. However, job opportunities are very limited and costs are high.', tag:'longstay' },
+    { title:'90 days visa-free in Schengen', desc:'Norway is in Schengen — the 90/180-day rule applies for non-EU visitors on the mainland.', tag:'extend' },
+    { title:'Digital nomad options are limited on the mainland', desc:'Norway has no dedicated digital nomad visa. Long-term legal stays require a work permit or student visa. Svalbard is the unique exception.', tag:'caution' }
+  ]},
+  'CY': { name:'Cyprus', flag:'🇨🇾', tips:[
+    { title:'90 days visa-free (note: not in Schengen)', desc:'Cyprus is an EU country but not part of Schengen. Your 90-day allowance in Cyprus is separate from your Schengen days — very useful for managing EU travel time.', tag:'extend' },
+    { title:'Digital Nomad Visa — 1 year, renewable', desc:'Cyprus launched a digital nomad visa offering 1-year stays, renewable for a second year. Requires €3,500/month income and private health insurance.', tag:'nomad' },
+    { title:'Non-Dom tax status — 0% on dividends and capital gains', desc:'Cyprus offers non-domicile tax status to qualifying new residents, exempting dividends and capital gains from income tax. Very attractive for entrepreneurs and investors.', tag:'longstay' }
+  ]},
+  'MT': { name:'Malta', flag:'🇲🇹', tips:[
+    { title:'Nomad Residence Permit — 1 year, renewable', desc:'Malta\'s Nomad Residence Permit is for remote workers. Requires €2,700/month income. Valid for 1 year, renewable annually. Malta is English-speaking and has a warm Mediterranean climate.', tag:'nomad' },
+    { title:'Global Residence Programme — tax residency', desc:'Malta\'s GRP offers a flat 15% tax rate on foreign income remitted to Malta. Requires purchasing or renting property above a minimum value. Gives EU residency.', tag:'longstay' },
+    { title:'In Schengen — 90/180 rule applies without a permit', desc:'Without a Malta residency permit, non-EU visitors are subject to the standard Schengen 90/180-day limit.', tag:'caution' }
+  ]},
+  'HR': { name:'Croatia', flag:'🇭🇷', tips:[
+    { title:'Digital Nomad Visa — up to 1 year', desc:'One of the first EU countries to launch a digital nomad visa. Requires ~€2,300/month income and employment or self-employment outside Croatia.', tag:'nomad' },
+    { title:'Tax exempt on foreign income', desc:'Digital nomad visa holders are exempt from Croatian income tax on foreign-sourced income — a major financial benefit.', tag:'longstay' },
+    { title:'Cannot be renewed — must leave after 1 year', desc:'The Croatian digital nomad visa cannot be extended or converted. After 12 months you must leave before re-applying.', tag:'caution' }
+  ]},
+  'MV': { name:'Maldives', flag:'🇲🇻', tips:[
+    { title:'30 days visa-free on arrival, extendable to 90 days', desc:'All nationalities receive 30 days free on arrival. Extendable to 90 days at the Department of Immigration. The Maldives is a popular short-stay destination rather than a long-stay base.', tag:'extend' },
+    { title:'Digital Nomad Visa — Maldives Unique Visa', desc:'The Maldives launched a 1-year remote work visa in 2021 (one of the first post-COVID). However uptake has been limited due to the very high cost of living.', tag:'nomad' },
+    { title:'Cost of living is extremely high outside Male', desc:'Resort islands are among the world\'s most expensive places to stay. Male is more affordable but still costly. Most nomads visit short-term rather than basing here long-term.', tag:'caution' }
+  ]},
+  'BH': { name:'Bahrain', flag:'🇧🇭', tips:[
+    { title:'Visa on arrival for 100+ nationalities — 2 weeks to 1 month', desc:'Bahrain offers very easy visa access. The Bahrain Visa-on-Arrival or eVisa is quick and affordable.', tag:'extend' },
+    { title:'Digital Nomad Visa — 1 year', desc:'Bahrain\'s remote worker visa requires $1,500/month income from a foreign source. One of the Gulf\'s most accessible and affordable digital nomad options.', tag:'nomad' },
+    { title:'0% personal income tax', desc:'Like other Gulf states, Bahrain has no personal income tax, making it financially attractive for high earners relocating from higher-tax countries.', tag:'longstay' }
+  ]},
+  'SA': { name:'Saudi Arabia', flag:'🇸🇦', tips:[
+    { title:'Tourist visa — 90 days in 180', desc:'Saudi Arabia opened to tourists in 2019. The tourist e-visa gives 90 days per visit within a 180-day period. A significant shift from previous strict entry policies.', tag:'extend' },
+    { title:'Premium Residency (Iqama Al-Mumayaz)', desc:'Saudi Arabia\'s Premium Residency gives indefinite residency rights (with renewal fees) without needing employer sponsorship. One-time fee of ~$800,000 or annual fee of ~$27,000.', tag:'longstay' },
+    { title:'NEOM and Vision 2030 attracting international professionals', desc:'Saudi Arabia is actively recruiting international talent for Vision 2030 projects. Employment-based residency is becoming more accessible for skilled professionals.', tag:'nomad' }
+  ]},
+  'JO': { name:'Jordan', flag:'🇯🇴', tips:[
+    { title:'Visa on arrival — 1 month, extendable to 6 months', desc:'Most nationalities receive a 1-month visa on arrival, extendable at local police stations up to 6 months total. Jordan is a safe, stable base in the Middle East.', tag:'extend' },
+    { title:'Residency permit for longer stays', desc:'Apply at the Civil Status and Passports Department with a rental contract and financial proof. Jordan\'s residency process is relatively straightforward.', tag:'longstay' },
+    { title:'No digital nomad visa — but remote work culture is growing', desc:'Jordan has no remote work visa as of 2025. Amman has a growing startup and co-working scene, and the cost of living is moderate for the region.', tag:'nomad' }
+  ]},
+  'AM': { name:'Armenia', flag:'🇦🇲', tips:[
+    { title:'180 days visa-free for most nationalities', desc:'Armenia offers an unusually generous 180-day visa-free stay for most Western passports. It\'s become a major destination for digital nomads since 2022.', tag:'extend' },
+    { title:'Very low cost of living', desc:'Yerevan is one of the most affordable capitals in the region with a rapidly growing cafe and co-working culture, fast internet, and a welcoming atmosphere for remote workers.', tag:'nomad' },
+    { title:'Temporary Residence for longer stays', desc:'After 180 days, you can apply for a temporary residence card (1 year, renewable) at the Police Passport and Visa Department. Process is relatively accessible.', tag:'longstay' }
+  ]},
+  'KZ': { name:'Kazakhstan', flag:'🇰🇿', tips:[
+    { title:'30 days visa-free for 60+ nationalities', desc:'Kazakhstan offers visa-free entry for citizens of many countries. Almaty is the commercial hub with good infrastructure and a growing tech scene.', tag:'extend' },
+    { title:'Visa-free up to 30 days — extend via e-visa or permit', desc:'For stays beyond 30 days, apply for an e-visa or temporary residence permit. Kazakhstan uses a different border reset system from most countries — research the specific rules for your nationality.', tag:'longstay' },
+    { title:'Tech Hub / IT Visa for professionals', desc:'Kazakhstan is developing a tech hub programme (Astana Hub) offering residency pathways for IT professionals and startups.', tag:'nomad' }
+  ]},
+  'UZ': { name:'Uzbekistan', flag:'🇺🇿', tips:[
+    { title:'30 days visa-free for 90+ nationalities', desc:'Uzbekistan has dramatically opened up since 2018. Samarkand and Tashkent are increasingly popular nomad stops on the Central Asia route.', tag:'extend' },
+    { title:'e-Visa for up to 30 days, extendable', desc:'Most nationalities can get an Uzbekistan e-visa online. Extensions are possible at the Ministry of Internal Affairs.', tag:'longstay' },
+    { title:'Low cost of living — underrated destination', desc:'Uzbekistan offers extremely affordable living with rich history, decent internet in cities, and a genuinely welcoming culture. No digital nomad visa yet.', tag:'nomad' }
+  ]},
+  'AZ': { name:'Azerbaijan', flag:'🇦🇿', tips:[
+    { title:'30 days via e-ASAN Visa — extendable', desc:'Azerbaijan\'s e-visa (ASAN) gives 30 days, extendable at the State Migration Service in Baku.', tag:'extend' },
+    { title:'Temporary Residence Permit — 1 year', desc:'Apply at the State Migration Service with accommodation proof and financial means. Baku has good infrastructure and is more affordable than most European capitals.', tag:'longstay' },
+    { title:'No digital nomad visa yet', desc:'Azerbaijan has no dedicated remote work visa, but the standard temporary residence permit covers longer stays for those who meet the requirements.', tag:'nomad' }
+  ]},
+  'TZ': { name:'Tanzania', flag:'🇹🇿', tips:[
+    { title:'Visa on arrival or e-visa — 90 days', desc:'Most nationalities can get a Tanzania visa on arrival or via e-visa for $50 USD. Valid for 90 days. Zanzibar and Dar es Salaam are growing nomad bases.', tag:'extend' },
+    { title:'Residence Permit for longer stays', desc:'Three classes of residence permit available — Class A (investment), Class B (employment), Class C (other). Class C is used by long-stay retirees and those with passive income.', tag:'longstay' },
+    { title:'Zanzibar has a separate entry process', desc:'Zanzibar is semi-autonomous — you need to show your passport and fill in a separate form on arrival even when arriving from mainland Tanzania. Factor this into plans.', tag:'caution' }
+  ]},
+  'GH': { name:'Ghana', flag:'🇬🇭', tips:[
+    { title:'90 days visa-free for some nationalities, visa required for others', desc:'ECOWAS citizens enter freely. Many other nationalities require a visa in advance. Check requirements for your specific passport before travel.', tag:'extend' },
+    { title:'Ghana Beyond Aid — actively courting diaspora and nomads', desc:'Ghana has actively promoted itself to diaspora returnees and international remote workers, particularly through the "Year of Return" initiative. Accra has a growing tech ecosystem.', tag:'nomad' },
+    { title:'Residence Permit via investment or employment', desc:'Non-ECOWAS nationals can apply for residence permits through investment, employment, or marriage. The process is manageable but involves some bureaucracy.', tag:'longstay' }
+  ]},
+  'NG': { name:'Nigeria', flag:'🇳🇬', tips:[
+    { title:'Visa on arrival for some nationalities', desc:'Nigeria offers visa on arrival for citizens of select countries. Most others need a visa in advance. Lagos is West Africa\'s largest tech and startup hub.', tag:'extend' },
+    { title:'STR (Subject to Regularisation) Permit', desc:'Foreigners staying longer than their initial entry permission can apply for an STR permit through the Nigeria Immigration Service.', tag:'longstay' },
+    { title:'CERPAC (Combined Expatriate Residence Permit)', desc:'For longer-term stays, the CERPAC card is the main residence document for expatriates in Nigeria. Requires employer sponsorship or business investment.', tag:'nomad' }
+  ]}
 };
 
 var TAG_LABELS = {
